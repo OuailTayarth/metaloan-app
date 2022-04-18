@@ -1,0 +1,1 @@
+export const MetaAddress = 0xA3b2C7cE6f2788148EBfc65BeB4Cb04cb3BDe46E;

@@ -1,0 +1,167 @@
+.about-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 200px 63px;
+}
+
+.about-content .textBox {
+  position: relative;
+  max-width: 500px;
+  margin-left: 50px;
+}
+
+/* .LineChildren {
+  transform: translate(0, 500px);
+  padding-top: 2px;
+} */
+
+/* Initial state for the split text lines */
+.LineChildren {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.LineParents {
+  overflow: hidden;
+}
+
+.about-content .textBox h2 {
+  color: #fff;
+  font-size: 4.3em;
+  line-height: 1em;
+}
+
+.about-content .textBox p {
+  font-size: 17;
+  padding: 4px 0px 14px 0px;
+  line-height: 20px;
+  color: #a4a9ac;
+  font-weight: 400;
+}
+
+.about-content .imgBox {
+  width: 600px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 50px;
+}
+
+.about-content .imgBox img {
+  max-width: 718px;
+}
+
+.about-content .play {
+  position: relative;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.about-content .play img {
+  max-width: 45px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.about-content .btn {
+  height: 40px;
+  background-color: #aed2f4;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+  font-size: 12px;
+}
+
+.about-content .btn:hover {
+  transform: translateY(-5%);
+}
+
+@media (max-width: 991px) {
+  .about-content {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: flex-start;
+    align-items: baseline;
+    padding: 200px 50px 200px 50px;
+  }
+
+  .about-content .imgBox {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    padding-top: 50px;
+  }
+
+  .about-content .imgBox img {
+    max-width: 100%;
+  }
+
+  .about-content .textBox {
+    margin: 0px 20px 0px 0px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-content .imgBox {
+    padding-top: 32px;
+    height: 368px;
+  }
+
+  .about-content {
+    padding: 200px 0px 40px 61px;
+  }
+
+  .OurTeam-section {
+    position: relative;
+    padding: 150px 70px 30px 70px;
+  }
+  .OurTeam-section .teamTitle {
+    font-size: 4em;
+  }
+}
+
+@media (max-width: 485px) {
+  .about-content {
+    padding: 142px 0px 90px 30px;
+  }
+  .about-content .textBox h4 {
+    font-size: 0.7em;
+  }
+
+  .OurTeam-section .teamTitle {
+    font-size: 50px;
+  }
+
+  .about-content .textBox h2 {
+    font-size: 2.8em;
+    margin-bottom: 11px;
+  }
+
+  .about-content .textBox p {
+    font-size: 1em;
+  }
+
+  .about-content .textBox {
+    margin-left: 0px;
+  }
+}

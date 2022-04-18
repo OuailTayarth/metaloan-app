@@ -1,0 +1,171 @@
+.howItWorks-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 200px 63px;
+}
+
+.howItWorks-content .textBox {
+  position: relative;
+  max-width: 550px;
+  margin: 0px 100px 0px 20px;
+}
+
+.howItWorks-content .textBox h2 {
+  color: #fff;
+  font-size: 4.3em;
+  line-height: 1em;
+  margin-bottom: 10px;
+}
+
+.LineChildren {
+  transform: translate(0, 500px);
+  padding-top: 2px;
+}
+
+/* .text-Header.bottom {
+    padding-bottom: 20px;
+} */
+
+.LineParents {
+  overflow: hidden;
+}
+
+.howItWorks-content .textBox p {
+  font-size: 1.1em;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.howItWorks-content .imgBox {
+  width: 600px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.howItWorks-content .imgBox img {
+  max-width: 662px;
+}
+
+.howItWorks-content .play {
+  position: relative;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.howItWorks-content .play img {
+  max-width: 45px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.howItWorks-content .btn {
+  height: 40px;
+  width: 157px;
+  background-color: #aed2f4;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+  font-size: 13px;
+}
+
+.howItWorks-content .btn:hover {
+  transform: translateY(-5%);
+}
+
+.howItWorks-content .textBox .requestLoan_list {
+  padding: 8px 0px;
+}
+
+.howItWorks-content .textBox .requestLoan_list li {
+  padding-bottom: 5px;
+  letter-spacing: 0.5px;
+  line-height: 19px;
+  color: #a4a9ac;
+}
+
+@media (max-width: 991px) {
+  .howItWorks-content {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 90px 0px;
+    flex-direction: column-reverse;
+    margin-top: 70px;
+  }
+
+  .howItWorks-content .imgBox {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    padding: 50px;
+  }
+
+  .howItWorks-content .imgBox img {
+    max-width: 100%;
+  }
+
+  .howItWorks-content .textBox {
+    margin-left: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .howItWorks-content {
+    padding: 90px 0px 60px 0px;
+  }
+}
+
+@media (max-width: 485px) {
+  .howItWorks-content .textBox h4 {
+    font-size: 0.7em;
+  }
+
+  .howItWorks-content .imgBox {
+    margin-top: 20px;
+    padding: 31px;
+  }
+
+  .howItWorks-content .textBox h2 {
+    font-size: 2.8em;
+  }
+
+  .howItWorks-content .textBox p {
+    font-size: 1em;
+  }
+
+  .howItWorks-content .textBox .requestLoan_list li {
+    padding-bottom: 2px;
+    letter-spacing: 0.5px;
+    line-height: 16px;
+    color: #a4a9ac;
+    font-size: 15px;
+  }
+
+  .howItWorks-content .btn {
+    height: 36px;
+    width: 155px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .howItWorks-content .textBox {
+    margin-left: 30px;
+  }
+
+  .howItWorks-content {
+  }
+}

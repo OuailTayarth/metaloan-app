@@ -1,0 +1,163 @@
+.content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 120px 70px;
+}
+
+.LineChildren {
+  transform: translate(0, 500px);
+  padding-top: 2px;
+}
+
+.LineParents {
+  overflow: hidden;
+}
+
+.content .textBox {
+  position: relative;
+  max-width: 469px;
+  margin-left: 50px;
+}
+
+.content .textBox h2 {
+  color: #fff;
+  font-size: 6.6em;
+  line-height: 1em;
+  margin-top: 6px;
+}
+
+.content .textBox h4 {
+  color: #fffca1;
+  font-size: 1.3em;
+  line-height: 1em;
+  margin-top: 20px;
+  letter-spacing: 0.5px;
+}
+
+.content .textBox p {
+  font-size: 17px;
+  padding-bottom: 16px;
+  line-height: 21px;
+  color: #a4a9ac;
+  font-weight: 400;
+}
+
+.content .imgBox {
+  width: 600px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 50px;
+}
+
+.content .imgBox img {
+  max-width: 662px;
+}
+
+.button-container #btn-left {
+  margin-right: 10px;
+}
+
+.content .play {
+  position: relative;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  font-size: 1em;
+}
+
+.content .play img {
+  max-width: 45px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.content .btn {
+  height: 40px;
+  width: 157px;
+  background-color: #aed2f4;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.content .btn:hover {
+  transform: translateY(-6%);
+}
+
+@media (max-width: 991px) {
+  .content {
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: 132px;
+  }
+
+  .content .imgBox {
+    display: none;
+  }
+
+  .content .textBox h2 {
+    font-size: 5.8em;
+  }
+}
+
+@media (max-width: 767px) {
+  .content .textBox h4 {
+    font-size: 0.8em;
+  }
+
+  .content .textBox h2 {
+    font-size: 3.8em;
+  }
+
+  .content .textBox p {
+    font-size: 15px;
+  }
+
+  .content .btn {
+    font-size: 12px;
+  }
+
+  .content .textBox {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content .textBox h4 {
+    font-size: 0.8em;
+  }
+
+  .content .textBox h2 {
+    font-size: 3.8em;
+  }
+
+  .content .textBox p {
+    font-size: 1em;
+  }
+
+  .content {
+    align-items: center;
+  }
+
+  .content .textBox {
+    margin-left: 0px;
+  }
+
+  .content .btn {
+    height: 41px;
+    width: 147px;
+    font-size: 12px;
+  }
+}

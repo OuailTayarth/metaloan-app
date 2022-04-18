@@ -1,0 +1,55 @@
+.launch-link {
+  position: absolute;
+  top: 167px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: 0.5s;
+}
+
+.links-Navigation {
+  position: relative;
+  display: flex;
+  transition: 1s ease-out;
+  max-width: 800px;
+  background-color: #aed2f4;
+  padding: 17px 0px;
+  border-radius: 3px;
+}
+
+.links-Navigation li {
+  margin-left: 20px;
+}
+
+.links-Navigation li a {
+  letter-spacing: 0.3px;
+  font-weight: 600;
+  color: #000;
+  font-size: 1.2rem;
+  transition: color 0.5s;
+}
+
+.links-Navigation li a:hover {
+  color: rgb(125, 119, 119);
+}
+
+a#lastChild {
+  margin-right: 20px;
+}
+
+@media (max-width: 485px) {
+  .links-Navigation li a {
+    letter-spacing: 0.3px;
+    font-weight: 600;
+    color: #000;
+    font-size: 1rem;
+    transition: color 0.5s;
+  }
+
+  .links-Navigation li {
+    margin-left: 10px;
+  }
+}

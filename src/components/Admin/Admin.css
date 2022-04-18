@@ -1,0 +1,173 @@
+.admin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #000;
+    color: #fff;
+    padding: 110px 0px 50px;
+    /* padding-top: 50px; */
+    width: 100%;
+  }
+
+
+.admin-container .title {
+    text-align: center;
+    margin: 40px 0 24px;
+}
+
+.admin-container .title h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.admin-container .title p {
+    font-size: 1.3em;
+    font-size: 500;
+    letter-spacing: 0.5px;
+    padding-top: 10px;
+    line-height: 25px;
+    max-width: 500px;
+    text-align: center;
+}
+
+.admin-container .book-form {
+    position: relative;
+    padding: 0px 60px 60px 60px;
+    display: inline-block;
+    /* text-align: center; */
+    width: 100%;
+    
+}
+
+.admin-container .book-form .inputBox {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+
+.admin-container .book-form .inputBox label {
+     display: block;
+     margin-bottom: 5px;
+}
+
+
+.admin-container .book-form .inputBox input,
+.admin-container .book-form .inputBox textarea {
+    padding: 13px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 400;
+    color:#111;
+    outline: none;
+    font-family: inherit;
+    border-radius: 5px;
+    border: none;
+    
+}
+
+.admin-container .book-form .inputBox #uploadFile {
+    color: #fff;
+}
+
+
+.admin-container .book-form .inputBox input[type = "submit"] {
+    display: inline-block;
+    background:#aed2f4;
+    color: #000;
+    border: none;
+    height: 40px;
+    font-weight: 700;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 5px;   
+}
+
+
+
+.admin-container .book-form .inputBox input[type = "submit"]:hover {
+    background:#383dda;
+}
+
+.submit-alert {
+  text-align: center;
+  line-height: 19px;
+  font-weight: 400;
+}
+
+.btn-create {
+    border: 2px solid #BABED7;
+    border-radius: 8px;
+    display: block;
+    width: 107%;
+    font-size: 14px;
+    height: 44px;
+    background:#aed2f4;
+    color: #000;
+    margin-bottom: 10px;
+    margin-top: 27px;
+    cursor: pointer;
+    outline: 0;
+    font-weight: 600;
+    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+}
+
+
+@media screen and (min-width: 576px) {
+    .admin-container {
+      width: 70%;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .admin-container {
+      width: 55%;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .admin-container {
+      width: 45%;
+    }
+ 
+  }
+
+  @media screen and (min-width: 1200px) {
+    .admin-container {
+      width: 35%;
+    }
+
+  }
+  
+  @media screen and (max-width: 420px) {
+    .admin-container .title p {
+        font-size: 1em;
+        max-width: 382px;
+        text-align: center;
+    }
+
+    .admin-container .title h1 {
+      font-size: 2.60rem;
+    }
+  }
+
+
+  @media (max-width: 485px) {
+    .admin-container .book-form .inputBox input[type = "submit"] {
+      height: 36px;
+      font-size: 12px;
+    }
+
+    .admin-container .title h2 {
+      font-size: 2.7em;
+    }
+    
+}

@@ -1,0 +1,157 @@
+.OurTeam-section {
+  position: relative;
+  padding: 150px 70px;
+}
+
+.OurTeam-section .teamTitle {
+  font-size: 4.3em;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.OurTeam-section .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  /* padding-top: 160px; */
+}
+
+.OurTeam-section .card {
+  position: relative;
+  width: 340px;
+  height: 450px;
+  background: #151636;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.OurTeam-section .card .circle {
+  position: absolute;
+  top: -190px;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  transform: translateX(-50%);
+  clip-path: circle();
+}
+.OurTeam-section .card .circle::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -16px;
+  width: 100%;
+  height: 100%;
+  /* box-shadow: 0 0 0 20px rgba(255,0,0,0.5); */
+  box-shadow: 0 0 0 20px rgba(243, 184, 184, 0.5);
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+}
+.OurTeam-section .circle .imgBox {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 340px;
+  height: 310px;
+}
+
+.OurTeam-section .imgBox img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s;
+}
+
+.OurTeam-section .imgBox img:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.OurTeam-section .imgBox .img2,
+.OurTeam-section .imgBox .img1 {
+  height: 500px;
+}
+
+.OurTeam-section .imgBox .img1 {
+  transform: scale(1.2);
+}
+
+.OurTeam-section .imgBox .avatar {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.OurTeam-section .imgBox:hover img {
+  display: inline;
+  background-color: black;
+  transition: all 0.5s;
+}
+
+.OurTeam-section .card .content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 140px;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.OurTeam-section .content .fa-linkedin {
+  padding: 2px 4px;
+  color: #fff;
+  background: #0077b5;
+  border-radius: 2px;
+}
+.OurTeam-section .content h3 {
+  font-size: 1.4em;
+  color: #c0c7f7;
+  font-weight: 400;
+  margin-top: 7px;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+
+.OurTeam-section .content .title h4 {
+  color: #c0c7f7;
+  padding: 4px 0px 8px 0px;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 19px;
+}
+
+.icons-content .icon {
+  filter: invert(0.2);
+  font-size: 16px;
+}
+
+.icons-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 485px) {
+  .OurTeam-section .teamTitle {
+    font-size: 3em;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .OurTeam-section {
+    padding: 150px 70px 70px 70px;
+  }
+}
