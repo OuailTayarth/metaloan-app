@@ -35,8 +35,7 @@ contract MetaPayment  {
     
     event LoanCanceled(address indexed borrower,
                         uint indexed planId,
-                        uint indexed date,
-                        bool status);
+                        uint indexed date);
 
 
     // Plan loan 
@@ -206,19 +205,20 @@ contract MetaPayment  {
     function cancelLoan(uint256 planId)
      external 
      payable
-     PlanExists(planId)
+    //  PlanExists(planId)
      onlyUsers()
-     onlyContract(planId)
+    //  onlyContract(planId)
      
     {   
-        onGoingLoans[msg.sender][planId] = LoanRequest(
-            payable(address(this)),
-            block.timestamp,
-            block.timestamp,
-            false
-        );
 
-        emit LoanCanceled(address(this), planId, block.timestamp, false);
+        LoanRequest storage loanRequest = onGoingLoans[msg.sender][planId];
+        require(
+        loanRequest.borrower != address(0), 
+        'this loan doesn't not exist'
+        );
+        delete onGoingLoans[msg.sender][planId];
+
+        emit LoanCanceled(msg.sender, planId, block.timestamp);
     }
 
 
@@ -252,7 +252,7 @@ contract MetaPayment  {
                            uint256 nextPayment,
                            bool activated) {
     LoanRequest storage loanRequest = onGoingLoans[msg.sender][planId];
-
+    
     return (
         loanRequest.borrower,
         loanRequest.start,
