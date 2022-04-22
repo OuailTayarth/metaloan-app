@@ -2,10 +2,24 @@
 pragma solidity ^0.8.6;
 
 
+// 
+/*  Inside the monthly payement we include the percentage!!
+    Cancel loan payment mecanism
+
+    Verify if bytes dara is that important
+    cancel problem accured because of the 0 or 1 index!!
+    take a look at oracle
+    TODOS:
+    add managers and owner
+    return loan for each borrower.
+    
+*/ 
+
+
 contract MetaPayment  {
 
     // The number of plan created
-    uint256 public plansNextId;
+    uint256 public planCount;
     uint256 public totalLoans;
     
     address[] public owners;
@@ -35,7 +49,8 @@ contract MetaPayment  {
     
     event LoanCanceled(address indexed borrower,
                         uint indexed planId,
-                        uint indexed date);
+                        uint indexed date,
+                        bool status);
 
 
     // Plan loan 
@@ -47,7 +62,7 @@ contract MetaPayment  {
         uint256 interestRate;
     }
 
-    Plan[] public plans;
+    mapping(uint => Plan) private idToPlan;
 
     // Subscription if the user pay we turn the excuted to true
     struct LoanRequest {
@@ -82,10 +97,10 @@ contract MetaPayment  {
         _;
     }
 
-    modifier PlanExists(uint planId) {
-        require(planId < plans.length, "Plan does not exist");
-        _;
-    }
+    // modifier PlanExists(uint planId) {
+    //     require(planId < plans.length, "Plan does not exist");
+    //     _;
+    // }
 
     modifier AlreadyEngaged() {
         require(!engaged[msg.sender], "You already have Loan");
@@ -109,35 +124,33 @@ contract MetaPayment  {
 
     
     // function to create a plan 
-    function createPlan(address _lender,
-                        uint256 _upfrontPayment,
+    function createPlan(uint256 _upfrontPayment,
                         uint256 _loanDuration,
                         uint256 _interestRate,
                         uint256 _monthlyPayment) external onlyOwners  {
-    plans.push(
-        Plan({
-          lender: payable(_lender),
-          upfrontPayment: _upfrontPayment,
-          loanDuration: _loanDuration,
-          interestRate: _interestRate,
-          monthlyPayment: _monthlyPayment
-        })
+
+    idToPlan[planCount] = Plan (
+        payable(msg.sender),
+        _upfrontPayment,
+        _loanDuration,
+        _interestRate,
+        _monthlyPayment
     );
+
     
-    emit PlanCreated(msg.sender, plansNextId, _upfrontPayment, _monthlyPayment, _loanDuration); 
-      plansNextId++;
+    emit PlanCreated(msg.sender, planCount, _upfrontPayment,_loanDuration, _monthlyPayment); 
+      planCount++;
     }
 
 
     // subscription for Loan + pay
     function getLoan(uint planId) external
     payable
-    PlanExists(planId)
     AlreadyEngaged()
     onlyUsers()
     {   
         // create a pointer 
-        Plan storage plan = plans[planId];
+        Plan storage plan = idToPlan[planId];
         require(msg.value >= plan.upfrontPayment, "Please send the correct upfront payment");
 
         emit PaymentSent(
@@ -164,14 +177,13 @@ contract MetaPayment  {
 
     function pay(uint256 planId) 
         external payable
-        PlanExists(planId)
         onlyUsers()
         {
         LoanRequest storage loanRequest = onGoingLoans[msg.sender][planId];
 
         require(block.timestamp > loanRequest.nextPayment, "Payement not due yet");
 
-        Plan storage plan = plans[planId];
+        Plan storage plan = idToPlan[planId];
 
         require(msg.value >= plan.monthlyPayment, "monthly payment not correct");
 
@@ -205,20 +217,18 @@ contract MetaPayment  {
     function cancelLoan(uint256 planId)
      external 
      payable
-    //  PlanExists(planId)
      onlyUsers()
-    //  onlyContract(planId)
+     onlyContract(planId)
      
     {   
-
-        LoanRequest storage loanRequest = onGoingLoans[msg.sender][planId];
-        require(
-        loanRequest.borrower != address(0), 
-        'this loan doesn't not exist'
+        onGoingLoans[msg.sender][planId] = LoanRequest(
+            payable(address(this)),
+            block.timestamp,
+            block.timestamp,
+            false
         );
-        delete onGoingLoans[msg.sender][planId];
 
-        emit LoanCanceled(msg.sender, planId, block.timestamp);
+        emit LoanCanceled(address(this), planId, block.timestamp, false);
     }
 
 
@@ -234,7 +244,7 @@ contract MetaPayment  {
     
     {
 
-    Plan storage plan = plans[_planId];
+    Plan storage plan = idToPlan[_planId];
 
     return (
         plan.lender,
@@ -245,21 +255,81 @@ contract MetaPayment  {
         );
     }
 
-    // return the ongoing loans list
-    function getOngoingLoans(uint256 planId)
-    external view returns (address borrower,
-                           uint256 start,
-                           uint256 nextPayment,
-                           bool activated) {
-    LoanRequest storage loanRequest = onGoingLoans[msg.sender][planId];
-    
-    return (
-        loanRequest.borrower,
-        loanRequest.start,
-        loanRequest.nextPayment,
-        loanRequest.activated
-    );
 
+    // get all Plans
+    function getAllPlans() public view returns(Plan[] memory) {
+        // to define the lengh 
+        uint itemCount = 0;
+        // to store the struct Plan inside the struct array Plan[]
+        uint currentIndex = 0;
+
+        // count the itemCount
+        for(uint i =0; i < planCount; i++) {
+            itemCount = itemCount + 1;
+        }
+
+        // create a new array type struct with a length of itemCount
+        Plan[] memory items = new Plan[](itemCount);
+
+        for(uint i = 0; i < planCount; i++) {
+        uint currentId = 1 + i;
+        // get a struct that has currentId
+        Plan storage currentItem = idToPlan[currentId];
+        // storage Plan in the Plan[] struct
+        items[currentIndex] = currentItem;
+        currentIndex += 1;
+        
+        } 
+        return items;
+    }
+
+
+    // Get All on going Loans
+    function getAllLoans() public view returns (LoanRequest[] memory) {
+
+        // to get the length
+        uint itemCount = 0;
+        // currentIndex to store the array inside the struct array;
+        uint currentIndex = 0;
+
+        for(uint i = 0; i < totalLoans; i++) {
+            itemCount += 1;
+        }
+
+        // create a new array from LoanRequest array
+        LoanRequest[] memory items = new LoanRequest[](itemCount);
+
+        for(uint i = 0; i < totalLoans; i++) {
+            uint currentId = i + 1;
+            // pointer 
+            LoanRequest storage currentItem = onGoingLoans[msg.sender][currentId];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
+        }
+
+        return items;
+    }
+
+
+    // return the ongoing loans list
+    function fetchMyLoan() external view returns(LoanRequest[] memory) {
+        uint256 itemCount = 0;
+        uint256 currentIndex = 0;
+
+        for(uint256 i = 0; i <totalLoans; i++) {
+            itemCount += 1;
+        }
+
+        LoanRequest[] memory items = new LoanRequest[](itemCount);
+        for(uint i = 0; i < totalLoans; i++) {
+            if(onGoingLoans[msg.sender][i + 1].borrower == msg.sender) {
+                uint256 currentId = i + 1;
+                LoanRequest memory currentItem = onGoingLoans[msg.sender][currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
+            return items;
     } 
 
 }

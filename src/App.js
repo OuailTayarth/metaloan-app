@@ -20,6 +20,9 @@ let web3 = new Web3(window.ethereum);
        : How to calculate the payment when the user take;
        : bear NFT collection calculation (could be good to learn from);
        : How to get the error from the smart contract;
+
+       var time = moment.unix(1331300839)
+       time.toString();
 */
 
 function App() {
@@ -27,9 +30,13 @@ function App() {
   const blockchain = useSelector((state) => state.blockchain);
   // const [status, setStatus] = useState("");
   // const [loading, setLoading] = useState(false);
-  const [downPayment, setDownPayment] = useState("1000000000000000");
+  const [downPayment, setDownPayment] = useState("10000000000000000");
   const [paymentMonthly, setPaymentMonthly] = useState("100000000000000");
   const [onGoingLoan, setOnGoingLoan] = useState({});
+  const [allPlans, setAllPlans] = useState([]);
+  const [allLoans, setAllLoans] = useState([]);
+
+  console.log(allPlans, allLoans);
   console.log(onGoingLoan);
   console.log(blockchain.smartContract);
 
@@ -58,13 +65,13 @@ function App() {
   /* function to create a plan from the owner wallet*/
   function createPlan() {
   
-    const upfrontPayment = web3.utils.toWei("0.001", "ether");
-    const monthlyPayment = web3.utils.toWei("0.0001", "ether");
-    const loanDuration = 30;
+    const upfrontPayment = web3.utils.toWei("0.0001", "ether");
+    const monthlyPayment = web3.utils.toWei("0.00001", "ether");
+    const loanDuration = 90;
     const interestRate = 1;
-
+    console.log(upfrontPayment,monthlyPayment,interestRate,loanDuration);
     blockchain.smartContract.methods
-    .createPlan(blockchain.account, upfrontPayment,loanDuration,interestRate,monthlyPayment)
+    .createPlan(upfrontPayment,loanDuration,interestRate,monthlyPayment)
     .send({from : blockchain.account})
     .once("error", (err)=> {
       console.log(err);
@@ -80,7 +87,6 @@ function App() {
   // add the value that the user should send
   // function to get a loan at a specific planId
   function getLoan() {
-
     blockchain.smartContract.methods
     .getLoan("0")
     .send({from : blockchain.account, value: downPayment})
@@ -128,21 +134,61 @@ function App() {
   }
 
 
-  /* Fetch On Going loans */
-   async function fetchOnGoingLoan() {
-     const data =  await blockchain.smartContract.methods.getPlan("0").call();
-     console.log(data);
+  // /* Fetch On Going loans */
+  //  async function fetchOnGoingLoan() {
+  //    const data =  await blockchain.smartContract.methods.getPlan("0").call();
+  //    console.log(data);
 
-     let item = {
-       lender : data.lender,
-       LoanDuration: data.loanDuration,
-       monthlyPayment: data.monthlyPayment,
-       upfrontPayment: data.upfrontPayment,
-       interestRate: data.interestRate
+  //    let item = {
+  //      lender : data.lender,
+  //      LoanDuration: data.loanDuration,
+  //      monthlyPayment: data.monthlyPayment,
+  //      upfrontPayment: data.upfrontPayment,
+  //      interestRate: data.interestRate
+  //     }
+  //     setOnGoingLoan(item);
+  // }
+
+
+  /* Fetch all Plans/read */
+  async function fetchAllPlan() {
+     const data = await blockchain.smartContract.methods.getAllPlans().call();
+     const fetchPlans = await Promise.all(data.map(async i => {
+      let item = {
+        loanDuration: i.loanDuration,
+        monthlyPayment: i.monthlyPayment,
+        upfrontPayment: i.upfrontPayment,
+        interestRate: i.interestRate
       }
-      setOnGoingLoan(item);
+
+      return (item);
+
+     }));
+
+     setAllPlans(fetchPlans);
+
   }
 
+
+  /*Fetch all Loans */
+  async function fetAllLoans() {
+    const data = await blockchain.smartContract.methods.getAllLoans().call();
+    console.log(data);
+
+    const allLoans = await Promise.all(data.map(async i => {
+
+        let item = {
+          borrower : i.borrower,
+          startLoan: i.start,
+          nextPayment: i.nextPayment,
+          activated: i.activated
+        }
+
+        return(item);
+    }));
+
+    setAllLoans(allLoans);
+  }
 
 
 
@@ -200,11 +246,48 @@ function App() {
           <s.Button
          onClick={(e)=> {
            e.preventDefault();
-           fetchOnGoingLoan();
+           fetchAllPlan();
          }}> 
-           fetch
+           fetchPlans
           </s.Button>
+
+          <s.Button
+         onClick={(e)=> {
+           e.preventDefault();
+           fetAllLoans();
+         }}> 
+           fetchLoans
+          </s.Button>
+
+          <>
+          {allPlans.map((plan, i)=> {
+            return (
+              <div key={i}>
+                <h1>{plan.loanDuration}</h1>
+                <h2>{plan.monthlyPayment}</h2>
+                <h2>{plan.upfrontPayment}</h2>
+                <h2>{plan.interestRate}</h2>
+              </div>
+            )
+          })}
+          </>
+
+
+          {allLoans.map((loan, i)=> {
+            return (
+              <div key={i}>
+                <h1>{loan.borrower}</h1>
+                <h2>{loan.start}</h2>
+                <h2>{loan.nextPayment}</h2>
+                <h1>{loan.activated}</h1>
+              
+              </div>
+            )
+          })}  
+
         </>
+
+       
       )}
       
     </s.Main>
