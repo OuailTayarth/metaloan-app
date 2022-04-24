@@ -7,6 +7,7 @@ import { fetchData } from "./redux/data/dataActions";
 import * as s from "../src/styles/globalStyles";
 
 import Web3 from "web3";
+import { relativeTimeRounding } from "moment";
 
 let web3 = new Web3(window.ethereum);
 
@@ -30,12 +31,14 @@ function App() {
   const blockchain = useSelector((state) => state.blockchain);
   // const [status, setStatus] = useState("");
   // const [loading, setLoading] = useState(false);
-  const [downPayment, setDownPayment] = useState("10000000000000000");
+  const [downPayment, setDownPayment] = useState("100000000000000");
   const [paymentMonthly, setPaymentMonthly] = useState("100000000000000");
   const [onGoingLoan, setOnGoingLoan] = useState({});
+
   const [allPlans, setAllPlans] = useState([]);
   const [allLoans, setAllLoans] = useState([]);
-
+  console.log(allPlans);
+  
   console.log(allPlans, allLoans);
   console.log(onGoingLoan);
   console.log(blockchain.smartContract);
@@ -64,14 +67,11 @@ function App() {
 
   /* function to create a plan from the owner wallet*/
   function createPlan() {
-  
     const upfrontPayment = web3.utils.toWei("0.0001", "ether");
     const monthlyPayment = web3.utils.toWei("0.00001", "ether");
-    const loanDuration = 90;
-    const interestRate = 1;
-    console.log(upfrontPayment,monthlyPayment,interestRate,loanDuration);
+    console.log(upfrontPayment,monthlyPayment);
     blockchain.smartContract.methods
-    .createPlan(upfrontPayment,loanDuration,interestRate,monthlyPayment)
+    .createPlan(upfrontPayment,monthlyPayment)
     .send({from : blockchain.account})
     .once("error", (err)=> {
       console.log(err);
@@ -113,7 +113,7 @@ function App() {
     })
     .then((receipt)=> {
       console.log(receipt);
-      console.log("You payment went successfully");
+      console.log("Your payment went successfully");
       dispatch(fetchData(blockchain.account));
     })
   }
@@ -134,7 +134,7 @@ function App() {
   }
 
 
-  // /* Fetch On Going loans */
+  // /* Fetch On Going plan */
   //  async function fetchOnGoingLoan() {
   //    const data =  await blockchain.smartContract.methods.getPlan("0").call();
   //    console.log(data);
@@ -151,43 +151,35 @@ function App() {
 
 
   /* Fetch all Plans/read */
-  async function fetchAllPlan() {
-     const data = await blockchain.smartContract.methods.getAllPlans().call();
-     const fetchPlans = await Promise.all(data.map(async i => {
-      let item = {
-        loanDuration: i.loanDuration,
-        monthlyPayment: i.monthlyPayment,
-        upfrontPayment: i.upfrontPayment,
-        interestRate: i.interestRate
+  async function fetchPlan() {
+     const data = await blockchain.smartContract.methods.fetchPlan("0").call();
+    console.log(data);
+
+      let items = {
+          monthlyPayment: data.monthlyPayment,
+          upfrontPayment: data.upfrontPayment
       }
 
-      return (item);
-
-     }));
-
-     setAllPlans(fetchPlans);
-
+      setAllPlans(items);
   }
 
 
   /*Fetch all Loans */
-  async function fetAllLoans() {
-    const data = await blockchain.smartContract.methods.getAllLoans().call();
-    console.log(data);
+  async function fetchMyLoan() {
+    const data = await blockchain.smartContract.methods.fetchMyLoan("0").call();
+    console.log("All loan data", data);
 
-    const allLoans = await Promise.all(data.map(async i => {
+    const status = (data.activated).toString();
 
         let item = {
-          borrower : i.borrower,
-          startLoan: i.start,
-          nextPayment: i.nextPayment,
-          activated: i.activated
+          borrower : data.borrower,
+          startLoan: data.start,
+          nextPayment: data.nextPayment,
+          activated: status
         }
+        console.log(data.activated);
 
-        return(item);
-    }));
-
-    setAllLoans(allLoans);
+    setAllLoans(item);
   }
 
 
@@ -246,7 +238,7 @@ function App() {
           <s.Button
          onClick={(e)=> {
            e.preventDefault();
-           fetchAllPlan();
+           fetchPlan();
          }}> 
            fetchPlans
           </s.Button>
@@ -254,26 +246,36 @@ function App() {
           <s.Button
          onClick={(e)=> {
            e.preventDefault();
-           fetAllLoans();
+           fetchMyLoan();
          }}> 
            fetchLoans
           </s.Button>
 
           <>
-          {allPlans.map((plan, i)=> {
+          <h1>{allPlans.upfrontPayment}</h1>
+          <h1>{allPlans.monthlyPayment}</h1>
+      
+      
+          {/* {allPlans.map((plan, i)=> {
             return (
               <div key={i}>
                 <h1>{plan.loanDuration}</h1>
                 <h2>{plan.monthlyPayment}</h2>
-                <h2>{plan.upfrontPayment}</h2>
-                <h2>{plan.interestRate}</h2>
+                <h2>30</h2>
+                <h2>1%</h2>
               </div>
             )
-          })}
+          })} */}
           </>
 
+          <h1>{allLoans.borrower}</h1>
+          <h1>{allLoans.startLoan}</h1>
+          <h1>{allLoans.nextPayment}</h1>
+          <h1>{allLoans.activated}</h1>
 
-          {allLoans.map((loan, i)=> {
+
+          
+          {/* {allLoans.map((loan, i)=> {
             return (
               <div key={i}>
                 <h1>{loan.borrower}</h1>
@@ -283,7 +285,7 @@ function App() {
               
               </div>
             )
-          })}  
+          })}   */}
 
         </>
 

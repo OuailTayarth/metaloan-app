@@ -12,6 +12,8 @@ pragma solidity ^0.8.6;
     TODOS:
     add managers and owner
     return loan for each borrower.
+    keep track of all the on going loans
+    // canceled formulate + pay formulate
     
 */ 
 
@@ -19,8 +21,9 @@ pragma solidity ^0.8.6;
 contract MetaPayment  {
 
     // The number of plan created
-    uint256 public planCount;
+    uint256 public totalPlans;
     uint256 public totalLoans;
+    uint256 public totalCanceledLoans;
     
     address[] public owners;
     mapping(address => bool) public isOwner;
@@ -29,8 +32,7 @@ contract MetaPayment  {
     event PlanCreated(address indexed creator,
                       uint256 indexed upfrontPayment,
                       uint256 indexed planIndex,
-                      uint256 monthlyPayment,
-                      uint256 loanDuration);
+                      uint256 monthlyPayment);
 
     event LoanRequestCreated(address indexed borrower,
                              uint256 indexed start,
@@ -49,17 +51,14 @@ contract MetaPayment  {
     
     event LoanCanceled(address indexed borrower,
                         uint indexed planId,
-                        uint indexed date,
-                        bool status);
+                        bool status,
+                        uint indexed date);
 
 
     // Plan loan 
     struct Plan {
-        address payable lender;
         uint256 upfrontPayment;
         uint256 monthlyPayment;
-        uint256 loanDuration;
-        uint256 interestRate;
     }
 
     mapping(uint => Plan) private idToPlan;
@@ -71,9 +70,17 @@ contract MetaPayment  {
         uint nextPayment;
         bool activated;
     }
+
+    struct RemovedLoan {
+        address payable borrower;
+        bool activated;
+        uint canceledTime;
+    }
+
+    mapping(uint => RemovedLoan) public idToRemovedLoan;
     
     // nested mapping from address to id to Subcription
-    mapping(address => mapping(uint => LoanRequest)) private onGoingLoans;
+    mapping(address => mapping(uint => LoanRequest)) private activeLoans;
 
     // only get loan once
     mapping(address => bool) public engaged;
@@ -102,13 +109,13 @@ contract MetaPayment  {
     //     _;
     // }
 
-    modifier AlreadyEngaged() {
+    modifier alreadyEngaged() {
         require(!engaged[msg.sender], "You already have Loan");
         _;
     }
 
     modifier LoanExists(uint planId) {
-        require(onGoingLoans[msg.sender][planId].borrower != address(0), "Loan does not exist");
+        require(activeLoans[msg.sender][planId].borrower != address(0), "Loan does not exist");
         _;
     }
 
@@ -117,36 +124,31 @@ contract MetaPayment  {
         _;
     }
 
-    modifier onlyContract(uint planId) {
-        require(onGoingLoans[msg.sender][planId].activated, "MetaLoan :: your loan has been canceled");
+    modifier noLoanExist(uint planId) {
+        require(activeLoans[msg.sender][planId].activated, "MetaLoan :: your loan has been canceled");
         _;
     }
 
     
     // function to create a plan 
     function createPlan(uint256 _upfrontPayment,
-                        uint256 _loanDuration,
-                        uint256 _interestRate,
                         uint256 _monthlyPayment) external onlyOwners  {
 
-    idToPlan[planCount] = Plan (
-        payable(msg.sender),
+    idToPlan[totalPlans] = Plan (
         _upfrontPayment,
-        _loanDuration,
-        _interestRate,
         _monthlyPayment
     );
 
     
-    emit PlanCreated(msg.sender, planCount, _upfrontPayment,_loanDuration, _monthlyPayment); 
-      planCount++;
+    emit PlanCreated(msg.sender, totalPlans, _upfrontPayment,_monthlyPayment); 
+      totalPlans++;
     }
 
 
     // subscription for Loan + pay
     function getLoan(uint planId) external
     payable
-    AlreadyEngaged()
+    alreadyEngaged()
     onlyUsers()
     {   
         // create a pointer 
@@ -163,7 +165,7 @@ contract MetaPayment  {
         engaged[msg.sender] = true;
 
         // subscriptions that takes the address owner to subscribe into a specific plan
-        onGoingLoans[msg.sender][planId] = LoanRequest(
+        activeLoans[msg.sender][planId] = LoanRequest(
             payable(msg.sender),
             block.timestamp,
             block.timestamp + 4 weeks,
@@ -178,11 +180,11 @@ contract MetaPayment  {
     function pay(uint256 planId) 
         external payable
         onlyUsers()
+        LoanExists(planId)
         {
-        LoanRequest storage loanRequest = onGoingLoans[msg.sender][planId];
+        LoanRequest storage loanRequest = activeLoans[msg.sender][planId];
 
         require(block.timestamp > loanRequest.nextPayment, "Payement not due yet");
-
         Plan storage plan = idToPlan[planId];
 
         require(msg.value >= plan.monthlyPayment, "monthly payment not correct");
@@ -218,28 +220,30 @@ contract MetaPayment  {
      external 
      payable
      onlyUsers()
-     onlyContract(planId)
+     noLoanExist(planId)
      
-    {   
-        onGoingLoans[msg.sender][planId] = LoanRequest(
-            payable(address(this)),
-            block.timestamp,
-            block.timestamp,
-            false
-        );
+    {
 
-        emit LoanCanceled(address(this), planId, block.timestamp, false);
+    LoanRequest storage loanRequest = activeLoans[msg.sender][planId];
+    require(loanRequest.borrower != address(0), "this loan doesn't exist");
+  
+    idToRemovedLoan[planId] = RemovedLoan(
+        payable(msg.sender),
+        false,
+        block.timestamp);
+
+        engaged[msg.sender] = false;
+        delete activeLoans[msg.sender][planId];
+        totalCanceledLoans++;
+        emit LoanCanceled(msg.sender, planId, false,block.timestamp);
     }
 
 
     // return the plan
-    function getPlan(uint256 _planId) 
+    function fetchPlan(uint256 _planId) 
     external view returns(
-        address lender,
         uint256 upfrontPayment,
-        uint256 monthlyPayment,
-        uint256 loanDuration,
-        uint256 interestRate
+        uint256 monthlyPayment
     ) 
     
     {
@@ -247,89 +251,74 @@ contract MetaPayment  {
     Plan storage plan = idToPlan[_planId];
 
     return (
-        plan.lender,
         plan.upfrontPayment,
-        plan.monthlyPayment,
-        plan.loanDuration,
-        interestRate
+        plan.monthlyPayment
         );
     }
 
+    // getLoan function 
+    function fetchMyLoan(uint256 planId) external view returns(
+            address borrower,
+            uint start,
+            uint nextPayment,
+            bool activated
+    ) {
 
-    // get all Plans
-    function getAllPlans() public view returns(Plan[] memory) {
-        // to define the lengh 
-        uint itemCount = 0;
-        // to store the struct Plan inside the struct array Plan[]
-        uint currentIndex = 0;
+           LoanRequest storage loanRequest = activeLoans[msg.sender][planId];
 
-        // count the itemCount
-        for(uint i =0; i < planCount; i++) {
-            itemCount = itemCount + 1;
-        }
-
-        // create a new array type struct with a length of itemCount
-        Plan[] memory items = new Plan[](itemCount);
-
-        for(uint i = 0; i < planCount; i++) {
-        uint currentId = 1 + i;
-        // get a struct that has currentId
-        Plan storage currentItem = idToPlan[currentId];
-        // storage Plan in the Plan[] struct
-        items[currentIndex] = currentItem;
-        currentIndex += 1;
-        
-        } 
-        return items;
+           return (
+            loanRequest.borrower,
+            loanRequest.start,
+            loanRequest.nextPayment,
+            loanRequest.activated
+           );
     }
 
 
-    // Get All on going Loans
-    function getAllLoans() public view returns (LoanRequest[] memory) {
-
-        // to get the length
-        uint itemCount = 0;
-        // currentIndex to store the array inside the struct array;
-        uint currentIndex = 0;
-
-        for(uint i = 0; i < totalLoans; i++) {
-            itemCount += 1;
-        }
-
-        // create a new array from LoanRequest array
-        LoanRequest[] memory items = new LoanRequest[](itemCount);
-
-        for(uint i = 0; i < totalLoans; i++) {
-            uint currentId = i + 1;
-            // pointer 
-            LoanRequest storage currentItem = onGoingLoans[msg.sender][currentId];
-            items[currentIndex] = currentItem;
-            currentIndex += 1;
-        }
-
-        return items;
-    }
 
 
-    // return the ongoing loans list
-    function fetchMyLoan() external view returns(LoanRequest[] memory) {
-        uint256 itemCount = 0;
-        uint256 currentIndex = 0;
 
-        for(uint256 i = 0; i <totalLoans; i++) {
-            itemCount += 1;
-        }
+    // function fetchCancelLoans() public view returns(RemovedLoan[] memory) {
 
-        LoanRequest[] memory items = new LoanRequest[](itemCount);
-        for(uint i = 0; i < totalLoans; i++) {
-            if(onGoingLoans[msg.sender][i + 1].borrower == msg.sender) {
-                uint256 currentId = i + 1;
-                LoanRequest memory currentItem = onGoingLoans[msg.sender][currentId];
-                items[currentIndex] = currentItem;
-                currentIndex += 1;
-            }
-        }
-            return items;
-    } 
+    //         // create count items;
+    //         uint256 itemCount = 0;
+    //         uint256 currentIndex = 0;
+
+
+    //         for(uint256 i =0; i < totalCanceledLoans; i++) {
+    //             itemCount +=1;
+    //         }
+
+    //         RemovedLoan[] memory items = new RemovedLoan[](itemCount);
+
+    //         for(uint256 i = 0; i < totalCanceledLoans; i++) {
+    //             uint256 currentId = i;
+    //             RemovedLoan storage currentItem = idToRemovedLoan[currentId];
+    //             items[currentIndex] = currentItem;
+    //             currentIndex += 1;
+    //         }
+    //         return items;
+    // }
+
+
 
 }
+
+/*
+
+struct RemovedLoan {
+        address payable borrower;
+        bool activated;
+        uint canceledTime;
+    }
+
+    mapping(uint => RemovedLoan) public idToRemovedLoan;
+
+*/
+// ["0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"]
+// 100000000000000000
+/*
+0x5B38Da6a701c568545dCfcB03FcB875f56beddC4
+1000000000000000000
+1000000000000000
+*/
