@@ -6,8 +6,7 @@ import UserNavbar from "../UserPages/UserNavbar/UserNavbar";
 const LaunchApp = () => {
     return (
         <>
-        <UserNavbar/>
-            <h1>Hej! Home page</h1>
+          <UserNavbar/>
         </>
     )
 }

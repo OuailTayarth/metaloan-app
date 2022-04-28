@@ -1,6 +1,6 @@
 // constants
 import Web3 from "web3";
-import MetaPayment from "../../artifacts/contracts/MetaPayment.sol/MetaPayment.json";
+import MetaPayment from "../../../src/artifacts/contracts/MetaPayment.sol/MetaPayment.json";
 // log
 import { fetchData } from "../data/dataActions";
 
