@@ -7,8 +7,6 @@ import * as s from "../src/styles/globalStyles";
 import moment from 'moment';
 import Web3 from "web3";
 
-import { Routes, Route } from "react-router-dom";
-
 
 
 let web3 = new Web3(window.ethereum);

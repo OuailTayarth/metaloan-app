@@ -1,0 +1,11 @@
+.launch-link {
+    position: absolute;
+    top: 132px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: 0.5s;
+} 

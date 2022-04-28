@@ -6,6 +6,11 @@ import { fetchData } from "./redux/data/dataActions";
 import * as s from "../src/styles/globalStyles";
 import moment from 'moment';
 import Web3 from "web3";
+import LaunchApp from "./components/LaunchApp/LaunchApp";
+import SubmitLoan from "./components/UserPages/SubmitLoan/SubmitLoan";
+import PayLoan from "./components/UserPages/PayLoan/PayLoan";
+import FetchLoan from "./components/UserPages/FetchLoan/FetchLoan";
+import FetchBorrowers from "./components/UserPages/FetchBorrowers/FetchBorrowers";
 
 
 import { Routes, Route } from "react-router-dom";
@@ -17,11 +22,13 @@ let web3 = new Web3(window.ethereum);
 
 
 /*
-  To get the tokenId I can add or initial a variable at 0 inside the smart contract 
-  instead of array.length, so I can make a call for the tokenId from the contract
   TODOS: tracking the token ID
-       : Create an nave with a router  
        : How to get the error from the smart contract;
+       : Create an nave with a router x 
+       : styles the main navbar for the website
+
+
+
 */
 
 function App() {
@@ -156,8 +163,13 @@ function App() {
         <>  
             <Navbar/>
             <Routes>
-                <Route path="/" element={<Home/>}/>
-            </Routes>
+                <Route path="launchApp" element={<LaunchApp/>}>
+                  <Route path="submitLoan" element={<SubmitLoan/>}/>
+                  <Route path="payLoan" element={<PayLoan/>}/>
+                  <Route path="fetchLoan" element={<FetchLoan/>}/>
+                  <Route path="fetchBorrowers" element={<FetchBorrowers/>}/> 
+                </Route>
+            </Routes> 
         </>
     </s.Main>
   );
