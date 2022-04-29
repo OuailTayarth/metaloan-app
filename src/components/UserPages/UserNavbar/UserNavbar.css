@@ -1,6 +1,6 @@
 .launch-link {
     position: absolute;
-    top: 132px;
+    top: 178px;
     left: 0;
     width: 100%;
     display: flex;
@@ -9,3 +9,39 @@
     z-index: 1000;
     transition: 0.5s;
 } 
+
+
+.links-Navigation {
+    position: relative;
+    display: flex;
+    transition:1s ease-out;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 10px 0px;
+    border-radius: 5px;
+}
+
+.links-Navigation li {
+    margin-left: 20px;
+    
+}
+
+.links-Navigation li a {
+    letter-spacing: 0.2px;
+    font-weight: 500;
+    color: #000;
+    font-size: 1.20rem;
+    transition: color 0.5s;    
+}
+
+
+
+.links-Navigation li a:hover {
+    color: #000;
+}
+
+
+
+a#lastChild {
+    margin-right: 20px;
+}

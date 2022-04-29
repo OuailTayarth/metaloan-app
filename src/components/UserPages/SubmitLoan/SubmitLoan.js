@@ -1,11 +1,13 @@
 import React from "react";
+import "../../UserPages/links-container.css";
 
 
 
 const SubmitLoan = ({getLoan}) => {
     return (
-        <div>
-            <button onClick={(e)=> {
+        <div className="links-container">
+            <h1>To Have your Loan you need to deposit 30% as down payment of the total amount of the Loan </h1>
+            <button className="btn" onClick={(e)=> {
                 e.preventDefault();
                 getLoan();
             }}>Submit Loan</button>

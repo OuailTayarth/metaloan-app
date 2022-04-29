@@ -3,7 +3,7 @@ import React from "react";
 const CreatePlan = ({createPlan}) => {
     return (
         <div>
-            <button onClick={(e)=> {
+            <button className="btn" onClick={(e)=> {
                 e.preventDefault();
                 createPlan();
             }}>

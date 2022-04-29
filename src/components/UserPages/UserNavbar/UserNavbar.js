@@ -7,7 +7,13 @@ const UserNavbar = ({fetchLoanData, fetchBorrowersData}) => {
     return (
         <>
         <div className="launch-link">
-             <ul className="navigation">
+             <ul className="links-Navigation">
+
+                 <li>
+                    <Link to="fetchBorrowers"
+                          onClick={()=> fetchBorrowersData()}
+                          >Borrowers</Link>
+                 </li>
 
                  <li>
                     <Link to="createPlan">Create Plan</Link>      
@@ -16,20 +22,16 @@ const UserNavbar = ({fetchLoanData, fetchBorrowersData}) => {
                  <li>
                     <Link to="submitLoan">Submit Loan</Link>      
                  </li>
-                      
-                 <li>
-                    <Link to="fetchLoan" 
-                          onClick={()=> fetchLoanData()}>
-                          Fetch Loan</Link> 
-                 </li>
  
                  <li>
                     <Link to="payLoan">Pay Loan</Link>  
                  </li>
 
                  <li>
-                    <Link to="fetchBorrowers"
-                          onClick={()=> fetchBorrowersData()}>Borrowers</Link>
+                    <Link to="fetchLoan" 
+                          onClick={()=> fetchLoanData()}
+                          id="lastChild">
+                          Fetch Loan</Link> 
                  </li>
 
              </ul>

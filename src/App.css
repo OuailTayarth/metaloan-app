@@ -91,6 +91,26 @@ li {
   list-style: none;
 }
 
+.btn {
+  padding: 11px 15px;
+  color: black;
+  background: #fff;
+  transition: background 0.5s ;
+  text-transform: uppercase;
+  cursor: pointer;
+  border:none;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: center;
+}
+
+.btn:hover {
+  background: hsl(51, 100%, 49%);
+  color: #030303;
+}
+
 .App {
   /* max-width: 1440px; */
   width: 100%;

@@ -28,6 +28,8 @@ let web3 = new Web3(window.ethereum);
        : Create a plan navbar
        : If I don't connect dispatch connect I will not be able to see the smart contract
        : I got stuck on returning all the borrowers
+       : add the animation of developer/designer/trust
+       : background animated video metaverse
 */
 
 function App() {
