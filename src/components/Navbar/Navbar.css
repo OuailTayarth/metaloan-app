@@ -61,7 +61,7 @@ header .logo span {
 }
 
 
-@media (max-width: 992px) {
+@media (max-width: 620px) {
     .navigation {
         display: none;
     }

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./UserNavbar.css";
 
-const UserNavbar = () => {
+const UserNavbar = ({fetchLoanData, fetchBorrowersData}) => {
 
     return (
         <>
@@ -18,7 +18,9 @@ const UserNavbar = () => {
                  </li>
                       
                  <li>
-                    <Link to="fetchLoan">Fetch Loan</Link> 
+                    <Link to="fetchLoan" 
+                          onClick={()=> fetchLoanData()}>
+                          Fetch Loan</Link> 
                  </li>
  
                  <li>
@@ -26,7 +28,8 @@ const UserNavbar = () => {
                  </li>
 
                  <li>
-                    <Link to="fetchBorrowers">Borrowers</Link>
+                    <Link to="fetchBorrowers"
+                          onClick={()=> fetchBorrowersData()}>Borrowers</Link>
                  </li>
 
              </ul>

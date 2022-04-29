@@ -1,7 +1,6 @@
 // constants
 import Web3 from "web3";
-import MetaPayment from "../../../src/artifacts/contracts/MetaPayment.sol/MetaPayment.json";
-// log
+import Meta from "../../artifacts/contracts/MetaPayment.sol/MetaPayment.json";
 import { fetchData } from "../data/dataActions";
 
 
@@ -49,9 +48,10 @@ export const connect = () => {
 
         if (networkId == 1337) {
           const SmartContractObj = new web3.eth.Contract(
-            MetaPayment.abi,
+            Meta.abi,
             "0x5FbDB2315678afecb367f032d93F642f64180aa3"
           );
+
           dispatch(
             connectSuccess({
               account: accounts[0],

@@ -2,10 +2,15 @@ import React from "react";
 
 
 
-const PayLoan = () => {
+const PayLoan = ({payLoan}) => {
     return (
         <div>
-            <h1>Pay Loan</h1>
+            <button onClick={(e)=> {
+                e.preventDefault();
+                payLoan();
+                }}>
+            Pay Loan
+            </button>
         </div>
     )
 }

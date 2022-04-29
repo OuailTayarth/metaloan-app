@@ -2,10 +2,13 @@ import React from "react";
 
 
 
-const SubmitLoan = () => {
+const SubmitLoan = ({getLoan}) => {
     return (
         <div>
-            <h1>Submit Loan</h1>
+            <button onClick={(e)=> {
+                e.preventDefault();
+                getLoan();
+            }}>Submit Loan</button>
         </div>
     )
 }

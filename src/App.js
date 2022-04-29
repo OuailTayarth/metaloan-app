@@ -15,8 +15,6 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import CreatePlan from "./components/CreatePlan/CreatePlan";
 
-
-
 let web3 = new Web3(window.ethereum);
 
 
@@ -27,6 +25,9 @@ let web3 = new Web3(window.ethereum);
        : Create an nave with a router  
        : How to get the error from the smart contract;
        : Smart the instance if the smart contract is not activated
+       : Create a plan navbar
+       : If I don't connect dispatch connect I will not be able to see the smart contract
+       : I got stuck on returning all the borrowers
 */
 
 function App() {
@@ -34,15 +35,15 @@ function App() {
   const blockchain = useSelector((state) => state.blockchain);
   const [downPayment, setDownPayment] = useState("100000000000000");
   const [paymentMonthly, setPaymentMonthly] = useState("100000000000000");
-
-
-  console.log(blockchain.smartContract);
-
+  const [LoanData, setLoanData] = useState([]);
+  const [BorrowersData, setBorrowersData] = useState([]);
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
     }
   }, [blockchain.smartContract, dispatch]);
+
+
 
 
   // keep the user connected on page refresh
@@ -81,37 +82,37 @@ function App() {
 
   // // add the value that the user should send
   // // function to get a loan at a specific planId
-  // function getLoan() {
-  //   blockchain.smartContract.methods
-  //   .getLoan("0")
-  //   .send({from : blockchain.account, value: downPayment})
-  //   .once("error", (err)=> {
-  //     console.log(err);
-  //     console.log("Transaction was rejected");
-  //   })
-  //   .then((receipt)=> {
-  //     console.log(receipt);
-  //     console.log("Im so dress for success!");
-  //     dispatch(fetchData(blockchain.account));
-  //   });
-  // }
+  function getLoan() {
+    blockchain.smartContract.methods
+    .getLoan("0")
+    .send({from : blockchain.account, value: downPayment})
+    .once("error", (err)=> {
+      console.log(err);
+      console.log("Transaction was rejected");
+    })
+    .then((receipt)=> {
+      console.log(receipt);
+      console.log("Im so dress for success!");
+      dispatch(fetchData(blockchain.account));
+    });
+  }
 
 
-  // // pay loan
-  // function payLoan() {
-  //   blockchain.smartContract.methods
-  //   .pay("0")
-  //   .send({from: blockchain.account, value : paymentMonthly})
-  //   .once("error", (err)=> {
-  //     console.log(err);
-  //     console.log("something went wrong");
-  //   })
-  //   .then((receipt)=> {
-  //     console.log(receipt);
-  //     console.log("Your payment went successfully");
-  //     dispatch(fetchData(blockchain.account));
-  //   })
-  // }
+  // pay loan
+  function payLoan() {
+    blockchain.smartContract.methods
+    .pay("0")
+    .send({from: blockchain.account, value : paymentMonthly})
+    .once("error", (err)=> {
+      console.log(err);
+      console.log("something went wrong");
+    })
+    .then((receipt)=> {
+      console.log(receipt);
+      console.log("Your payment went successfully");
+      dispatch(fetchData(blockchain.account));
+    })
+  }
 
 
   // /* Fetch all Plans/read */
@@ -130,39 +131,64 @@ function App() {
   
 
   // /*Fetch all Loans */
-  // async function fetchMyLoan() {
-  //   const data = await blockchain.smartContract.methods.fetchMyLoan("0").call();
-  //   console.log("All loan data", data);
+  async function fetchLoanData() {
+    const data = await blockchain.smartContract.methods.fetchMyLoan("0").call();
+    console.log("All loan data", data);
 
-  //   const status = (data.activated).toString();
-  //   let startDay = (moment.unix(data.start)).toString();
-  //   let nextPayment = (moment.unix(data.nextPayment)).toString();
+    const status = (data.activated).toString();
+    let startDay = (moment.unix(data.start)).toString();
+    let nextPayment = (moment.unix(data.nextPayment)).toString();
 
-  //       let item = {
-  //         borrower : data.borrower,
-  //         startLoan: startDay,
-  //         nextPayment: nextPayment,
-  //         activated: status
-  //       }
-  //       console.log(data.activated);
+        let item = {
+          borrower : data.borrower,
+          startLoan: startDay,
+          nextPayment: nextPayment,
+          activated: status
+        }
+        console.log(data.activated);
 
-  //   setAllLoans(item);
-  // }
+      setLoanData(item);
+  }
 
+  // fetch borrowers Data 
+  async function fetchBorrowersData () {
+    const data = blockchain.smartContract.methods.fetchAllBorrowers().call();
 
+    const items = await Promise.all(data.map( async i => {
+      // const status = (i.activated).toString();
+      // let startDay = (moment.unix(i.start)).toString();
+      // let nextPayment = (moment.unix(i.nextPayment)).toString();
+
+      let item = {
+        borrower : i.borrower,
+        startLoan: i.start,
+        nextPayment: i.nextPayment,
+        activated: i.activated
+      }  
+
+      return item;
+    }));
+
+    console.log(items);
+    setBorrowersData(items);
+  }
 
   return (
     <s.Main>
         <>  
             <Navbar/>
             <Routes>
-                <Route path="launchApp" element={<LaunchApp/>}>
-                  <Route path="submitLoan" element={<SubmitLoan/>}/>
-                  <Route path="payLoan" element={<PayLoan/>}/>
-                  <Route path="fetchLoan" element={<FetchLoan/>}/>
-                  <Route path="fetchBorrowers" element={<FetchBorrowers/>}/> 
-                  <Route path="createPlan" 
-                  element={<CreatePlan createPlan={createPlan}/>}/>
+                <Route path="launchApp" 
+                    element={<LaunchApp fetchLoanData={fetchLoanData} 
+                                        fetchBorrowersData={fetchBorrowersData}/>}>
+                    <Route path="submitLoan" 
+                    element={<SubmitLoan getLoan={getLoan} />}/>
+                    <Route path="payLoan" 
+                    element={<PayLoan payLoan={payLoan}/>}/>
+                    <Route path="fetchLoan" element={<FetchLoan LoanData={LoanData}/>}/>
+                    <Route path="fetchBorrowers" element={<FetchBorrowers/>}/> 
+                    <Route path="createPlan"
+                    element={<CreatePlan createPlan={createPlan}/>}/>
                 </Route>
             </Routes> 
         </>

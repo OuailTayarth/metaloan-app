@@ -3,10 +3,12 @@ import UserNavbar from "../UserPages/UserNavbar/UserNavbar";
 
 
 
-const LaunchApp = () => {
+const LaunchApp = ({fetchLoanData, fetchBorrowersData}) => {
     return (
         <>
-          <UserNavbar/>
+          <UserNavbar 
+          fetchLoanData={fetchLoanData}
+          fetchBorrowersData={fetchBorrowersData}/>
         </>
     )
 }
