@@ -30,6 +30,11 @@ let web3 = new Web3(window.ethereum);
        : I got stuck on returning all the borrowers
        : add the animation of developer/designer/trust
        : background animated video metaverse
+       : merging the function of NFt minter dapp with the current dapp
+       : return array of arrays and store it inside an array.
+       : convert arrays inside array to object= TODOS
+       : data.response the error cause Promise.all should be await as well as the
+       call
 */
 
 function App() {
@@ -39,6 +44,8 @@ function App() {
   const [paymentMonthly, setPaymentMonthly] = useState("100000000000000");
   const [LoanData, setLoanData] = useState([]);
   const [BorrowersData, setBorrowersData] = useState([]);
+
+
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
@@ -140,7 +147,6 @@ function App() {
     const status = (data.activated).toString();
     let startDay = (moment.unix(data.start)).toString();
     let nextPayment = (moment.unix(data.nextPayment)).toString();
-
         let item = {
           borrower : data.borrower,
           startLoan: startDay,
@@ -154,30 +160,37 @@ function App() {
 
   // fetch borrowers Data 
   async function fetchBorrowersData () {
-    const data = blockchain.smartContract.methods.fetchAllBorrowers().call();
-
-    const items = await Promise.all(data.map( async i => {
-      // const status = (i.activated).toString();
-      // let startDay = (moment.unix(i.start)).toString();
-      // let nextPayment = (moment.unix(i.nextPayment)).toString();
-
+    const data = await blockchain.smartContract.methods.fetchAllBorrowers().call();
+    
+    let items = await Promise.all(data.map(async (nested) => {
+      const status = (nested.activated).toString();
+      let startDay = (moment.unix(nested.start)).toString();
+      let nextPayment = (moment.unix(nested.nextPayment)).toString();
+      
       let item = {
-        borrower : i.borrower,
-        startLoan: i.start,
-        nextPayment: i.nextPayment,
-        activated: i.activated
-      }  
-
+        borrower : nested.borrower,
+        start: startDay,
+        nextPayment: nextPayment,
+        activated: status
+      }
+      console.log(item);
       return item;
+      
     }));
-
-    console.log(items);
     setBorrowersData(items);
   }
+
 
   return (
     <s.Main>
         <>  
+        {/* <button
+           onClick={(e)=> {
+             e.preventDefault()
+             dispatch(connect())
+           }}>
+             Connect
+           </button> */}
             <Navbar/>
             <Routes>
                 <Route path="launchApp" 
@@ -187,8 +200,10 @@ function App() {
                     element={<SubmitLoan getLoan={getLoan} />}/>
                     <Route path="payLoan" 
                     element={<PayLoan payLoan={payLoan}/>}/>
-                    <Route path="fetchLoan" element={<FetchLoan LoanData={LoanData}/>}/>
-                    <Route path="fetchBorrowers" element={<FetchBorrowers/>}/> 
+                    <Route path="fetchLoan" 
+                    element={<FetchLoan LoanData={LoanData}/>}/>
+                    <Route path="fetchBorrowers" 
+                    element={<FetchBorrowers BorrowersData = {BorrowersData}/>}/> 
                     <Route path="createPlan"
                     element={<CreatePlan createPlan={createPlan}/>}/>
                 </Route>

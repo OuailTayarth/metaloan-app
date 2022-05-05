@@ -1,17 +1,22 @@
 import React from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { connect } from "../../../redux/blockchain/blockchainActions";
 
 
-
-const FetchBorrowers = () => {
-
-    // const dispatch = useDispatch();
-    // const blockchain = useSelector((state)=> state.blockchain);
+const FetchBorrowers = ({BorrowersData}) => {
 
     return (
-        <h1>FetchBorrowers</h1>
-    )
+        <>
+            {BorrowersData.map((el, index) => {
+                return (
+                    <div key={index}>
+                        <h1>Borrower: {el.borrower}</h1>
+                        <h1>Loan Start: {el.start}</h1>
+                        <h1>Next Payment: {el.nextPayment}</h1>
+                        <h1>Loan status: {el.activated}</h1>
+                    </div>
+                )
+            })}
+        </>
+    );
 }
 
 export default FetchBorrowers;
