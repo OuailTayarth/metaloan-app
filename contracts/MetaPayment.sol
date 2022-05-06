@@ -5,7 +5,7 @@ pragma solidity 0.8.6;
 
 contract MetaPayment  {
 
-    /*Events*/ 
+    // event 
     event PlanCreated(address indexed creator,
                       uint256 indexed upfrontPayment,
                       uint256 indexed planIndex,
@@ -51,8 +51,6 @@ contract MetaPayment  {
         bool activated;
     }
 
-
-
     
     /* nested mapping from address to id to Submit Loan */ 
     mapping(address => mapping(uint => SubmitLoan)) private activeLoans;
@@ -64,7 +62,7 @@ contract MetaPayment  {
 
 
     constructor() {
-        owner = msg.sender;
+        owner = payable(msg.sender);
     }
 
 
@@ -204,25 +202,46 @@ contract MetaPayment  {
     receive() external payable {}
 
 
-    /* User can fetch it own Loan */ 
-    function fetchMyLoan(uint256 planId) external view returns(
-            address borrower,
-            uint start,
-            uint nextPayment,
-            bool activated
-    ) {
 
-           SubmitLoan storage submitLoan = activeLoans[msg.sender][planId];
+    // /* User can fetch it own Loan */ 
+    // function fetchMyLoan(uint256 planId) external view returns(
+    //         address borrower,
+    //         uint start,
+    //         uint nextPayment,
+    //         bool activated
+    // ) {
 
-           return (
-            submitLoan.borrower,
-            submitLoan.start,
-            submitLoan.nextPayment,
-            submitLoan.activated
-           );
+    //     SubmitLoan storage submitLoan = activeLoans[msg.sender][planId];
+
+    //     if(submitLoan.borrower == msg.sender) {
+    //         return (
+    //         submitLoan.borrower,
+    //         submitLoan.start,
+    //         submitLoan.nextPayment,
+    //         submitLoan.activated
+    //        );
+    //     }
+           
+    // }
+
+     /* Fetch all borrowers loans */
+    function fetchAllLoans() external view returns(SubmitLoan[] memory) {
+
+            SubmitLoan[] memory items = new SubmitLoan[](totalLoans);
+            for(uint256 i = 0; i < allBorrowers.length; i++) {
+                address currentAddress = allBorrowers[i];
+                uint256 currentId = allPlansId[i];
+                SubmitLoan storage currentLoan = activeLoans[currentAddress][currentId];
+
+                if(currentLoan.borrower == currentAddress) {
+                    items[i] = currentLoan;
+                }
+                
+            }
+
+            return items;
     }
-
-
+    
     /* Fetch all borrowers loans */
     function fetchAllBorrowers() external view returns(SubmitLoan[] memory) {
 
@@ -238,6 +257,4 @@ contract MetaPayment  {
             return items;
     }
 
-   
-    
 }

@@ -141,34 +141,36 @@ function App() {
 
   // /*Fetch all Loans */
   async function fetchLoanData() {
-    const data = await blockchain.smartContract.methods.fetchMyLoan("0").call();
+    const data = await blockchain.smartContract.methods.fetchAllLoans().call();
     console.log("All loan data", data);
 
-    const status = (data.activated).toString();
-    let startDay = (moment.unix(data.start)).toString();
-    let nextPayment = (moment.unix(data.nextPayment)).toString();
-        let item = {
-          borrower : data.borrower,
-          startLoan: startDay,
-          nextPayment: nextPayment,
-          activated: status
-        }
-        console.log(data.activated);
+  const items = await Promise.all(data.map(async (el) => {
+    const status = (el.activated).toString();
+    let startDay = (moment.unix(el.start)).toString();
+    let nextPayment = (moment.unix(el.nextPayment)).toString();
 
-      setLoanData(item);
+      let item = {
+        borrower : el.borrower,
+        startLoan: startDay,
+        nextPayment: nextPayment,
+        activated: status
+      }
+      console.log(item);
+
+      setLoanData(items);
   }
 
   // fetch borrowers Data 
   async function fetchBorrowersData () {
     const data = await blockchain.smartContract.methods.fetchAllBorrowers().call();
     
-    let items = await Promise.all(data.map(async (nested) => {
-      const status = (nested.activated).toString();
-      let startDay = (moment.unix(nested.start)).toString();
-      let nextPayment = (moment.unix(nested.nextPayment)).toString();
+    let items = await Promise.all(data.map(async (el) => {
+      const status = (el.activated).toString();
+      let startDay = (moment.unix(el.start)).toString();
+      let nextPayment = (moment.unix(el.nextPayment)).toString();
       
       let item = {
-        borrower : nested.borrower,
+        borrower : el.borrower,
         start: startDay,
         nextPayment: nextPayment,
         activated: status
