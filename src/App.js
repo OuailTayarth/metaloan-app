@@ -14,8 +14,11 @@ import FetchBorrowers from "./components/UserPages/FetchBorrowers/FetchBorrowers
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import CreatePlan from "./components/CreatePlan/CreatePlan";
+import HeroSection from "./components/HeroSection/HeroSection";
 
 let web3 = new Web3(window.ethereum);
+
+
 
 
 /*
@@ -141,24 +144,27 @@ function App() {
 
   // /*Fetch all Loans */
   async function fetchLoanData() {
-    const data = await blockchain.smartContract.methods.fetchAllLoans().call();
-    console.log("All loan data", data);
+    const account = await blockchain.account;
+    console.log(account);
+    const data = await blockchain.smartContract.methods.getLoan(account,"0").call();
+    console.log(data);
 
-  const items = await Promise.all(data.map(async (el) => {
-    const status = (el.activated).toString();
-    let startDay = (moment.unix(el.start)).toString();
-    let nextPayment = (moment.unix(el.nextPayment)).toString();
+    const status = (data.activated).toString();
+    let startDay = (moment.unix(data.start)).toString();
+    let nextPayment = (moment.unix(data.nextPayment)).toString();
 
       let item = {
-        borrower : el.borrower,
+        borrower : data.borrower,
         startLoan: startDay,
         nextPayment: nextPayment,
         activated: status
       }
-      console.log(item);
 
-      setLoanData(items);
+      setLoanData(item);
   }
+
+
+
 
   // fetch borrowers Data 
   async function fetchBorrowersData () {
@@ -194,6 +200,7 @@ function App() {
              Connect
            </button> */}
             <Navbar/>
+            <HeroSection/>
             <Routes>
                 <Route path="launchApp" 
                     element={<LaunchApp fetchLoanData={fetchLoanData} 

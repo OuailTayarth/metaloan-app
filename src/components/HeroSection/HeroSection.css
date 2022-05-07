@@ -1,0 +1,56 @@
+.content {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content .textBox {
+    position: relative;
+    max-width: 500px;
+    margin-left: 50px;
+}
+
+.content .textBox h2 {
+    color: #fff;
+    font-size: 5em;
+    line-height: 1em;
+}
+
+.content .textBox p {
+    font-size: 1.2em;
+    padding-bottom: 20px;
+    line-height: 20px;
+}
+
+.content .imgBox {
+    width: 600px;
+    display: flex;
+    justify-content: flex-end;
+    /* padding-right: 50px; */
+}
+
+.content .imgBox img {
+    max-width: 661px;
+}
+
+
+.content .play{
+    position: relative;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.content .play img {
+    max-width: 45px;
+    margin-right: 10px;
+    cursor: pointer;
+}

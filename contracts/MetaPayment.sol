@@ -185,7 +185,7 @@ contract MetaPayment  {
 
 
     /* Withraw money from the contract to the lender*/
-    function withdraw (uint256 _amount) payable external
+    function withdraw (uint256 _amount) external payable
     onlyOwner() 
     onlyUsers() {
         require(_amount > 0, "_amount connot be 0");
@@ -197,51 +197,14 @@ contract MetaPayment  {
         cancelLoanTime = !cancelLoanTime;
     }
 
-
     /* receive eth in the contract */
     receive() external payable {}
 
-
-
-    // /* User can fetch it own Loan */ 
-    // function fetchMyLoan(uint256 planId) external view returns(
-    //         address borrower,
-    //         uint start,
-    //         uint nextPayment,
-    //         bool activated
-    // ) {
-
-    //     SubmitLoan storage submitLoan = activeLoans[msg.sender][planId];
-
-    //     if(submitLoan.borrower == msg.sender) {
-    //         return (
-    //         submitLoan.borrower,
-    //         submitLoan.start,
-    //         submitLoan.nextPayment,
-    //         submitLoan.activated
-    //        );
-    //     }
-           
-    // }
-
-     /* Fetch all borrowers loans */
-    function fetchAllLoans() external view returns(SubmitLoan[] memory) {
-
-            SubmitLoan[] memory items = new SubmitLoan[](totalLoans);
-            for(uint256 i = 0; i < allBorrowers.length; i++) {
-                address currentAddress = allBorrowers[i];
-                uint256 currentId = allPlansId[i];
-                SubmitLoan storage currentLoan = activeLoans[currentAddress][currentId];
-
-                if(currentLoan.borrower == currentAddress) {
-                    items[i] = currentLoan;
-                }
-                
-            }
-
-            return items;
+    // fetch user accounts
+    function getLoan(address user, uint256 planId) external view returns(SubmitLoan memory) {
+        return activeLoans[user][planId];
     }
-    
+
     /* Fetch all borrowers loans */
     function fetchAllBorrowers() external view returns(SubmitLoan[] memory) {
 
@@ -256,5 +219,6 @@ contract MetaPayment  {
 
             return items;
     }
+
 
 }
