@@ -15,6 +15,9 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import CreatePlan from "./components/CreatePlan/CreatePlan";
 import HeroSection from "./components/HeroSection/HeroSection";
+import About from "./components/About/About";
+import Testimonials from "./components/Testimonials/Testimonials";
+import Footer from "./components/Footer/Footer";
 
 let web3 = new Web3(window.ethereum);
 
@@ -99,6 +102,8 @@ function App() {
     .getLoan("0")
     .send({from : blockchain.account, value: downPayment})
     .once("error", (err)=> {
+      let error = err.toString();
+      console.log(error);
       console.log(err);
       console.log("Transaction was rejected");
     })
@@ -126,21 +131,6 @@ function App() {
     })
   }
 
-
-  // /* Fetch all Plans/read */
-  // async function fetchPlan() {
-  //    const data = await blockchain.smartContract.methods.fetchPlan("0").call();
-  //   console.log(data);
-
-  //     let items = {
-  //         monthlyPayment: data.monthlyPayment,
-  //         upfrontPayment: data.upfrontPayment
-  //     }
-
-  //     setAllPlans(items);
-  // }
-
-  
 
   // /*Fetch all Loans */
   async function fetchLoanData() {
@@ -200,7 +190,10 @@ function App() {
              Connect
            </button> */}
             <Navbar/>
-            <HeroSection/>
+            {/* <HeroSection/>
+            <About/>
+            <Testimonials/>
+            <Footer/> */}
             <Routes>
                 <Route path="launchApp" 
                     element={<LaunchApp fetchLoanData={fetchLoanData} 

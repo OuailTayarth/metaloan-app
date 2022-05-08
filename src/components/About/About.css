@@ -1,43 +1,43 @@
-.content {
+.about-content {
     position: relative;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 50px 0px;
 }
 
-.content .textBox {
+.about-content .textBox {
     position: relative;
-    max-width: 500px;
-    margin-left: 50px;
+    max-width: 550px;
+    margin-right: 60px;
 }
 
-.content .textBox h2 {
+.about-content .textBox h2 {
     color: #fff;
     font-size: 5em;
     line-height: 1em;
-    margin-top: 20px;
 }
 
-.content .textBox p {
+.about-content .textBox p {
     font-size: 1.2em;
     padding-bottom: 20px;
     line-height: 20px;
 }
 
-.content .imgBox {
+.about-content .imgBox {
     width: 600px;
     display: flex;
     justify-content: flex-end;
     /* padding-right: 50px; */
 }
 
-.content .imgBox img {
+.about-content .imgBox img {
     max-width: 662px;
 }
 
 
-.content .play{
+.about-content .play{
     position: relative;
     display: inline-flex;
     justify-content: flex-start;
@@ -50,7 +50,7 @@
     font-size: 1em;
 }
 
-.content .play img {
+.about-content .play img {
     max-width: 45px;
     margin-right: 10px;
     cursor: pointer;

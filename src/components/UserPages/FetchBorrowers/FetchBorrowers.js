@@ -5,6 +5,8 @@ const FetchBorrowers = ({BorrowersData}) => {
 
     return (
         <>
+        {BorrowersData.length > 0 ? (
+            <>
             {BorrowersData.map((el, index) => {
                 return (
                     <div key={index}>
@@ -15,6 +17,11 @@ const FetchBorrowers = ({BorrowersData}) => {
                     </div>
                 )
             })}
+            </>
+            )
+        : (
+            <h1> No Borrowers exist yet...</h1>
+        )} 
         </>
     );
 }

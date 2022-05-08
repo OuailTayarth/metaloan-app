@@ -1,0 +1,91 @@
+.testimonials {
+    text-align: center;
+    padding: 5rem 0rem;
+}
+
+.top-title {
+    margin: 2rem 0rem 1rem 0rem;
+}
+
+.top-title h1 {
+    font-size: 1.30rem;
+    color: #fff;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.testimonials-container {
+    width: 95vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
+
+}
+
+
+.person {
+    margin: 2rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+
+
+.person-img {
+    position: relative;
+    display: block;
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    margin-bottom: 4rem;
+    border-radius: 50%;
+}
+
+.person-img img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.text {
+    font-size: 1.10rem;
+    margin-bottom: 3.5rem;
+    letter-spacing: 1px;
+    line-height: 25px;
+}
+
+.info h1 {
+    letter-spacing: 1px;
+    margin-bottom: 0.50rem;
+    color: hsl(198, 62%, 26%);
+    font-weight: 900;
+}
+
+
+.info h5 {
+   font-weight: 500;
+   font-size: 1rem;
+}
+
+@media (max-width: 992px) {
+    .testimonials-container {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery .gallery-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+}
+
+@media (max-width: 767px) {
+    
+    
+    
+}
+
+
+
