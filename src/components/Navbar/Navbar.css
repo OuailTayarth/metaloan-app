@@ -7,7 +7,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 35px 50px;
-    z-index: 1000;
+    z-index: 10000;
     transition: 0.5s; 
 }
 
@@ -42,28 +42,33 @@ header .logo span {
 
 
 .navigation li a:hover {
-    color: hsl(51, 100%, 49%);
+    color: rgb(42, 48, 57);
 }
 
 
 
-#contact {
-    padding: 11px 15px;
-    color: black;
-    background: #fff;
-    border-radius: 34px;
-    transition: background 0.5s ;
-    text-transform: uppercase;
-    font-size: 0.90rem;
+#connect {
+  padding: 11px 10px;
+  color: black;
+  background: #fff;
+  transition: background 0.5s ;
+  text-transform: uppercase;
+  cursor: pointer;
+  border:none;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: center;
 }
 
-#contact:hover {
-    background: hsl(51, 100%, 49%);
+#connect:hover {
+    background: rgb(42, 48, 57);
     color: #fff;
 }
 
 
-@media (max-width: 620px) {
+@media (max-width: 991px) {
     .navigation {
         display: none;
     }
@@ -75,14 +80,16 @@ header .logo span {
     .toggle-menu {
         position: relative;
         background-image: url(../../pictures/icon-hamburger.svg);
-        font-size: 5rem;
+        font-size: 4rem;
         height: 30px;
         width: 40px;
         background-size: 32px;
         background-repeat: no-repeat;
         background-position: center;
         cursor: pointer;
+        z-index: 1000;
     }
+
 
     .navigation.active {
         position: fixed;
@@ -90,43 +97,37 @@ header .logo span {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: #fff;
-        width: 80%;
-        height: 49%;
-        top: 115px;
-        left: 93px;
-        /* transition:1s ease-out; */
+        background: rgba(0, 0,0, 0.95);
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        transition:1s ease-out;
     }
 
+   
+
     .navigation li a {
-        color: hsl(198, 62%, 26%);
+        color: #fff;
     }
 
     .navigation li {
-        margin-bottom: 2.6rem;
+        margin-bottom: 2rem;
+        margin-left: 0;
     }
 
-
-    #contact {
-        padding: 14px 19px;
-        color: black;
-        background: hsl(51, 100%, 49%);
-        border-radius: 34px;
-        text-transform: uppercase;
-        font-size: 1.05rem;
-        transition: color 0.5s;
-    }
-    
-    #contact:hover {
-        color: #fff;
-    }
-    
 }
 
-@media (max-width: 767px) {
+@media (max-width: 485px) {
+    header {
+        padding: 35px 26px;
+    }
+}
+
+/* @media (max-width: 767px) {
     .navigation.active {
         width: 80%;
         left: 40px;
         top: 90px;
     }
-}
+} */

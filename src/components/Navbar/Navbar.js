@@ -34,17 +34,15 @@ const Navbar = () => {
                 <li>
                     <Link to="/launchApp" onClick={closeMobileMenu}>Launch App</Link>     
                 </li>
-
+                
                 <li>
                     <button className='btn'
+                            id="connect"
                             onClick={(e)=> {
                                 e.preventDefault()
                                 dispatch(connect())
-                            }}>Connect Wallet</button>     
-                </li>
-                
-                 
-                                
+                            }}>Connect Wallet</button>
+                </li>               
             </ul>
        </header>
     )

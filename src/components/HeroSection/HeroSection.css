@@ -82,3 +82,28 @@
 .content .btn:hover {
     transform: translateY(-6%);
 }
+
+
+@media (max-width: 485px) {
+    .content .textBox h4 {
+        font-size: 0.7em;
+    }
+
+    .content .textBox h2 {
+        font-size: 3.8em;
+    }
+
+    .content .textBox p {
+        font-size: 1em;
+    }
+    
+    .content .btn {
+        height: 36px;
+        width: 107px;
+        font-size: 12px;
+    }
+
+    .content .textBox {
+        margin-left: 30px;
+    }
+}

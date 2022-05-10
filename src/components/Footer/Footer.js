@@ -35,10 +35,6 @@ const Footer = () => {
                     </li>
 
                     <li>
-                        <Link to="/" className="icon"> <FaPinterest/> </Link>
-                    </li>
-
-                    <li>
                         <Link to="/" className="icon"> <AiOutlineInstagram/> </Link>
                     </li>
                 </ul>
