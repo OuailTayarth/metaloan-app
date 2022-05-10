@@ -11,8 +11,9 @@ const About = () => {
             </div>
 
             <div className="textBox">
-                <h2>About</h2>
+                <h2>About Us</h2>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea maxime fugit labore corporis eligendi rerum optio impedit quos, non sunt eius, atque sequi consectetur nostrum, similique perferendis repellendus ducimus porro!</p>
+                <button className='btn'>Get A Loan</button>
             </div>
         </div>
 )

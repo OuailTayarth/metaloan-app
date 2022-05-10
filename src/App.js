@@ -41,6 +41,7 @@ let web3 = new Web3(window.ethereum);
        : convert arrays inside array to object= TODOS
        : data.response the error cause Promise.all should be await as well as the
        call
+       make payment input;
 */
 
 function App() {
@@ -190,10 +191,10 @@ function App() {
              Connect
            </button> */}
             <Navbar/>
-            {/* <HeroSection/>
+            <HeroSection/>
             <About/>
             <Testimonials/>
-            <Footer/> */}
+            <Footer/>
             <Routes>
                 <Route path="launchApp" 
                     element={<LaunchApp fetchLoanData={fetchLoanData} 

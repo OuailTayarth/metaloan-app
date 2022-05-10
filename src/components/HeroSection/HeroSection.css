@@ -16,13 +16,23 @@
     color: #fff;
     font-size: 5em;
     line-height: 1em;
+    margin-top: 25px;
+}
+
+.content .textBox h4 {
+    color:#7e81dc ;
+    font-size: 1em;
+    line-height: 1em;
     margin-top: 20px;
+    letter-spacing: 0.5px;
 }
 
 .content .textBox p {
-    font-size: 1.2em;
+    font-size: 1.1em;
     padding-bottom: 20px;
     line-height: 20px;
+    color: #a4a9ac;
+    font-weight: 400;
 }
 
 .content .imgBox {
@@ -54,4 +64,21 @@
     max-width: 45px;
     margin-right: 10px;
     cursor: pointer;
+}
+
+.content .btn {
+    height: 40px;
+    width: 118px;
+    background-color: #7e81dc;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.content .btn:hover {
+    transform: translateY(-6%);
 }
