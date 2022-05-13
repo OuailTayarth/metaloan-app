@@ -1,0 +1,121 @@
+.contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #000;
+    color: #fff;
+    padding-top: 20px;
+    width: 100%;
+    
+}
+
+.contacts .title {
+    text-align: center;
+    margin: 40px 0 40px;
+}
+
+.contacts .title h2 {
+    font-size: 3em;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.contacts .title p {
+    font-size: 1.5em;
+    font-size: 500;
+    letter-spacing: 0.5px;
+    padding-top: 10px;
+}
+
+.contacts .book-form {
+    position: relative;
+    padding: 0px 60px 60px 60px;
+    display: inline-block;
+    text-align: center;
+}
+
+.contacts .book-form .inputBox {
+    display: flex;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.contacts .book-form .inputBox input,
+.contacts .book-form .inputBox textarea {
+    padding: 10px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 400;
+    color:#111;
+    outline: none;
+    font-family: inherit;
+    border-radius: 5px;
+    border: none;
+    
+}
+
+.contacts .book-form .inputBox #uploadFile {
+    color: #fff;
+}
+
+
+.contacts .book-form .inputBox input[type = "submit"] {
+    display: inline-block;
+    background:#7e81dc;
+    color: #000;
+    border: none;
+    height: 40px;
+    font-weight: 700;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 5px;   
+}
+
+
+
+.contacts .book-form .inputBox input[type = "submit"]:hover {
+    background:#383dda;
+}
+
+
+@media screen and (min-width: 576px) {
+    .contacts {
+      width: 70%;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .contacts {
+      width: 55%;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .contacts {
+      width: 45%;
+    }
+ 
+  }
+
+  @media screen and (min-width: 1200px) {
+    .contacts {
+      width: 35%;
+    }
+
+  }
+
+  @media screen and (max-width: 420px) {
+    .contacts .title p {
+        font-size: 1.3em;
+    }
+  }

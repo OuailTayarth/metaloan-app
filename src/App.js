@@ -18,6 +18,7 @@ import HeroSection from "./components/HeroSection/HeroSection";
 import About from "./components/About/About";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
+import ContactForm from "./components/ContactForm/ContactForm";
 
 let web3 = new Web3(window.ethereum);
 
@@ -194,6 +195,7 @@ function App() {
             <HeroSection/>
             <About/>
             <Testimonials/>
+            <ContactForm/>
             <Footer/>
             <Routes>
                 <Route path="launchApp" 

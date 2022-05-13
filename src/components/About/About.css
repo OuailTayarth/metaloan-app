@@ -10,7 +10,8 @@
 .about-content .textBox {
     position: relative;
     max-width: 550px;
-    margin-right: 60px;
+    margin: 0px 100px 0px 20px;
+    
 }
 
 .about-content .textBox h2 {
@@ -73,4 +74,59 @@
 
 .about-content .btn:hover {
     transform: translateY(-5%);
+}
+   
+
+
+@media (max-width:991px) {
+    .about-content {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        padding: 90px 0px;
+        flex-direction: column-reverse;
+    }
+
+    .about-content .imgBox {
+        height: 350px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+    }
+
+    .about-content .imgBox img {
+        max-width: 100%;
+    }
+
+    .about-content .textBox {
+        margin-left: 50px;
+    }
+}
+
+
+@media (max-width: 485px) {
+    .about-content .textBox h4 {
+        font-size: 0.7em;
+    }
+
+    .about-content .textBox h2 {
+        font-size: 3.8em;
+    }
+
+    .about-content .textBox p {
+        font-size: 1em;
+    }
+    
+    .about-content .btn {
+        height: 36px;
+        width: 107px;
+        font-size: 12px;
+    }
+
+    .about-content .textBox {
+        margin-left: 30px;
+    }
 }
