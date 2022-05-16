@@ -104,6 +104,7 @@ li {
   font-weight: 600;
   font-family: inherit;
   text-align: center;
+  letter-spacing: 0.3px;
 }
 
 .btn:hover {

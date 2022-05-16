@@ -46,6 +46,10 @@
     max-width: 662px;
 }
 
+.button-container #btn-left {
+    margin-right: 10px;
+}
+
 
 .content .play{
     position: relative;

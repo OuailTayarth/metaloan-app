@@ -1,7 +1,7 @@
 import React,{useState} from 'react'; 
 import { Link } from 'react-router-dom';
 import { connect } from "../../redux/blockchain/blockchainActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import './Navbar.css';
 
 const Navbar = () => {
@@ -24,15 +24,19 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                   <Link to="/" onClick={closeMobileMenu}>About</Link> 
+                   <Link to="/about" onClick={closeMobileMenu}>About</Link> 
                 </li>
 
                 <li>
-                    <Link to="/" onClick={closeMobileMenu}>Testimonials</Link> 
+                    <Link to="/testimonials" onClick={closeMobileMenu}>Testimonials</Link> 
                 </li>
 
                 <li>
-                    <Link to="/launchApp" onClick={closeMobileMenu}>Launch App</Link>     
+                    <Link to="/contactUs" onClick={closeMobileMenu}>Contact</Link>     
+                </li>
+
+                <li>
+                    <Link to="/launchApp" id="connect" onClick={closeMobileMenu}>Launch App</Link>     
                 </li>
                 
                 <li>
@@ -49,3 +53,6 @@ const Navbar = () => {
 }
 
 export default Navbar;
+
+
+

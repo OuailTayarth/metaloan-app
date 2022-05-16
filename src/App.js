@@ -11,7 +11,7 @@ import SubmitLoan from "./components/UserPages/SubmitLoan/SubmitLoan";
 import PayLoan from "./components/UserPages/PayLoan/PayLoan";
 import FetchLoan from "./components/UserPages/FetchLoan/FetchLoan";
 import FetchBorrowers from "./components/UserPages/FetchBorrowers/FetchBorrowers";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import CreatePlan from "./components/CreatePlan/CreatePlan";
 import HeroSection from "./components/HeroSection/HeroSection";
@@ -47,6 +47,7 @@ let web3 = new Web3(window.ethereum);
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const blockchain = useSelector((state) => state.blockchain);
   const [downPayment, setDownPayment] = useState("100000000000000");
   const [paymentMonthly, setPaymentMonthly] = useState("100000000000000");
@@ -59,6 +60,11 @@ function App() {
       dispatch(fetchData(blockchain.account));
     }
   }, [blockchain.smartContract, dispatch]);
+
+
+  useEffect(()=> {
+    navigate("/", {replace: true});
+  },[]);
 
 
 
@@ -192,18 +198,14 @@ function App() {
              Connect
            </button> */}
             <Navbar/>
-            <HeroSection/>
-            <About/>
-            <Testimonials/>
-            <ContactForm/>
-            <Footer/>
             <Routes>
-                <Route path="launchApp" 
+                <Route path="/" element={<HeroSection/>}/>
+                <Route path="/launchApp" 
                     element={<LaunchApp fetchLoanData={fetchLoanData} 
                                         fetchBorrowersData={fetchBorrowersData}/>}>
                     <Route path="submitLoan" 
                     element={<SubmitLoan getLoan={getLoan} />}/>
-                    <Route path="payLoan" 
+                    <Route path="payLoan"
                     element={<PayLoan payLoan={payLoan}/>}/>
                     <Route path="fetchLoan" 
                     element={<FetchLoan LoanData={LoanData}/>}/>
@@ -212,7 +214,11 @@ function App() {
                     <Route path="createPlan"
                     element={<CreatePlan createPlan={createPlan}/>}/>
                 </Route>
-            </Routes> 
+            </Routes>
+            <About/>
+            <Testimonials/>
+            <ContactForm/>
+            <Footer/>
         </>
     </s.Main>
     
@@ -331,3 +337,7 @@ export default App;
       // )}
       
     // </s.Main> */}
+
+
+
+    
