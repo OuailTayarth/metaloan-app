@@ -108,8 +108,8 @@ li {
 }
 
 .btn:hover {
-  background: hsl(51, 100%, 49%);
-  color: #030303;
+  background: rgb(42, 48, 57);
+  color: #fff;
 }
 
 .App {

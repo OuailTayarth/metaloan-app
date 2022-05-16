@@ -14,13 +14,8 @@ const Footer = () => {
 
                 <ul className="navigation">
                     <li>
-                        <Link to="/">Home</Link>
+                        <Link to="/">MetaLoan</Link>
                     </li>
-
-                    <li>
-                        <Link to="/">Launch App</Link>
-                    </li>
-
                 </ul>
                </div>
 

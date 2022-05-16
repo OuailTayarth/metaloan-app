@@ -1,0 +1,60 @@
+.submit-container {
+    text-align: center;
+}
+
+.submit-container h1 {
+    max-width: 472px;
+    padding: 0px 20px;
+    font-size: 1.2rem;
+    padding-bottom: 17px;
+    line-height: 25px;
+    font-weight: 400;
+}
+
+.submit-container h4 {
+    max-width: 472px;
+    font-size: 1.1rem;
+    padding-bottom: 17px;
+    line-height: 25px;
+    font-weight: 400;
+}
+
+.count-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 20px 0px;
+}
+
+button#count.btn {
+    width: 40px;
+    height: 37px;
+    font-size: 1.3rem;
+    padding-top: 8px;
+}
+
+p#count.btn {
+    width: 40px;
+    height: 37px;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 10px;
+}
+
+
+#launchApp-btn {
+    height: 40px;
+    width: 150px;
+    background-color: #7e81dc;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    font-weight: 700;
+    font-size: 13px;
+        
+}
+
