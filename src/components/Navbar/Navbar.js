@@ -36,7 +36,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                    <Link to="/launchApp" id="connect" onClick={closeMobileMenu}>Launch App</Link>     
+                    <Link to="/launchApp/fetchBorrowers" id="connect" onClick={closeMobileMenu}>Launch App</Link>     
                 </li>
                 
                 <li>

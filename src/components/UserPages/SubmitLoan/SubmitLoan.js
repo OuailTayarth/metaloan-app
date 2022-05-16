@@ -1,21 +1,55 @@
-import React from "react";
+import React, {useState} from "react";
 import "../../UserPages/links-container.css";
 import "./SubmitLoan.css";
 
 
 
 const SubmitLoan = ({getLoan}) => {
+
+    const [LoanId, setLoanId] = useState(1);
+    const [activePayment, setActivePayment] = useState(false);
+
+
+    // Increment Loan Id
+    function incrementLoanId() {
+        let newLoanId = LoanId + 1;
+        if(newLoanId > 100) {
+            newLoanId = 100;
+        }
+        setLoanId(newLoanId);
+    }
+
+    // Decrement Loan Id
+    function decrementLoanId() {
+        let newLoanId = LoanId + 1;
+        if(newLoanId > 1) {
+            newLoanId = 1;
+        }
+        setLoanId(newLoanId);
+    }
+
     return (
         <div className="submit-container">
             <h1>To Have your Loan accepted  you need to deposit 30% as down payment of the total amount of the Loan </h1>
 
             <div className="count-buttons">
                 <button 
-                    className="btn" id="count">-</button>
-                    <p className="btn" id="count">1</p>
-                    <button className="btn" id="count">+</button>
+                        className="btn" 
+                        id="count"
+                        disabled={activePayment ? 1 : 0}
+                        onClick={()=> {
+                        decrementLoanId();
+                    }}>-</button>
+                    <p className="btn" id="count">{LoanId}</p>
+                    <button 
+                        className="btn" 
+                        id="count"
+                        disabled={activePayment ? 1 : 0}
+                        onClick={()=> {
+                        incrementLoanId();
+                    }}>+</button>
             </div>
-            <h4>Make sure to select the number of your loan offer your pay</h4>
+            <h4>Make sure to select the right number of your loan offer before your pay</h4>
 
                     <button className="btn"
                         id="launchApp-btn"

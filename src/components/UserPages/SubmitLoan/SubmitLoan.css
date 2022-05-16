@@ -54,7 +54,10 @@ p#count.btn {
     font-weight: 600;
     transition: all 0.3s ease-in-out;
     font-weight: 700;
-    font-size: 13px;
-        
+    font-size: 13px; 
+}
+
+#launchApp-btn:hover {
+    background-color: #383dda;
 }
 
