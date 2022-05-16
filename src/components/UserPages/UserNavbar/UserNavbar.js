@@ -15,9 +15,9 @@ const UserNavbar = ({fetchLoanData, fetchBorrowersData}) => {
                           >Borrowers</Link>
                  </li>
 
-                 <li>
+                 {/* <li>
                     <Link to="createPlan">Create Plan</Link>      
-                 </li>
+                 </li> */}
                  
                  <li>
                     <Link to="submitLoan">Submit Loan</Link>      
@@ -31,7 +31,7 @@ const UserNavbar = ({fetchLoanData, fetchBorrowersData}) => {
                     <Link to="fetchLoan" 
                           onClick={()=> fetchLoanData()}
                           id="lastChild">
-                          Fetch Loan</Link> 
+                          MyLoan</Link> 
                  </li>
 
              </ul>
