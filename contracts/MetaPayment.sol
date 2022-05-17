@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
+import "hardhat/console.sol";
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
-
-contract MetaPayment  {
+contract MetaPayment {
 
     // event 
     event PlanCreated(address indexed creator,
@@ -33,15 +34,19 @@ contract MetaPayment  {
     address public owner;
     address[] public allBorrowers;
     uint[] public allPlansId; 
+    IERC20 public USDCToken;
 
 
     // Plan loan 
     struct Plan {
+        address lender;
+        address tokenPayment;
         uint256 upfrontPayment;
         uint256 monthlyPayment;
     }
 
-    mapping(uint => Plan) private idToPlan;
+    mapping(uint => Plan) public idToPlan;
+    mapping(address => uint256) public payementTracker;
 
     // Subscription if the user pay we turn the excuted to true
     struct SubmitLoan {
@@ -51,7 +56,6 @@ contract MetaPayment  {
         bool activated;
     }
 
-    
     /* nested mapping from address to id to Submit Loan */ 
     mapping(address => mapping(uint => SubmitLoan)) private activeLoans;
 
@@ -89,10 +93,14 @@ contract MetaPayment  {
 
 
     /* The owner can create differents Plans*/  
-    function createPlan(uint256 _upfrontPayment,
+    function createPlan(address _lender,
+                        address _tokenPayment,
+                        uint256 _upfrontPayment,
                         uint256 _monthlyPayment) external onlyOwner  {
 
     idToPlan[totalPlans] = Plan (
+        payable(_lender),
+        _tokenPayment,
         _upfrontPayment,
         _monthlyPayment
     );
@@ -107,15 +115,15 @@ contract MetaPayment  {
     function getLoan(uint planId) external
     payable
     alreadyEngaged()
-    onlyUsers()
     {   
-        
+        IERC20 tokenPayment = IERC20(idToPlan[planId].tokenPayment);
         Plan storage plan = idToPlan[planId];
-        require(msg.value >= plan.upfrontPayment, "MetaLoan :: Please send the correct upfront payment");
+
+        tokenPayment.transferFrom(msg.sender, plan.lender, plan.upfrontPayment);
 
         emit PaymentSent(
             payable(msg.sender),
-            payable(address(this)),
+            payable(plan.lender),
             plan.upfrontPayment,
             planId,
             block.timestamp);
@@ -132,7 +140,7 @@ contract MetaPayment  {
 
         allBorrowers.push(msg.sender);
         allPlansId.push(planId); 
-
+        payementTracker[msg.sender] += plan.upfrontPayment;
         emit LoanCreated(msg.sender, planId, block.timestamp, true);
         totalLoans++;
     }
@@ -141,22 +149,25 @@ contract MetaPayment  {
     /* Pay the loan every Month*/
     function pay(uint256 planId) 
         external payable
-        onlyUsers()
         LoanExists(planId)
         {
         SubmitLoan storage submitLoan = activeLoans[msg.sender][planId];
 
         require(block.timestamp > submitLoan.nextPayment, "MetaLoan :: Payement not due yet");
+
+        IERC20 tokenPayment = IERC20(idToPlan[planId].tokenPayment);
         Plan storage plan = idToPlan[planId];
 
-        require(msg.value >= plan.monthlyPayment, "MetaLoan :: monthly payment not correct");
+        // check how the recommended method
+        tokenPayment.transferFrom(msg.sender, plan.lender, plan.monthlyPayment);
 
         emit PaymentSent(
             payable(msg.sender),
-            payable(address(this)),
+            payable(plan.lender),
             plan.monthlyPayment,
             planId,
             block.timestamp);
+        payementTracker[msg.sender] += plan.monthlyPayment; 
         totalPaymentsPerWallet[msg.sender] += 1; 
         submitLoan.nextPayment = submitLoan.nextPayment +  1 minutes;
 
@@ -172,24 +183,17 @@ contract MetaPayment  {
      
     {   
         require(cancelLoanTime, "MetaLoan :: Cancel loan is not activated yet");
+        payementTracker[msg.sender] = 0;
         delete activeLoans[msg.sender][planId];
         emit LoanCanceled(msg.sender, planId, block.timestamp);
     }
 
 
-
-    /* Get contract balance */ 
-    function getBalance () external view returns (uint256) {
-        return address(this).balance;
-    }
-
-
-    /* Withraw money from the contract to the lender*/
-    function withdraw (uint256 _amount) external payable
-    onlyOwner() 
-    onlyUsers() {
-        require(_amount > 0, "_amount connot be 0");
-        payable(msg.sender).transfer(_amount);
+    /* Withraw money from the contract to the Owner*/
+    function withdraw (uint256 planId) external payable
+    onlyOwner()  { 
+        IERC20 tokenPayment = IERC20(idToPlan[planId].tokenPayment);
+        tokenPayment.transfer(msg.sender, tokenPayment.balanceOf(address(this)));
     }
 
 
@@ -197,12 +201,24 @@ contract MetaPayment  {
         cancelLoanTime = !cancelLoanTime;
     }
 
+
     /* receive eth in the contract */
     receive() external payable {}
 
+    
+    /* Get contract balance */ 
+    function getBalance () external view returns (uint256) {
+        return address(this).balance;
+    }
+
     // fetch user accounts
-    function getLoan(address user, uint256 planId) external view returns(SubmitLoan memory) {
+    function fecthMyLoan(address user, uint256 planId) external view returns(SubmitLoan memory) {
         return activeLoans[user][planId];
+    }
+
+    // fetch one plan
+    function fetchPlan(uint256 planId) external view returns(Plan memory) {
+        return idToPlan[planId];
     }
 
     /* Fetch all borrowers loans */
@@ -220,5 +236,16 @@ contract MetaPayment  {
             return items;
     }
 
+    // get all plan
+    function fetchallPlans() external view returns(Plan[] memory) {
+            Plan[] memory items = new Plan[](totalPlans);
+            for(uint256 i = 0; i < allPlansId.length; i++) {
+                uint256 currentId = allPlansId[i];
+                Plan storage currentPlan = idToPlan[currentId];
+                items[i] = currentPlan;
+            }
+            return items;
+    }
 
 }
+

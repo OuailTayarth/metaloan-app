@@ -8,7 +8,14 @@ async function main() {
 
   await metaContract.deployed();
 
-  console.log("MetaContract deployed to:", metaContract.address);
+
+  const USDTContract = await hre.ethers.getContractFactory("USDTPayment")
+  const usdtContract = await USDTContract.deploy();
+
+  await usdtContract.deployed();
+
+  console.log("MetaContract deployed to:", metaContract.address,
+              "USDT deployed to:", usdtContract.address);
 }
 
 
