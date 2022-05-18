@@ -4,6 +4,8 @@ pragma solidity 0.8.6;
 import "hardhat/console.sol";
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
+// to do "delete plan"
+
 contract MetaPayment {
 
     // event 
@@ -57,7 +59,7 @@ contract MetaPayment {
     }
 
     /* nested mapping from address to id to Submit Loan */ 
-    mapping(address => mapping(uint => SubmitLoan)) private activeLoans;
+    mapping(address => mapping(uint => SubmitLoan)) public activeLoans;
 
     /* To only get loan once*/ 
     mapping(address => bool) public engaged;
@@ -134,7 +136,7 @@ contract MetaPayment {
         activeLoans[msg.sender][planId] = SubmitLoan(
             payable(msg.sender),
             block.timestamp,
-            block.timestamp + 1 minutes,
+            block.timestamp,
             true
         );
 
