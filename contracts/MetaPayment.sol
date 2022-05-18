@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
+
 import "hardhat/console.sol";
-import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import "openzeppelin-contracts/token/ERC20/IERC20.sol";
 
-// to do "delete plan"
-
-contract MetaPayment {
+contract MetaPayment  {
 
     // event 
     event PlanCreated(address indexed creator,
@@ -25,17 +24,24 @@ contract MetaPayment {
                               uint256 indexed date,
                               bool status);
 
-    event LoanCanceled(address indexed borrower,
+    event LoanDeleted(address indexed borrower,
                         uint indexed planId,
                         uint indexed date);
 
 
+    event PlanDeleted(address indexed borrower,
+                        uint indexed planId,
+                        uint indexed date);
+
+
+
     uint256 public totalPlans;
     uint256 public totalLoans;
-    bool public cancelLoanTime;
+    bool public deleteTime;
     address public owner;
     address[] public allBorrowers;
     uint[] public allPlansId; 
+    address[] public managers;
     IERC20 public USDCToken;
 
 
@@ -49,6 +55,7 @@ contract MetaPayment {
 
     mapping(uint => Plan) public idToPlan;
     mapping(address => uint256) public payementTracker;
+    mapping(address => bool) public isManager;
 
     // Subscription if the user pay we turn the excuted to true
     struct SubmitLoan {
@@ -59,7 +66,7 @@ contract MetaPayment {
     }
 
     /* nested mapping from address to id to Submit Loan */ 
-    mapping(address => mapping(uint => SubmitLoan)) public activeLoans;
+    mapping(address => mapping(uint => SubmitLoan)) private activeLoans;
 
     /* To only get loan once*/ 
     mapping(address => bool) public engaged;
@@ -88,6 +95,11 @@ contract MetaPayment {
         _;
     }
 
+    modifier PlanExists(uint planId) {
+        require(idToPlan[planId].lender != address(0), "MetaLoan :: Plan does not exist");
+        _;
+    }
+
     modifier onlyUsers() {
         require(tx.origin == msg.sender, " MetaLoan :: Connot be called by contract");
         _;
@@ -112,11 +124,12 @@ contract MetaPayment {
       totalPlans++;
     }
 
-
+    // check if the the plan
     /*User Pay submit request for a loan*/
     function getLoan(uint planId) external
     payable
     alreadyEngaged()
+    PlanExists(planId)
     {   
         IERC20 tokenPayment = IERC20(idToPlan[planId].tokenPayment);
         Plan storage plan = idToPlan[planId];
@@ -136,7 +149,7 @@ contract MetaPayment {
         activeLoans[msg.sender][planId] = SubmitLoan(
             payable(msg.sender),
             block.timestamp,
-            block.timestamp,
+            block.timestamp + 1 minutes,
             true
         );
 
@@ -172,22 +185,29 @@ contract MetaPayment {
         payementTracker[msg.sender] += plan.monthlyPayment; 
         totalPaymentsPerWallet[msg.sender] += 1; 
         submitLoan.nextPayment = submitLoan.nextPayment +  1 minutes;
-
     }
 
 
     /* Cancel Loan when user finish Loan payment */
-    function cancelLoan(uint256 planId)
+    function deleteLoan(uint256 planId)
      external 
-     payable
      onlyUsers()
      LoanExists(planId)
      
     {   
-        require(cancelLoanTime, "MetaLoan :: Cancel loan is not activated yet");
+        require(deleteTime, "MetaLoan :: deleteTime loan is not activated yet");
         payementTracker[msg.sender] = 0;
         delete activeLoans[msg.sender][planId];
-        emit LoanCanceled(msg.sender, planId, block.timestamp);
+        emit LoanDeleted(msg.sender, planId, block.timestamp);
+    }
+
+    // delete plan 
+    function deletePlan(uint256 planId) 
+    external 
+    PlanExists(planId) {  
+        require(deleteTime, "MetaLoan :: deleteTime loan is not activated yet");
+        delete idToPlan[planId];
+        emit PlanDeleted(msg.sender, planId, block.timestamp);
     }
 
 
@@ -199,8 +219,15 @@ contract MetaPayment {
     }
 
 
-    function toggleCancelLoan() external onlyOwner() {
-        cancelLoanTime = !cancelLoanTime;
+    function toggleDelete() external onlyOwner() {
+        deleteTime = !deleteTime;
+    }
+
+    // add Managers
+    function addManager(address _manager) external onlyOwner() {
+        require(!isManager[_manager], "Metaloan :: Manager is not unique");
+        managers.push(_manager);
+        isManager[_manager] = true;
     }
 
 
