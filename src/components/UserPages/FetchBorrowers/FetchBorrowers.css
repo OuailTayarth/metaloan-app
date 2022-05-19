@@ -1,0 +1,41 @@
+.borrowers-container {
+    width: 95vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
+}
+
+
+.single-borrower {
+    /* position: absolute;
+    left: 175px;
+    top: 220px; */
+    background-color:rgb(42, 48, 57);
+    color: #fff;
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    margin: auto;
+}
+
+.single-borrower:hover {
+    transform: translateY(-5px);
+}
+
+.single-borrower h1 {
+    color: #fff;
+    font-weight: 500;
+    padding: 2px 0px;
+}
+
+
+
+
+
+
+
+    
+
+
+    

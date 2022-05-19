@@ -1,28 +1,28 @@
 import React from "react";
-
+import "./FetchBorrowers.css";
 
 const FetchBorrowers = ({BorrowersData}) => {
 
     return (
-        <>
+        <div className="borrowers-container">
         {BorrowersData.length > 0 ? (
             <>
             {BorrowersData.map((el, index) => {
                 return (
-                    <div key={index}>
-                        <h1>Borrower: {el.borrower}</h1>
-                        <h1>Loan Start: {el.start}</h1>
-                        <h1>Next Payment: {el.nextPayment}</h1>
-                        <h1>Loan status: {el.activated}</h1>
-                    </div>
+                    <article key={index} className="single-borrower" >
+                        <h1>Borrower : <span> {el.borrower} </span></h1>
+                        <h1>Loan Start: <span>{el.start} </span> </h1>
+                        <h1>Next Payment: <span>{el.nextPayment} </span></h1>
+                        <h1>Loan status: <span>{el.activated} </span></h1>
+                    </article>
                 )
             })}
             </>
             )
         : (
-            <h1> No Borrowers exist yet...</h1>
+            <h1 className="message"> No Borrowers exist yet...</h1>
         )} 
-        </>
+        </div>
     );
 }
 

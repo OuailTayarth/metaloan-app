@@ -49,13 +49,10 @@ let web3 = new Web3(window.ethereum);
 
 function App() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const blockchain = useSelector((state) => state.blockchain);
-  const [downPayment, setDownPayment] = useState("100000000000000");
-  const [paymentMonthly, setPaymentMonthly] = useState("100000000000000");
-
   const [loanId, setLoanId] = useState(0);
-  
+  const [tokenPaymentAddress, setTokenPaymentAddress] = useState([]);
+  console.log(tokenPaymentAddress);
   const [LoanData, setLoanData] = useState([]);
   const [BorrowersData, setBorrowersData] = useState([]);
 
@@ -67,10 +64,9 @@ function App() {
   }, [blockchain.smartContract, dispatch]);
 
 
-  useEffect(()=> {
-    navigate("/", {replace: true});
-  },[]);
-
+  // useEffect(()=> {
+  //   navigate("/", {replace: true});
+  // },[]);
 
 
 
@@ -109,7 +105,7 @@ function decrementLoanId() {
 }
 
 
-  // /* function to create a plan from the owner wallet*/
+  // /* Function to create a plan from the owner wallet | could be solve with inputs form */
   function createPlan() {
     const upfrontPayment = web3.utils.toWei("0.0001", "ether");
     const monthlyPayment = web3.utils.toWei("0.00001", "ether");
@@ -137,6 +133,8 @@ function decrementLoanId() {
   async function getLoan() {
     const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
     let upfrontPayment = data.upfrontPayment;
+    let tokenPayment = data.tokenPayment;
+    setTokenPaymentAddress(tokenPayment);
     blockchain.smartContract.methods
     .getLoan(loanId)
     .send({from : blockchain.account, value: upfrontPayment})
@@ -178,9 +176,9 @@ function decrementLoanId() {
   // /*Fetch all Loans */
   async function fetchLoanData() {
     const userAccount = await blockchain.account;
-    // correct fetcch
     const data = await blockchain.smartContract.methods.fecthMyLoan(userAccount,"0").call();
-    const totalPaymentPerWallet = await blockchain.smartContract.methods.totalPaymentTracker(userAccount).call();
+    const paymentData = await blockchain.smartContract.methods.totalPaymentTracker(userAccount).call();
+    const totalPaymentPerWallet = web3.utils.fromWei(paymentData, "ether");
     console.log(totalPaymentPerWallet);
     const status = (data.activated).toString();
     let startDay = (moment.unix(data.start)).toString();

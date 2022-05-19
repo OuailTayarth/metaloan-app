@@ -1,14 +1,14 @@
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/dist/src/signer-with-address";
 import React from "react";
+import "../FetchBorrowers/FetchBorrowers.css";
 
 
 
-const FetchLoan = ({LoanData}) => {
+const FetchLoan = ({LoanData, tokenPaymentAddress}) => {
     return (
-        <>
+        <div className="borrowers-container">
         {Object.keys(LoanData).length > 0 ? (
-            <div>
-                <h1>Borrower address: {LoanData.borrower}</h1>
+            <div className="single-borrower">
+                <h1 >Borrower address: {LoanData.borrower}</h1>
                 <h1>Total Payment: {LoanData.totalPayment}</h1>
                 <h1>Loan Start: {LoanData.startLoan}</h1>
                 <h1>NextPayment: {LoanData.nextPayment}</h1>
@@ -17,7 +17,7 @@ const FetchLoan = ({LoanData}) => {
         ) : (
             <h1>Loan does not exist</h1>
         )}
-        </>
+        </div>
         
     )
 }
