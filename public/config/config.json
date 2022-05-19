@@ -1,0 +1,18 @@
+{
+    "CONTRACT_ADDRESS": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "SCAN_LINK": "https://etherscan.io/address/0x47234BD3160dD6C6c27CbE91D97F419Fb331Fa8B",
+    "NETWORK": {
+      "NAME": "Mumbai network",
+      "SYMBOL": "MTC",
+      "ID": 1337
+    },
+    "NFT_NAME": "Test",
+    "SYMBOL": "HFH",
+    "MAX_SUPPLY": 10000,
+    "WEI_COST": 3100000000000000,
+    "DISPLAY_COST": 0.0031,
+    "MARKETPLACE": "Opeansea",
+    "MARKETPLACE_LINK": "https://testnets.opensea.io/",
+    "SHOW_BACKGROUND": true
+  }
+  

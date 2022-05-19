@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
+// modifier 4 weeks and privacy for maaping
 
 import "hardhat/console.sol";
-import "openzeppelin-contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract MetaPayment  {
 
@@ -66,7 +67,7 @@ contract MetaPayment  {
     }
 
     /* nested mapping from address to id to Submit Loan */ 
-    mapping(address => mapping(uint => SubmitLoan)) private activeLoans;
+    mapping(address => mapping(uint => SubmitLoan)) public activeLoans;
 
     /* To only get loan once*/ 
     mapping(address => bool) public engaged;
@@ -82,6 +83,11 @@ contract MetaPayment  {
     // modifiers
     modifier onlyOwner() {
         require(owner == msg.sender, "MetaLoan :: Access only by owner");
+        _;
+    }
+
+    modifier onlyManager() {
+        require(isManager[msg.sender], "Metaloan:: Access only by Manager");
         _;
     }
 
@@ -149,7 +155,7 @@ contract MetaPayment  {
         activeLoans[msg.sender][planId] = SubmitLoan(
             payable(msg.sender),
             block.timestamp,
-            block.timestamp + 1 minutes,
+            block.timestamp ,
             true
         );
 
@@ -191,9 +197,7 @@ contract MetaPayment  {
     /* Cancel Loan when user finish Loan payment */
     function deleteLoan(uint256 planId)
      external 
-     onlyUsers()
      LoanExists(planId)
-     
     {   
         require(deleteTime, "MetaLoan :: deleteTime loan is not activated yet");
         payementTracker[msg.sender] = 0;
@@ -204,7 +208,9 @@ contract MetaPayment  {
     // delete plan 
     function deletePlan(uint256 planId) 
     external 
-    PlanExists(planId) {  
+    PlanExists(planId)
+    onlyManager()
+    onlyOwner() {  
         require(deleteTime, "MetaLoan :: deleteTime loan is not activated yet");
         delete idToPlan[planId];
         emit PlanDeleted(msg.sender, planId, block.timestamp);

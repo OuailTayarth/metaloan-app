@@ -84,23 +84,28 @@ function App() {
   },[])
 
 
-  /* function to create a plan from the owner wallet*/
-  function createPlan() {
-    const upfrontPayment = web3.utils.toWei("0.0001", "ether");
-    const monthlyPayment = web3.utils.toWei("0.00001", "ether");
-    console.log(upfrontPayment,monthlyPayment);
-    blockchain.smartContract.methods
-    .createPlan(upfrontPayment,monthlyPayment)
-    .send({from : blockchain.account})
-    .once("error", (err)=> {
-      console.log(err);
-      console.log("Transaction was rejected!");
-    })
-    .then((receipt)=> {
-      console.log(receipt);
-      dispatch(fetchData(blockchain.account));
-    });
+  // /* function to create a plan from the owner wallet*/
+  // function createPlan() {
+  //   const upfrontPayment = web3.utils.toWei("0.0001", "ether");
+  //   const monthlyPayment = web3.utils.toWei("0.00001", "ether");
+  //   console.log(upfrontPayment,monthlyPayment);
+  //   blockchain.smartContract.methods
+  //   .createPlan(upfrontPayment,monthlyPayment)
+  //   .send({from : blockchain.account})
+  //   .once("error", (err)=> {
+  //     console.log(err);
+  //     console.log("Transaction was rejected!");
+  //   })
+  //   .then((receipt)=> {
+  //     console.log(receipt);
+  //     dispatch(fetchData(blockchain.account));
+  //   });
 
+  // }
+
+
+  function createPlan() {
+    console.log("test");
   }
 
   // // add the value that the user should send

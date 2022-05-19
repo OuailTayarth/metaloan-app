@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaFacebook ,FaTwitter , FaPinterest } from 'react-icons/fa';
+import { FaFacebook ,FaTwitter  } from 'react-icons/fa';
 import { AiOutlineInstagram} from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import './Footer.css';

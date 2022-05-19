@@ -9,6 +9,7 @@ const LaunchApp = ({fetchLoanData, fetchBorrowersData}) => {
           fetchLoanData={fetchLoanData}
           fetchBorrowersData={fetchBorrowersData}/>
         </div>
+      
     )
 }
 

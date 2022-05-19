@@ -9,13 +9,12 @@ async function main() {
   await metaContract.deployed();
 
 
-  const USDTContract = await hre.ethers.getContractFactory("USDTPayment")
-  const usdtContract = await USDTContract.deploy();
+  // const USDTContract = await hre.ethers.getContractFactory("USDTPayment")
+  // const usdtContract = await USDTContract.deploy();
 
-  await usdtContract.deployed();
+  // await usdtContract.deployed();
 
-  console.log("MetaContract deployed to:", metaContract.address,
-              "USDT deployed to:", usdtContract.address);
+  console.log("MetaContract deployed to:", metaContract.address);
 }
 
 

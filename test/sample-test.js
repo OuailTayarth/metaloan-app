@@ -86,5 +86,10 @@ describe("metaPayment contract", () => {
             expect(await token.balanceOf(metaPayment.address)).to.equal(20);
             await metaPayment.connect(owner).withdraw(0) 
         });
-    })
+    });
+
+    it("Should add manager", async ()=> {
+        await metaPayment.connect(owner).addManager(addr1.address);
+        expect(await metaPayment.connect(owner).isManager(addr1.address)).to.equal(true);
+    });
 });
