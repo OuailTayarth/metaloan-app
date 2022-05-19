@@ -18,7 +18,7 @@ const HeroSection = () => {
                         <button 
                               className='btn' 
                               id='btn-left'
-                              onClick={()=> navigate("launchApp")}>Get A Loan</button>
+                              onClick={()=> navigate("launchApp/submitLoan")}>Get A Loan</button>
                         <button className='btn'>WhitePaper</button>
                     </div>
                 </div>

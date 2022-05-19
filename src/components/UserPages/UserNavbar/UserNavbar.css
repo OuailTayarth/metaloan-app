@@ -16,9 +16,10 @@
     display: flex;
     transition:1s ease-out;
     max-width: 800px;
-    background-color: #7e81dc;
-    padding: 10px 0px;
-    border-radius: 5px;
+    background-color:rgb(42, 48, 57);
+    padding: 18px 0px;
+    border-radius: 3px;
+    
 }
 
 .links-Navigation li {
@@ -27,9 +28,9 @@
 }
 
 .links-Navigation li a {
-    letter-spacing: 0.2px;
-    font-weight: 500;
-    color: #000;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+    color: #fff;
     font-size: 1.20rem;
     transition: color 0.5s;    
 }

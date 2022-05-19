@@ -16,7 +16,7 @@ const About = () => {
                 <h2>About Us</h2>
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea maxime fugit labore corporis eligendi rerum optio impedit quos, non sunt eius, atque sequi consectetur nostrum, similique perferendis repellendus ducimus porro!</p>
                 <button className='btn'
-                        onClick={()=> navigate("launchApp")}>Get A Loan</button>
+                        onClick={()=> navigate("launchApp/submitLoan")}>Get A Loan</button>
             </div>
         </div>
 )

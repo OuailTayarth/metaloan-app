@@ -5,22 +5,26 @@
     place-items: center;
 }
 
+.loan-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 .single-borrower {
-    /* position: absolute;
-    left: 175px;
-    top: 220px; */
     background-color:rgb(42, 48, 57);
     color: #fff;
-    border-radius: 10px;
-    padding: 1.5rem 1rem;
+    border-radius: 7px;
+    padding: 20px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     margin: auto;
 }
 
 .single-borrower:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
 }
 
 .single-borrower h1 {
@@ -28,6 +32,24 @@
     font-weight: 500;
     padding: 2px 0px;
 }
+
+.message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgb(42, 48, 57);
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.message:hover {
+    transform: translateY(-3px);
+}
+
+
 
 
 
