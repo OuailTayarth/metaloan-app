@@ -43,7 +43,9 @@ let web3 = new Web3(window.ethereum);
        : data.response the error cause Promise.all should be await as well as the
        call
        make payment input;
+       based on the address I should display The Tokens logo
 */
+
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +53,9 @@ function App() {
   const blockchain = useSelector((state) => state.blockchain);
   const [downPayment, setDownPayment] = useState("100000000000000");
   const [paymentMonthly, setPaymentMonthly] = useState("100000000000000");
+
+  const [loanId, setLoanId] = useState(0);
+  
   const [LoanData, setLoanData] = useState([]);
   const [BorrowersData, setBorrowersData] = useState([]);
 
@@ -84,36 +89,57 @@ function App() {
   },[])
 
 
+
+  // Increment Loan Id
+  function incrementLoanId() {
+    let newLoanId = loanId + 1;
+    if(newLoanId > 100) {
+        newLoanId = 100;
+    }
+    setLoanId(newLoanId);
+}
+
+// Decrement Loan Id
+function decrementLoanId() {
+  let newLoanId = loanId + 1;
+  if(newLoanId > 0) {
+      newLoanId = 0;
+  }
+  setLoanId(newLoanId);
+}
+
+
   // /* function to create a plan from the owner wallet*/
-  // function createPlan() {
-  //   const upfrontPayment = web3.utils.toWei("0.0001", "ether");
-  //   const monthlyPayment = web3.utils.toWei("0.00001", "ether");
-  //   console.log(upfrontPayment,monthlyPayment);
-  //   blockchain.smartContract.methods
-  //   .createPlan(upfrontPayment,monthlyPayment)
-  //   .send({from : blockchain.account})
-  //   .once("error", (err)=> {
-  //     console.log(err);
-  //     console.log("Transaction was rejected!");
-  //   })
-  //   .then((receipt)=> {
-  //     console.log(receipt);
-  //     dispatch(fetchData(blockchain.account));
-  //   });
-
-  // }
-
-
   function createPlan() {
-    console.log("test");
+    const upfrontPayment = web3.utils.toWei("0.0001", "ether");
+    const monthlyPayment = web3.utils.toWei("0.00001", "ether");
+    const lenderAddress = "0x68ec584C5f130319E71992bC9A8369111a07c5FA";
+    const tokenPaymentAddress = "0x5B4c93B48A18F5DfA3e86Dcb3843477A82955cb5";
+    console.log(upfrontPayment,monthlyPayment);
+    blockchain.smartContract.methods
+    .createPlan(lenderAddress, tokenPaymentAddress,upfrontPayment, monthlyPayment)
+    .send({from : blockchain.account})
+    .once("error", (err)=> {
+      console.log(err);
+      console.log("Transaction was rejected!");
+    })
+    .then((receipt)=> {
+      console.log(receipt);
+      dispatch(fetchData(blockchain.account));
+    });
+
   }
 
-  // // add the value that the user should send
-  // // function to get a loan at a specific planId
-  function getLoan() {
+
+
+  // add the value that the user should send
+  // function to get a loan at a specific planId
+  async function getLoan() {
+    const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
+    let upfrontPayment = data.upfrontPayment;
     blockchain.smartContract.methods
-    .getLoan("0")
-    .send({from : blockchain.account, value: downPayment})
+    .getLoan(loanId)
+    .send({from : blockchain.account, value: upfrontPayment})
     .once("error", (err)=> {
       let error = err.toString();
       console.log(error);
@@ -129,10 +155,14 @@ function App() {
 
 
   // pay loan
-  function payLoan() {
+  async function payLoan() {
+    const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
+    console.log(data);
+    let monthlyPayment = data.monthlyPayment;
+    console.log(monthlyPayment);
     blockchain.smartContract.methods
-    .pay("0")
-    .send({from: blockchain.account, value : paymentMonthly})
+    .pay(loanId)
+    .send({from: blockchain.account, value : monthlyPayment})
     .once("error", (err)=> {
       console.log(err);
       console.log("something went wrong");
@@ -195,27 +225,33 @@ function App() {
   return (
     <s.Main>
         <>  
-        {/* <button
-           onClick={(e)=> {
-             e.preventDefault()
-             dispatch(connect())
-           }}>
-             Connect
-           </button> */}
             <Navbar/>
             <Routes>
                 <Route path="/" element={<HeroSection/>}/>
+
                 <Route path="/launchApp" 
                     element={<LaunchApp fetchLoanData={fetchLoanData} 
                                         fetchBorrowersData={fetchBorrowersData}/>}>
+
                     <Route path="submitLoan" 
-                    element={<SubmitLoan getLoan={getLoan} />}/>
+                    element={<SubmitLoan getLoan={getLoan}
+                                         incrementLoanId={incrementLoanId}
+                                         decrementLoanId={decrementLoanId}
+                                         loanId={loanId}
+                                         />}/>
+
                     <Route path="payLoan"
-                    element={<PayLoan payLoan={payLoan}/>}/>
+                    element={<PayLoan    payLoan={payLoan}
+                                         incrementLoanId={incrementLoanId}
+                                         decrementLoanId={decrementLoanId}
+                                         loanId={loanId}/>}/>
+
                     <Route path="fetchLoan" 
                     element={<FetchLoan LoanData={LoanData}/>}/>
+
                     <Route path="fetchBorrowers" 
-                    element={<FetchBorrowers BorrowersData = {BorrowersData}/>}/> 
+                    element={<FetchBorrowers BorrowersData = {BorrowersData}/>}/>
+
                     <Route path="createPlan"
                     element={<CreatePlan createPlan={createPlan}/>}/>
                 </Route>

@@ -4,29 +4,12 @@ import "./SubmitLoan.css";
 
 
 
-const SubmitLoan = ({getLoan}) => {
+const SubmitLoan = ({getLoan,
+                    decrementLoanId,
+                    incrementLoanId,
+                    loanId}) => {
 
-    const [LoanId, setLoanId] = useState(1);
     const [activePayment, setActivePayment] = useState(false);
-
-
-    // Increment Loan Id
-    function incrementLoanId() {
-        let newLoanId = LoanId + 1;
-        if(newLoanId > 100) {
-            newLoanId = 100;
-        }
-        setLoanId(newLoanId);
-    }
-
-    // Decrement Loan Id
-    function decrementLoanId() {
-        let newLoanId = LoanId + 1;
-        if(newLoanId > 1) {
-            newLoanId = 1;
-        }
-        setLoanId(newLoanId);
-    }
 
     return (
         <div className="submit-container">
@@ -40,7 +23,7 @@ const SubmitLoan = ({getLoan}) => {
                         onClick={()=> {
                         decrementLoanId();
                     }}>-</button>
-                    <p className="btn" id="count">{LoanId}</p>
+                    <p className="btn" id="count">{loanId}</p>
                     <button 
                         className="btn" 
                         id="count"
