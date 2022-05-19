@@ -1,10 +1,29 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.6;
+pragma solidity ^0.8.6;
 
-// modifier 4 weeks and privacy for maaping
+
+// 
+/*  Inside the monthly payement we include the percentage!!
+    take a look at oracle
+    TODOS:
+    add managers and owner
+    // Keep track of unpaid loans and paid loans
+    // return all the subscription of all addresses
+    // after 3 month missed payement we should add a late fee
+    //update upfront pyement and downpayment
+    // fix lint error with currentIme function
+    // check tx-origin
+    // add diffetent addres token inside each plan. tokenAddress to get paid with. x 
+    // create a function to withraw funds from the smart contract to onwer wallet. x
+    // transfering the funds from wallet to another is succufful x
+    // I have to approve the smart contract 
+    // ask omar who is going to delete the loan/user or the plan/owner
+    // fetch
+*/ 
+
 
 import "hardhat/console.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "openzeppelin-contracts/token/ERC20/IERC20.sol";
 
 contract MetaPayment  {
 
@@ -43,7 +62,7 @@ contract MetaPayment  {
     address[] public allBorrowers;
     uint[] public allPlansId; 
     address[] public managers;
-    IERC20 public USDCToken;
+    IERC20 public usdtToken;
 
 
     // Plan loan 
@@ -55,7 +74,7 @@ contract MetaPayment  {
     }
 
     mapping(uint => Plan) public idToPlan;
-    mapping(address => uint256) public payementTracker;
+    mapping(address => uint256) public totalPaymentTracker;
     mapping(address => bool) public isManager;
 
     // Subscription if the user pay we turn the excuted to true
@@ -67,7 +86,7 @@ contract MetaPayment  {
     }
 
     /* nested mapping from address to id to Submit Loan */ 
-    mapping(address => mapping(uint => SubmitLoan)) public activeLoans;
+    mapping(address => mapping(uint => SubmitLoan)) private activeLoans;
 
     /* To only get loan once*/ 
     mapping(address => bool) public engaged;
@@ -106,7 +125,7 @@ contract MetaPayment  {
         _;
     }
 
-    modifier onlyUsers() {
+    modifier callerIsUser() {
         require(tx.origin == msg.sender, " MetaLoan :: Connot be called by contract");
         _;
     }
@@ -136,6 +155,7 @@ contract MetaPayment  {
     payable
     alreadyEngaged()
     PlanExists(planId)
+    callerIsUser()
     {   
         IERC20 tokenPayment = IERC20(idToPlan[planId].tokenPayment);
         Plan storage plan = idToPlan[planId];
@@ -155,13 +175,13 @@ contract MetaPayment  {
         activeLoans[msg.sender][planId] = SubmitLoan(
             payable(msg.sender),
             block.timestamp,
-            block.timestamp ,
+            block.timestamp + 1 minutes,
             true
         );
 
         allBorrowers.push(msg.sender);
         allPlansId.push(planId); 
-        payementTracker[msg.sender] += plan.upfrontPayment;
+        totalPaymentTracker[msg.sender] += plan.upfrontPayment;
         emit LoanCreated(msg.sender, planId, block.timestamp, true);
         totalLoans++;
     }
@@ -171,6 +191,7 @@ contract MetaPayment  {
     function pay(uint256 planId) 
         external payable
         LoanExists(planId)
+        callerIsUser()
         {
         SubmitLoan storage submitLoan = activeLoans[msg.sender][planId];
 
@@ -188,7 +209,7 @@ contract MetaPayment  {
             plan.monthlyPayment,
             planId,
             block.timestamp);
-        payementTracker[msg.sender] += plan.monthlyPayment; 
+        totalPaymentTracker[msg.sender] += plan.monthlyPayment; 
         totalPaymentsPerWallet[msg.sender] += 1; 
         submitLoan.nextPayment = submitLoan.nextPayment +  1 minutes;
     }
@@ -200,7 +221,7 @@ contract MetaPayment  {
      LoanExists(planId)
     {   
         require(deleteTime, "MetaLoan :: deleteTime loan is not activated yet");
-        payementTracker[msg.sender] = 0;
+        totalPaymentTracker[msg.sender] = 0;
         delete activeLoans[msg.sender][planId];
         emit LoanDeleted(msg.sender, planId, block.timestamp);
     }

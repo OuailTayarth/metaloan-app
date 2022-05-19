@@ -177,11 +177,11 @@ function decrementLoanId() {
 
   // /*Fetch all Loans */
   async function fetchLoanData() {
-    const account = await blockchain.account;
-    console.log(account);
-    const data = await blockchain.smartContract.methods.getLoan(account,"0").call();
-    console.log(data);
-
+    const userAccount = await blockchain.account;
+    // correct fetcch
+    const data = await blockchain.smartContract.methods.fecthMyLoan(userAccount,"0").call();
+    const totalPaymentPerWallet = await blockchain.smartContract.methods.totalPaymentTracker(userAccount).call();
+    console.log(totalPaymentPerWallet);
     const status = (data.activated).toString();
     let startDay = (moment.unix(data.start)).toString();
     let nextPayment = (moment.unix(data.nextPayment)).toString();
@@ -190,6 +190,7 @@ function decrementLoanId() {
         borrower : data.borrower,
         startLoan: startDay,
         nextPayment: nextPayment,
+        totalPayment: totalPaymentPerWallet,
         activated: status
       }
 
