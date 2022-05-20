@@ -14,9 +14,9 @@
 
 
 .single-borrower {
-    background-color:rgb(42, 48, 57);
+    background-color: #6b7379;
     color: #fff;
-    border-radius: 7px;
+    border-radius: 6px;
     padding: 20px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
@@ -31,13 +31,21 @@
     color: #fff;
     font-weight: 500;
     padding: 2px 0px;
+    margin-bottom: 2px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.single-borrower h1 span {
+    font-weight: 300;
+    font-size: 17px;
 }
 
 .message {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:rgb(42, 48, 57);
+    background-color:#6b7379;
     color: #fff;
     border-radius: 10px;
     padding: 20px;
@@ -49,6 +57,10 @@
     transform: translateY(-3px);
 }
 
+
+/* background: #000;
+    padding: 5px;
+    border-radius: 6px; */
 
 
 

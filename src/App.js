@@ -19,8 +19,10 @@ import About from "./components/About/About";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import ContactForm from "./components/ContactForm/ContactForm";
-
+import tokenIbi from "../src/ERC20ABI.json";
 let web3 = new Web3(window.ethereum);
+
+
 
 
 
@@ -44,6 +46,8 @@ let web3 = new Web3(window.ethereum);
        call
        make payment input;
        based on the address I should display The Tokens logo
+       fix the problem of when I click on borrowers I need to to click twice on the connect
+       wallet smart contract twice????????
 */
 
 
@@ -132,12 +136,20 @@ function decrementLoanId() {
   // function to get a loan at a specific planId
   async function getLoan() {
     const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
-    let upfrontPayment = data.upfrontPayment;
-    let tokenPayment = data.tokenPayment;
-    setTokenPaymentAddress(tokenPayment);
+    let upfrontPayment = String(data.upfrontPayment);
+    let tokenAddress = data.tokenPayment;
+    let currency = new web3.eth.Contract(tokenIbi, tokenAddress);
+    console.log(currency);
+    currency.methods.approve("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
+                               upfrontPayment).send({from: blockchain.account})
+    .then(
+      await currency.methods.transfer("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
+                               upfrontPayment).send({from:blockchain.account})
+    )
+    setTokenPaymentAddress(tokenAddress);
     blockchain.smartContract.methods
     .getLoan(loanId)
-    .send({from : blockchain.account, value: upfrontPayment})
+    .send({from : blockchain.account})
     .once("error", (err)=> {
       let error = err.toString();
       console.log(error);
@@ -155,12 +167,19 @@ function decrementLoanId() {
   // pay loan
   async function payLoan() {
     const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
-    console.log(data);
-    let monthlyPayment = data.monthlyPayment;
-    console.log(monthlyPayment);
-    blockchain.smartContract.methods
-    .pay(loanId)
-    .send({from: blockchain.account, value : monthlyPayment})
+    let monthlyPayment = String(data.monthlyPayment);
+    let tokenAddress = data.tokenPayment;
+    console.log(tokenAddress);
+    let currency = new web3.eth.Contract(tokenIbi, tokenAddress);
+    console.log(currency);
+    currency.methods.approve("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
+                              monthlyPayment).send({from: blockchain.account})
+    .then(
+      await currency.methods.transfer("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
+                              monthlyPayment).send({from:blockchain.account})
+    )
+    blockchain.smartContract.methods.pay(loanId)
+    .send({from: blockchain.account})
     .once("error", (err)=> {
       console.log(err);
       console.log("something went wrong");

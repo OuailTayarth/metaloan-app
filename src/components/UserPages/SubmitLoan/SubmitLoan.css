@@ -47,7 +47,7 @@ p#count.btn {
 #launchApp-btn {
     height: 40px;
     width: 150px;
-    background-color: #7e81dc;
+    background-color: #6b7379;
     border: none;
     color: #000;
     cursor: pointer;
@@ -58,6 +58,6 @@ p#count.btn {
 }
 
 #launchApp-btn:hover {
-    background-color: #383dda;
+    background-color: #676b6e;
 }
 
