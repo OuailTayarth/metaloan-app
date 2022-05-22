@@ -1,15 +1,16 @@
 import React, {useState} from "react";
 import "../../UserPages/links-container.css";
 import "./SubmitLoan.css";
+import Alert from "../../Alert/Alert";
 
 
 
 const SubmitLoan = ({getLoan,
                     decrementLoanId,
                     incrementLoanId,
-                    loanId}) => {
-
-    const [activePayment, setActivePayment] = useState(false);
+                    loanId, alert,
+                    removeAlert,
+                    activePayment}) => {
 
     return (
         <div className="submit-container">
@@ -33,13 +34,14 @@ const SubmitLoan = ({getLoan,
                     }}>+</button>
             </div>
             <h4>Make sure to select the right number of your loan offer before your pay</h4>
-
+            {alert.show && <Alert {...alert} removeAlert={removeAlert}/>}       
                     <button className="btn"
                         id="launchApp-btn"
+                        disabled={activePayment ? 1 : 0}
                         onClick={(e)=> {
                         e.preventDefault();
                         getLoan();
-                    }}>Submit Loan</button>
+                    }}>{activePayment ? "Busy..." :  "Submit Loan"}</button>
             </div>
     )
 }

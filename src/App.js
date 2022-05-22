@@ -11,7 +11,7 @@ import SubmitLoan from "./components/UserPages/SubmitLoan/SubmitLoan";
 import PayLoan from "./components/UserPages/PayLoan/PayLoan";
 import FetchLoan from "./components/UserPages/FetchLoan/FetchLoan";
 import FetchBorrowers from "./components/UserPages/FetchBorrowers/FetchBorrowers";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import CreatePlan from "./components/CreatePlan/CreatePlan";
 import HeroSection from "./components/HeroSection/HeroSection";
@@ -48,6 +48,7 @@ let web3 = new Web3(window.ethereum);
        based on the address I should display The Tokens logo
        fix the problem of when I click on borrowers I need to to click twice on the connect
        wallet smart contract twice????????
+       How should I get the abi of USDC abi on polygon network
 */
 
 
@@ -59,7 +60,8 @@ function App() {
   console.log(tokenPaymentAddress);
   const [LoanData, setLoanData] = useState([]);
   const [BorrowersData, setBorrowersData] = useState([]);
-
+  const [alert, setAlert] = useState({show : false, msg: ""});
+  const [activePayment, setActivePayment] = useState(false);
 
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
@@ -71,6 +73,12 @@ function App() {
   // useEffect(()=> {
   //   navigate("/", {replace: true});
   // },[]);
+
+  // ShowAlert
+  function showAlert(show = false, msg = "") {
+      setAlert({show:show, msg:msg});
+  }
+  
 
 
 
@@ -139,6 +147,7 @@ function decrementLoanId() {
     let upfrontPayment = String(data.upfrontPayment);
     let tokenAddress = data.tokenPayment;
     let currency = new web3.eth.Contract(tokenIbi, tokenAddress);
+    setActivePayment(true);
     console.log(currency);
     currency.methods.approve("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
                                upfrontPayment).send({from: blockchain.account})
@@ -154,11 +163,13 @@ function decrementLoanId() {
       let error = err.toString();
       console.log(error);
       console.log(err);
-      console.log("Transaction was rejected");
+      setActivePayment(false);
+      showAlert(true, "Something went wrong");
     })
     .then((receipt)=> {
       console.log(receipt);
-      console.log("Im so dress for success!");
+      setActivePayment(false);
+      showAlert(true, "Congratulations, You loan has been submitted successfully");
       dispatch(fetchData(blockchain.account));
     });
   }
@@ -166,12 +177,14 @@ function decrementLoanId() {
 
   // pay loan
   async function payLoan() {
+    showAlert(true, "Happy to see you, Your payment is processing...!");
     const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
     let monthlyPayment = String(data.monthlyPayment);
     let tokenAddress = data.tokenPayment;
     console.log(tokenAddress);
     let currency = new web3.eth.Contract(tokenIbi, tokenAddress);
     console.log(currency);
+    setActivePayment(true);
     currency.methods.approve("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
                               monthlyPayment).send({from: blockchain.account})
     .then(
@@ -182,11 +195,13 @@ function decrementLoanId() {
     .send({from: blockchain.account})
     .once("error", (err)=> {
       console.log(err);
-      console.log("something went wrong");
+      setActivePayment(false);
+      showAlert(true, "Something went wrong...!");
     })
     .then((receipt)=> {
       console.log(receipt);
-      console.log("Your payment went successfully");
+      setActivePayment(false);
+      showAlert(true, "Congratulations, You monthly payment has been submitted successfully");
       dispatch(fetchData(blockchain.account));
     })
   }
@@ -256,13 +271,19 @@ function decrementLoanId() {
                                          incrementLoanId={incrementLoanId}
                                          decrementLoanId={decrementLoanId}
                                          loanId={loanId}
+                                         alert = {alert}
+                                         removeAlert = {showAlert}
+                                         activePayment={activePayment}
                                          />}/>
 
                     <Route path="payLoan"
                     element={<PayLoan    payLoan={payLoan}
+                                         alert = {alert}
+                                         removeAlert = {showAlert}
                                          incrementLoanId={incrementLoanId}
                                          decrementLoanId={decrementLoanId}
-                                         loanId={loanId}/>}/>
+                                         loanId={loanId}
+                                         activePayment={activePayment}/>}/>
 
                     <Route path="fetchLoan" 
                     element={<FetchLoan LoanData={LoanData}/>}/>
