@@ -119,8 +119,8 @@ function decrementLoanId() {
 
   // /* Function to create a plan from the owner wallet | could be solve with inputs form */
   function createPlan() {
-    const upfrontPayment = web3.utils.toWei("0.0001", "ether");
-    const monthlyPayment = web3.utils.toWei("0.00001", "ether");
+    const upfrontPayment = web3.utils.toWei("20", "ether");
+    const monthlyPayment = web3.utils.toWei("20", "ether");
     const lenderAddress = "0x68ec584C5f130319E71992bC9A8369111a07c5FA";
     const tokenPaymentAddress = "0x5B4c93B48A18F5DfA3e86Dcb3843477A82955cb5";
     console.log(upfrontPayment,monthlyPayment);
@@ -139,26 +139,11 @@ function decrementLoanId() {
   }
 
 
-
-  // add the value that the user should send
   // function to get a loan at a specific planId
-  async function getLoan() {
-    const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
-    let upfrontPayment = String(data.upfrontPayment);
-    let tokenAddress = data.tokenPayment;
-    let currency = new web3.eth.Contract(tokenIbi, tokenAddress);
+  function getLoan() {
+    showAlert(true, "Welcome to MetaLoan, Your payment is processing...!");
     setActivePayment(true);
-    console.log(currency);
-    currency.methods.approve("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
-                               upfrontPayment).send({from: blockchain.account})
-    .then(
-      await currency.methods.transfer("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
-                               upfrontPayment).send({from:blockchain.account})
-    )
-    setTokenPaymentAddress(tokenAddress);
-    blockchain.smartContract.methods
-    .getLoan(loanId)
-    .send({from : blockchain.account})
+    blockchain.smartContract.methods.requestLoan(loanId).send({from : blockchain.account})
     .once("error", (err)=> {
       let error = err.toString();
       console.log(error);
@@ -169,30 +154,16 @@ function decrementLoanId() {
     .then((receipt)=> {
       console.log(receipt);
       setActivePayment(false);
-      showAlert(true, "Congratulations, You loan has been submitted successfully");
+      showAlert(true, "Congratulations, You loan has been submitted successfully!");
       dispatch(fetchData(blockchain.account));
     });
   }
 
-
   // pay loan
-  async function payLoan() {
-    showAlert(true, "Happy to see you, Your payment is processing...!");
-    const data = await blockchain.smartContract.methods.idToPlan(loanId).call();
-    let monthlyPayment = String(data.monthlyPayment);
-    let tokenAddress = data.tokenPayment;
-    console.log(tokenAddress);
-    let currency = new web3.eth.Contract(tokenIbi, tokenAddress);
-    console.log(currency);
+  function payLoan() {
     setActivePayment(true);
-    currency.methods.approve("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
-                              monthlyPayment).send({from: blockchain.account})
-    .then(
-      await currency.methods.transfer("0x1b4eAe2DC7Ca0b68643A26177bfC9c069B3D6E05",
-                              monthlyPayment).send({from:blockchain.account})
-    )
-    blockchain.smartContract.methods.pay(loanId)
-    .send({from: blockchain.account})
+    showAlert(true, "Happy to see you, Your payment is processing...!");  
+    blockchain.smartContract.methods.payLoan(loanId).send({from: blockchain.account})
     .once("error", (err)=> {
       console.log(err);
       setActivePayment(false);
@@ -206,6 +177,8 @@ function decrementLoanId() {
     })
   }
 
+  
+  
 
   // /*Fetch all Loans */
   async function fetchLoanData() {
@@ -228,8 +201,6 @@ function decrementLoanId() {
 
       setLoanData(item);
   }
-
-
 
 
   // fetch borrowers Data 

@@ -328,7 +328,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct MetaPayment.SubmitLoan",
+				"internalType": "struct ERC20MetaLoan.SubmitLoan",
 				"name": "",
 				"type": "tuple"
 			}
@@ -363,7 +363,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct MetaPayment.SubmitLoan[]",
+				"internalType": "struct ERC20MetaLoan.SubmitLoan[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -404,7 +404,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct MetaPayment.Plan",
+				"internalType": "struct ERC20MetaLoan.Plan",
 				"name": "",
 				"type": "tuple"
 			}
@@ -439,7 +439,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct MetaPayment.Plan[]",
+				"internalType": "struct ERC20MetaLoan.Plan[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -458,19 +458,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "planId",
-				"type": "uint256"
-			}
-		],
-		"name": "getLoan",
-		"outputs": [],
-		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -566,7 +553,20 @@
 				"type": "uint256"
 			}
 		],
-		"name": "pay",
+		"name": "payLoan",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "planId",
+				"type": "uint256"
+			}
+		],
+		"name": "requestLoan",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"

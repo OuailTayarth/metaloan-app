@@ -10,9 +10,9 @@ const HeroSection = () => {
     return (
             <div className="content">
                 <div className="textBox">
-                    <h4>DISCOVER HOW TO ENJOY MORE</h4>
+                    <h4>FINANCING THE METAVERSE</h4>
                     <h2>MetaLoan</h2>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea maxime fugit labore corporis eligendi rerum optio impedit quos, non sunt eius</p>
+                    <p>The metaverse unlocks new opportunities to learn, explore, play and invest in virtual worlds. MetaLoan helps you own your piece of the metaverse by breaking the purchase price into small, affordable payments.</p>
 
                     <div className="button-container">
                         <button 

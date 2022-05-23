@@ -51,19 +51,19 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                   <Link to="/about" onClick={closeMobileMenu}>About</Link> 
+                   <Link to="/about" onClick={closeMobileMenu}>How it Works</Link> 
                 </li>
 
                 <li>
-                    <Link to="/testimonials" onClick={closeMobileMenu}>Testimonials</Link> 
+                    <Link to="/testimonials" onClick={closeMobileMenu}>Request a Loan</Link> 
                 </li>
 
                 <li>
-                    <Link to="/contactUs" onClick={closeMobileMenu}>Contact</Link>     
+                    <Link to="/contactUs" onClick={closeMobileMenu}>About Us</Link>     
                 </li>
 
                 <li>
-                    <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>Launch App</Link>     
+                    <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
                 </li>
                 
                 <li>
