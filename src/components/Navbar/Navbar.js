@@ -18,7 +18,7 @@ const Navbar = () => {
 
     useEffect(()=> {
         fetchAccounts();
-        dispatch(fetchData(blockchain.account));
+        // dispatch(fetchData(blockchain.account));
     }, [])
 
     // fetch accounts Data
