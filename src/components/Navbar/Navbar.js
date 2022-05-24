@@ -60,11 +60,11 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                    <Link to="/contactForm" onClick={closeMobileMenu}>Request a Loan</Link> 
+                    <Link to="/ContactForm" onClick={closeMobileMenu}>Request a Loan</Link> 
                 </li>
 
                 <li>
-                    <Link to="/about" onClick={closeMobileMenu}>About Us</Link>     
+                    <Link to="/About" onClick={closeMobileMenu}>About Us</Link>     
                 </li>
 
                 <li>

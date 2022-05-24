@@ -234,6 +234,7 @@ function decrementLoanId() {
             <Routes>
                 <Route path="/" element={<HeroSection/>}/>
                 <Route path="/howItWorks" element={<HowItoWorks/>}/>
+                <Route path="/about" element={<About/>}/>
                 <Route path="/launchApp" 
                     element={<LaunchApp fetchLoanData={fetchLoanData} 
                                         fetchBorrowersData={fetchBorrowersData}/>}>
@@ -268,7 +269,6 @@ function decrementLoanId() {
                 </Route>
             </Routes>
             <ContactForm/>
-            <About/>
             <Footer/>
         </>
     </s.Main>
