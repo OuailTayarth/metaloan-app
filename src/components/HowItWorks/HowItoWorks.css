@@ -1,4 +1,4 @@
-.about-content {
+.howItWorks-content {
     position: relative;
     width: 100%;
     display: flex;
@@ -7,40 +7,38 @@
     padding: 50px 0px;
 }
 
-.about-content .textBox {
+.howItWorks-content .textBox {
     position: relative;
     max-width: 550px;
     margin: 0px 100px 0px 20px;
     
 }
 
-.about-content .textBox h2 {
+.howItWorks-content .textBox h2 {
     color: #fff;
     font-size: 5em;
     line-height: 1em;
 }
 
-.about-content .textBox p {
+.howItWorks-content .textBox p {
     font-size: 1.1em;
-    padding-bottom: 20px;
     line-height: 20px;
-    color: #a4a9ac;
     font-weight: 400;
 }
 
-.about-content .imgBox {
+.howItWorks-content .imgBox {
     width: 600px;
     display: flex;
     justify-content: flex-end;
     /* padding-right: 50px; */
 }
 
-.about-content .imgBox img {
+.howItWorks-content .imgBox img {
     max-width: 662px;
 }
 
 
-.about-content .play{
+.howItWorks-content .play{
     position: relative;
     display: inline-flex;
     justify-content: flex-start;
@@ -53,13 +51,13 @@
     font-size: 1em;
 }
 
-.about-content .play img {
+.howItWorks-content .play img {
     max-width: 45px;
     margin-right: 10px;
     cursor: pointer;
 }
 
-.about-content .btn {
+.howItWorks-content .btn {
     height: 40px;
     width: 118px;
     background-color: #7e81dc;
@@ -72,14 +70,25 @@
     font-size: 13px;
 }
 
-.about-content .btn:hover {
+.howItWorks-content .btn:hover {
     transform: translateY(-5%);
 }
+
+.howItWorks-content .textBox .requestLoan_list {
+    padding: 20px 0px;
+} 
+
+.howItWorks-content .textBox .requestLoan_list li {
+    padding-bottom: 5px;
+    letter-spacing: 0.5px;
+    line-height: 19px;
+    color: #a4a9ac;
+}  
    
 
 
 @media (max-width:991px) {
-    .about-content {
+    .howItWorks-content {
         position: relative;
         width: 100%;
         display: flex;
@@ -89,7 +98,7 @@
         flex-direction: column-reverse;
     }
 
-    .about-content .imgBox {
+    .howItWorks-content .imgBox {
         height: 350px;
         width: 100%;
         display: flex;
@@ -97,36 +106,36 @@
         padding-top: 50px;
     }
 
-    .about-content .imgBox img {
+    .howItWorks-content .imgBox img {
         max-width: 100%;
     }
 
-    .about-content .textBox {
+    .howItWorks-content .textBox {
         margin-left: 50px;
     }
 }
 
 
 @media (max-width: 485px) {
-    .about-content .textBox h4 {
+    .howItWorks-content .textBox h4 {
         font-size: 0.7em;
     }
 
-    .about-content .textBox h2 {
+    .howItWorks-content .textBox h2 {
         font-size: 3.8em;
     }
 
-    .about-content .textBox p {
+    .howItWorks-content .textBox p {
         font-size: 1em;
     }
     
-    .about-content .btn {
+    .howItWorks-content .btn {
         height: 36px;
-        width: 120px;
+        width: 107px;
         font-size: 12px;
     }
 
-    .about-content .textBox {
+    .howItWorks-content .textBox {
         margin-left: 30px;
     }
 }

@@ -1,11 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './ContactForm.css';
 import emailsjs from "@emailjs/browser";
 
 
 
+
 const ContactForm = () => {
   const form = useRef();
+
+  const [disabled, setDisabled] = useState(false);
+  const handleClick = () => setDisabled(!disabled);
+
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -21,36 +26,36 @@ const ContactForm = () => {
   } 
 
     return (
-        <section class="contacts" id="booking">
+        <section className="contacts" id="booking">
   
-        <div class="title">
-          <h2>Contact us</h2>
-          <p>Submit a request to get a loan</p>
+        <div className="title">
+          <h2>Request a Loan</h2>
+          <p>Complete this form to receive your custom loan plan</p>
         </div>
 
         <form ref={form} class="book-form" onSubmit={sendEmail}>
-          <div class="inputBox">
+          <div className="inputBox">
             <input type="text" name="user_name" placeholder="First & Last Name"/>
           </div>
 
-          <div class="inputBox">
+          <div className="inputBox">
             <input type="email" name="user_email" placeholder=" Email" required/>
           </div>
 
-          <div class="inputBox">
-            <input type="text" name="user_link" placeholder="Link to the desired Land(decentraland) "/>
+          <div className="inputBox">
+            <input type="text" name="user_link" placeholder="Link to the desired Land(Decentraland) "/>
           </div>
 
-          <div class="inputBox">
-            <textarea name="user_message" placeholder="Add a Description" ></textarea>
+          <div className="inputBox">
+            <textarea name="user_message" placeholder="Anything else we should know" rows="10" ></textarea>
           </div>
 
-          <div class="inputBox">
-            <input type="file" name="user_files" multiple="multiple"
-            id="uploadFile"/>
+          <div className="checkbox-container">
+            <input type="checkbox" id="scales" name="scales" disabled={handleClick} />
+            <label for="scales">MetaLoan requires payment of a 30% down payment before any purchase. By submitting a request you acknowledge this requirement.</label>
           </div>
 
-          <div class="inputBox">
+          <div className="inputBox">
             <input type="Submit"/>
           </div>
         </form>

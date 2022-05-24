@@ -16,29 +16,34 @@ const Navbar = () => {
     console.log(accounts);
 
 
-    useEffect(()=> {
-        fetchAccounts();
-        // dispatch(fetchData(blockchain.account));
-    }, [])
+    // useEffect(()=> {
+    //     fetchAccounts();
+    //     // dispatch(fetchData(blockchain.account));
+    // }, [])
 
-    // fetch accounts Data
-    async function fetchAccounts () {
-        const { ethereum } = window;
-        const metamaskIsInstalled = ethereum && ethereum.isMetaMask;
+    // // fetch accounts Data
+    // async function fetchAccounts () {
+    //     const { ethereum } = window;
+    //     const metamaskIsInstalled = ethereum && ethereum.isMetaMask;
 
-        if(metamaskIsInstalled) {
-            try {
-                const accounts = await window.ethereum.request({
-                    method: "eth_requestAccounts",
-                  });
-                  setAccounts(accounts[0]);               
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
+    //     if(metamaskIsInstalled) {
+    //         try {
+    //             const accounts = await window.ethereum.request({
+    //                 method: "eth_requestAccounts",
+    //               });
+    //               setAccounts(accounts[0]);               
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    // }
+
+    // {accounts.length === 0 ? "Connect Wallet" : (
+    //     <div id='address'>
+    //     {accounts.substring(0, 12)}...
+    //     </div>
+    // )}
     
-
 
     return (
        <header> 
@@ -51,15 +56,15 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                   <Link to="/about" onClick={closeMobileMenu}>How it Works</Link> 
+                   <Link to="/howItWorks" onClick={closeMobileMenu}>How it Works</Link> 
                 </li>
 
                 <li>
-                    <Link to="/testimonials" onClick={closeMobileMenu}>Request a Loan</Link> 
+                    <Link to="/contactForm" onClick={closeMobileMenu}>Request a Loan</Link> 
                 </li>
 
                 <li>
-                    <Link to="/contactUs" onClick={closeMobileMenu}>About Us</Link>     
+                    <Link to="/about" onClick={closeMobileMenu}>About Us</Link>     
                 </li>
 
                 <li>
@@ -72,11 +77,7 @@ const Navbar = () => {
                             onClick={(e)=> {
                                 e.preventDefault();
                                 dispatch(connect());
-                            }}> {accounts.length === 0 ? "Connect Wallet" : (
-                                <div id='address'>
-                                {accounts.substring(0, 12)}...
-                                </div>
-                            )}</button>
+                            }}>Connect Wallet</button>
                 </li>               
             </ul>
        </header>
@@ -84,6 +85,9 @@ const Navbar = () => {
 }
 
 export default Navbar;
+
+
+
 
 
 

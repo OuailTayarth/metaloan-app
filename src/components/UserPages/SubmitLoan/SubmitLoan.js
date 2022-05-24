@@ -13,7 +13,7 @@ const SubmitLoan = ({getLoan,
                     activePayment}) => {
 
     return (
-        <div className="submit-container">
+        <div className="submit-container two">
             <h1>To Have your Loan accepted  you need to deposit 30% as down payment of the total amount of the Loan </h1>
 
             <div className="count-buttons">

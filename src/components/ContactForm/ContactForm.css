@@ -5,14 +5,26 @@
     flex-direction: column;
     background-color: #000;
     color: #fff;
-    padding-top: 20px;
+    padding-top: 80px;
     width: 100%;
     
+    
+}
+
+.checkbox-container {
+  display: flex;
+}
+
+
+.checkbox-container label  {
+  text-align: left;
+  margin-left: 5px;
+  line-height: 20px;
 }
 
 .contacts .title {
     text-align: center;
-    margin: 40px 0 40px;
+    margin: 40px 0 24px;
 }
 
 .contacts .title h2 {
@@ -23,10 +35,12 @@
 }
 
 .contacts .title p {
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-size: 500;
     letter-spacing: 0.5px;
     padding-top: 10px;
+    line-height: 25px;
+    max-width: 500px;
 }
 
 .contacts .book-form {
@@ -50,7 +64,7 @@
 
 .contacts .book-form .inputBox input,
 .contacts .book-form .inputBox textarea {
-    padding: 10px;
+    padding: 13px;
     width: 100%;
     font-size: 15px;
     font-weight: 400;
@@ -117,6 +131,14 @@
 
   @media screen and (max-width: 420px) {
     .contacts .title p {
-        font-size: 1.3em;
+        font-size: 1em;
     }
   }
+
+
+  @media (max-width: 485px) {
+    .contacts .book-form .inputBox input[type = "submit"] {
+      height: 36px;
+      font-size: 12px;
+    }
+}

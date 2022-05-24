@@ -19,7 +19,7 @@ import About from "./components/About/About";
 import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import ContactForm from "./components/ContactForm/ContactForm";
-import tokenIbi from "../src/ERC20ABI.json";
+import HowItoWorks from "./components/HowItWorks/HowItoWorks";
 let web3 = new Web3(window.ethereum);
 
 
@@ -62,7 +62,7 @@ function App() {
   const [BorrowersData, setBorrowersData] = useState([]);
   const [alert, setAlert] = useState({show : false, msg: ""});
   const [activePayment, setActivePayment] = useState(false);
-
+  
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
@@ -190,9 +190,9 @@ function decrementLoanId() {
     const status = (data.activated).toString();
     let startDay = (moment.unix(data.start)).toString();
     let nextPayment = (moment.unix(data.nextPayment)).toString();
-
+    let borrowerAddress = (data.borrower).toString();
       let item = {
-        borrower : data.borrower,
+        borrower : borrowerAddress,
         startLoan: startDay,
         nextPayment: nextPayment,
         totalPayment: totalPaymentPerWallet,
@@ -211,9 +211,10 @@ function decrementLoanId() {
       const status = (el.activated).toString();
       let startDay = (moment.unix(el.start)).toString();
       let nextPayment = (moment.unix(el.nextPayment)).toString();
-      
+      let borrowerAddress = (el.borrower).toString();
+
       let item = {
-        borrower : el.borrower,
+        borrower : borrowerAddress,
         start: startDay,
         nextPayment: nextPayment,
         activated: status
@@ -232,11 +233,11 @@ function decrementLoanId() {
             <Navbar/>
             <Routes>
                 <Route path="/" element={<HeroSection/>}/>
-
+                <Route path="/howItWorks" element={<HowItoWorks/>}/>
                 <Route path="/launchApp" 
                     element={<LaunchApp fetchLoanData={fetchLoanData} 
                                         fetchBorrowersData={fetchBorrowersData}/>}>
-
+                
                     <Route path="submitLoan" 
                     element={<SubmitLoan getLoan={getLoan}
                                          incrementLoanId={incrementLoanId}
@@ -266,9 +267,8 @@ function decrementLoanId() {
                     element={<CreatePlan createPlan={createPlan}/>}/>
                 </Route>
             </Routes>
-            <About/>
-            <Testimonials/>
             <ContactForm/>
+            <About/>
             <Footer/>
         </>
     </s.Main>

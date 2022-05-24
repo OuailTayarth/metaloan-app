@@ -2,6 +2,10 @@
     text-align: center;
 }
 
+.submit-container.two {
+    margin-bottom: -36px;
+}
+
 .submit-container h1 {
     max-width: 472px;
     padding: 0px 20px;
@@ -61,3 +65,15 @@ p#count.btn {
     background-color: #676b6e;
 }
 
+
+
+@media (max-width: 485px) {
+    .submit-container h1 {
+        font-size: 1.1rem;
+    }
+
+    .submit-container h4 {
+        font-size: 1rem;
+        margin: 0px 50px;
+    }
+}

@@ -30,7 +30,7 @@
 .content .textBox p {
     font-size: 1.1em;
     padding-bottom: 20px;
-    line-height: 20px;
+    line-height: 21px;
     color: #a4a9ac;
     font-weight: 400;
 }
@@ -90,7 +90,7 @@
 
 @media (max-width: 485px) {
     .content .textBox h4 {
-        font-size: 0.7em;
+        font-size: 0.8em;
     }
 
     .content .textBox h2 {
@@ -103,7 +103,7 @@
     
     .content .btn {
         height: 36px;
-        width: 107px;
+        width: 120px;
         font-size: 12px;
     }
 

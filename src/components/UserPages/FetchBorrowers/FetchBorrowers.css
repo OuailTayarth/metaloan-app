@@ -1,8 +1,8 @@
 .borrowers-container {
     width: 95vw;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    place-items: center;
+    grid-template-columns: repeat(auto-fill,516px);
+    justify-content: center;
 }
 
 .loan-container {
@@ -12,15 +12,16 @@
 }
 
 
-
 .single-borrower {
     background-color: #6b7379;
     color: #fff;
     border-radius: 6px;
-    padding: 20px;
+    padding: 16px 0px;
+    width: 439px;    
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     margin: auto;
+    text-align: center;
 }
 
 .single-borrower:hover {
@@ -28,17 +29,19 @@
 }
 
 .single-borrower h1 {
-    color: #fff;
+    color: #000;
     font-weight: 500;
     padding: 2px 0px;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .single-borrower h1 span {
-    font-weight: 300;
+    font-weight: 400;
     font-size: 17px;
+    max-width: 50px;
+    line-height: 24px;
 }
 
 .message {
@@ -53,15 +56,35 @@
     cursor: pointer;
 }
 
+.loan-container.tree {
+    margin-bottom: -60px;
+}
+
 .message:hover {
     transform: translateY(-3px);
 }
 
 
-/* background: #000;
-    padding: 5px;
-    border-radius: 6px; */
+.borrowers-container.one {
+    margin-bottom: -21px;
+}
 
+
+@media (max-width: 485px) {
+    .single-borrower h1 {
+        font-size: 17px;
+    }
+
+    .single-borrower h1 span {
+        font-size: 15px;
+    }
+
+    .single-borrower {
+        width: 371px;
+    }
+
+    
+}
 
 
 
