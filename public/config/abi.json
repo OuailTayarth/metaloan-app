@@ -16,7 +16,7 @@
 			{
 				"indexed": true,
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			},
 			{
@@ -47,7 +47,7 @@
 			{
 				"indexed": true,
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			},
 			{
@@ -84,7 +84,7 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			},
 			{
@@ -140,7 +140,7 @@
 			{
 				"indexed": true,
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			},
 			{
@@ -152,6 +152,45 @@
 		],
 		"name": "PlanDeleted",
 		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "activeLoans",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "borrower",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "start",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "nextPayment",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "activated",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -236,7 +275,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			}
 		],
@@ -249,7 +288,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			}
 		],
@@ -266,71 +305,6 @@
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "engaged",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "planId",
-				"type": "uint256"
-			}
-		],
-		"name": "fecthMyLoan",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "address payable",
-						"name": "borrower",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "start",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "nextPayment",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "activated",
-						"type": "bool"
-					}
-				],
-				"internalType": "struct ERC20MetaLoan.SubmitLoan",
-				"name": "",
-				"type": "tuple"
 			}
 		],
 		"stateMutability": "view",
@@ -363,7 +337,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct ERC20MetaLoan.SubmitLoan[]",
+				"internalType": "struct MetaLoanPayment.SubmittedLoan[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -374,8 +348,54 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			},
+			{
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
+				"type": "uint256"
+			}
+		],
+		"name": "fetchMyLoan",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address payable",
+						"name": "borrower",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "start",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nextPayment",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "activated",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct MetaLoanPayment.SubmittedLoan",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_planId",
 				"type": "uint256"
 			}
 		],
@@ -404,7 +424,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct ERC20MetaLoan.Plan",
+				"internalType": "struct MetaLoanPayment.Plan",
 				"name": "",
 				"type": "tuple"
 			}
@@ -439,7 +459,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct ERC20MetaLoan.Plan[]",
+				"internalType": "struct MetaLoanPayment.Plan[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -549,7 +569,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			}
 		],
@@ -562,7 +582,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			}
 		],
@@ -643,33 +663,29 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "usdtToken",
-		"outputs": [
+		"inputs": [
 			{
-				"internalType": "contract IERC20",
-				"name": "",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
+		"name": "withdrawEth",
+		"outputs": [],
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "planId",
+				"name": "_planId",
 				"type": "uint256"
 			}
 		],
-		"name": "withdraw",
+		"name": "withdrawToken",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
-	},
-	{
-		"stateMutability": "payable",
-		"type": "receive"
 	}
 ]

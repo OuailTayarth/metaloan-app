@@ -2,29 +2,9 @@
 pragma solidity ^0.8.6;
 
 
-// 
-/*  Inside the monthly payement we include the percentage!!
-    take a look at oracle
-    TODOS:
-    add managers and owner
-    // Keep track of unpaid loans and paid loans
-    // return all the subscription of all addresses
-    // after 3 month missed payement we should add a late fee
-    //update upfront pyement and downpayment
-    // fix lint error with currentIme function
-    // check tx-origin
-    // add diffetent addres token inside each plan. tokenAddress to get paid with. x 
-    // create a function to withraw funds from the smart contract to onwer wallet. x
-    // transfering the funds from wallet to another is succufful x
-    // I have to approve the smart contract 
-    // ask omar who is going to delete the loan/user or the plan/owner
-    // if should I give the right to the user to have only one loan per address.
-*/ 
-
-
 // contract last address 0x46d143c0E594775ecfEBAD12355d68ca9d1C6293
 
-import "openzeppelin-contracts/token/ERC20/IERC20.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract ERC20MetaLoan  {
 
@@ -91,8 +71,6 @@ contract ERC20MetaLoan  {
     /* From address to ID to Address to Submitted Loan */ 
     mapping(address => mapping(uint => SubmittedLoan)) public activeLoans;
 
-    /* To only get loan once*/ 
-    mapping(address => bool) public engaged;
 
     /* keep track of numbers of payment for each address*/ 
     mapping(address => uint256) public totalPaymentsPerWallet;
@@ -111,11 +89,6 @@ contract ERC20MetaLoan  {
 
     modifier onlyManager() {
         require(isManager[msg.sender], "Metaloan:: Access only by Manager");
-        _;
-    }
-
-    modifier alreadyEngaged() {
-        require(!engaged[msg.sender], "MetaLoan :: You already have Loan");
         _;
     }
 
@@ -168,14 +141,13 @@ contract ERC20MetaLoan  {
     **/
     function requestLoan(uint _planId) external
     payable
-    alreadyEngaged()
     PlanExists(_planId)
     callerIsUser()
     {   
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
         Plan storage plan = idToPlan[_planId];
 
-        tokenPayment.transferFrom(msg.sender, plan.lender, plan.upfrontPayment);
+        totalPaymentTracker[msg.sender] += plan.upfrontPayment;
 
         emit PaymentSent(
             payable(msg.sender),
@@ -183,8 +155,6 @@ contract ERC20MetaLoan  {
             plan.upfrontPayment,
             _planId,
             block.timestamp);
-        
-        engaged[msg.sender] = true;
 
         activeLoans[msg.sender][_planId] = SubmittedLoan(
             payable(msg.sender),
@@ -195,7 +165,10 @@ contract ERC20MetaLoan  {
 
         allBorrowers.push(msg.sender);
         allPlansId.push(_planId); 
-        totalPaymentTracker[msg.sender] += plan.upfrontPayment;
+
+        bool sent = tokenPayment.transferFrom(msg.sender, plan.lender, plan.upfrontPayment);
+        require(sent, "Token transfer failed");
+
         emit LoanCreated(msg.sender, _planId, block.timestamp, true);
         totalLoans++;
     }
@@ -221,12 +194,14 @@ contract ERC20MetaLoan  {
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
         Plan storage plan = idToPlan[_planId];
 
-        // check how the recommended method
-        tokenPayment.transferFrom(msg.sender, plan.lender, plan.monthlyPayment);
-
         totalPaymentTracker[msg.sender] += plan.monthlyPayment; 
-        totalPaymentsPerWallet[msg.sender] += 1; 
+        totalPaymentsPerWallet[msg.sender] += 1;
         submittedLoan.nextPayment = submittedLoan.nextPayment +  1 minutes;
+
+        // check how the recommended method
+        bool sent = tokenPayment.transferFrom(msg.sender, plan.lender, plan.monthlyPayment);
+        require(sent, "Token transfer failed");
+
         emit PaymentSent(
             payable(msg.sender),
             payable(plan.lender),
@@ -267,17 +242,31 @@ contract ERC20MetaLoan  {
 
 
     /**
-    * @notice Withraw money from the contract to the Owner. 
+    * @notice Withraw Token from the contract to the Owner. 
     * @param _planId The planId for a specific loan
     **/
-    function withdraw (uint256 _planId) external payable
+    function withdrawToken (uint256 _planId) external payable
     onlyOwner()  { 
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
-        tokenPayment.transfer(msg.sender, tokenPayment.balanceOf(address(this)));
+        bool sent = tokenPayment.transfer(msg.sender, tokenPayment.balanceOf(address(this)));
+        require(sent, "transfer tokens failed");
     }
 
+
+
+
     /**
-    * @notice Activate Delete loan Function to delete loan. 
+    * @notice Withraw Eth from the contract to the Owner. 
+    * @param _amount The amount of Eth that should be transfered
+    **/
+    function withdrawEth (uint256 _amount) external payable onlyOwner() {
+        require(_amount > 0, "_amount can not be 0");
+        payable(msg.sender).transfer(_amount);
+    }
+
+
+    /**
+    * @notice Activate delete loan Function to delete loan. 
     **/
     function toggleDelete() external onlyOwner() {
         deleteTime = !deleteTime;
@@ -347,3 +336,4 @@ contract ERC20MetaLoan  {
     }
 
 }
+
