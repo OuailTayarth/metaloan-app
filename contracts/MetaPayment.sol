@@ -2,11 +2,26 @@
 pragma solidity ^0.8.6;
 
 
-// contract last address 0x46d143c0E594775ecfEBAD12355d68ca9d1C6293
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract ERC20MetaLoan  {
+
+// The lastest Contract Address => 0x220eBd4c939e95De0b52f5Cf594125eB1DC34f3D
+// Contract => 0xc9e23A04d9906cCfceea62422512f85DEEFeD8b9
+// USDT token contract => 0x8c243e7BCAEc794A79e355Dfd7e59505FE0C8417
+// Modify the 30 month period.
+// 100000000000000000000
+// add approve to the contract to spend my Token on my behalf 
+// For testing
+// should remove for the origin contract
+// The the subscriber should also needs to execute approve(yourContract, amount)
+// on the token contract directly
+
+
+
+contract MetaLoanPayment is ReentrancyGuard {
 
     // Events
     event PlanCreated(address indexed creator,
@@ -43,6 +58,7 @@ contract ERC20MetaLoan  {
     address[] public allBorrowers;
     uint[] public allPlansId; 
     address[] public managers;
+    using SafeERC20 for IERC20;
 
 
     /* Allows owner to create a Loan for each borrower */
@@ -119,7 +135,8 @@ contract ERC20MetaLoan  {
     function createPlan(address _lender,
                         address _tokenPayment,
                         uint256 _upfrontPayment,
-                        uint256 _monthlyPayment) external onlyOwner  {
+                        uint256 _monthlyPayment) external 
+                        onlyManager() {
 
     idToPlan[totalPlans] = Plan (
         payable(_lender),
@@ -128,7 +145,7 @@ contract ERC20MetaLoan  {
         _monthlyPayment
     );
 
-    
+
     emit PlanCreated(msg.sender, totalPlans, _upfrontPayment,_monthlyPayment); 
       totalPlans++;
     }
@@ -143,6 +160,7 @@ contract ERC20MetaLoan  {
     payable
     PlanExists(_planId)
     callerIsUser()
+    nonReentrant()
     {   
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
         Plan storage plan = idToPlan[_planId];
@@ -165,15 +183,12 @@ contract ERC20MetaLoan  {
 
         allBorrowers.push(msg.sender);
         allPlansId.push(_planId); 
-
-        bool sent = tokenPayment.transferFrom(msg.sender, plan.lender, plan.upfrontPayment);
-        require(sent, "Token transfer failed");
-
-        emit LoanCreated(msg.sender, _planId, block.timestamp, true);
         totalLoans++;
+
+        tokenPayment.safeTransferFrom(msg.sender, plan.lender, plan.upfrontPayment);
+        emit LoanCreated(msg.sender, _planId, block.timestamp, true);
+        
     }
-
-
 
 
     /**
@@ -186,6 +201,7 @@ contract ERC20MetaLoan  {
         external payable
         LoanExists(_planId)
         callerIsUser()
+        nonReentrant()
         {
         SubmittedLoan storage submittedLoan = activeLoans[msg.sender][_planId];
 
@@ -198,10 +214,8 @@ contract ERC20MetaLoan  {
         totalPaymentsPerWallet[msg.sender] += 1;
         submittedLoan.nextPayment = submittedLoan.nextPayment +  1 minutes;
 
-        // check how the recommended method
-        bool sent = tokenPayment.transferFrom(msg.sender, plan.lender, plan.monthlyPayment);
-        require(sent, "Token transfer failed");
 
+        tokenPayment.safeTransferFrom(msg.sender, plan.lender, plan.monthlyPayment);
         emit PaymentSent(
             payable(msg.sender),
             payable(plan.lender),
@@ -246,10 +260,9 @@ contract ERC20MetaLoan  {
     * @param _planId The planId for a specific loan
     **/
     function withdrawToken (uint256 _planId) external payable
-    onlyOwner()  { 
+    onlyOwner() nonReentrant()  { 
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
-        bool sent = tokenPayment.transfer(msg.sender, tokenPayment.balanceOf(address(this)));
-        require(sent, "transfer tokens failed");
+        tokenPayment.safeTransfer(msg.sender, tokenPayment.balanceOf(address(this)));
     }
 
 
@@ -259,7 +272,7 @@ contract ERC20MetaLoan  {
     * @notice Withraw Eth from the contract to the Owner. 
     * @param _amount The amount of Eth that should be transfered
     **/
-    function withdrawEth (uint256 _amount) external payable onlyOwner() {
+    function withdrawEth (uint256 _amount) external payable onlyOwner() nonReentrant() {
         require(_amount > 0, "_amount can not be 0");
         payable(msg.sender).transfer(_amount);
     }

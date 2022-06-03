@@ -74,6 +74,7 @@ function App() {
   //   navigate("/", {replace: true});
   // },[]);
 
+  
   // ShowAlert
   function showAlert(show = false, msg = "") {
       setAlert({show:show, msg:msg});
@@ -183,7 +184,7 @@ function decrementLoanId() {
   // /*Fetch all Loans */
   async function fetchLoanData() {
     const userAccount = await blockchain.account;
-    const data = await blockchain.smartContract.methods.fecthMyLoan(userAccount,"0").call();
+    const data = await blockchain.smartContract.methods.fetchMyLoan(userAccount,"0").call();
     const paymentData = await blockchain.smartContract.methods.totalPaymentTracker(userAccount).call();
     const totalPaymentPerWallet = web3.utils.fromWei(paymentData, "ether");
     console.log(totalPaymentPerWallet);

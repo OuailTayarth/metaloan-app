@@ -26,8 +26,6 @@ const HeroSection = () => {
                 <div className="imgBox">
                     <img src={metaHeroImg} alt="ImageHero" className='metaHero'/>
                 </div>
-
-                
             </div>
 
     )

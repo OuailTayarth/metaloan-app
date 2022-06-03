@@ -2,7 +2,6 @@ import React,{useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from "../../redux/blockchain/blockchainActions";
 import { useDispatch, useSelector} from "react-redux";
-import { fetchData } from "../../redux/data/dataActions";
 import './Navbar.css';
 
 const Navbar = () => {
