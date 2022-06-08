@@ -181,7 +181,7 @@ function decrementLoanId() {
   
   
 
-  // /*Fetch all Loans */
+  // /* Fetch all Loans */
   async function fetchLoanData() {
     const userAccount = await blockchain.account;
     const data = await blockchain.smartContract.methods.fetchMyLoan(userAccount,"0").call();

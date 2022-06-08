@@ -6,7 +6,7 @@ import './Navbar.css';
 
 const Navbar = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const blockchain = useSelector((state) => state.blockchain);
     const [click, setClick] = useState(false);
     const [accounts, setAccounts] = useState([]);
@@ -66,7 +66,7 @@ const Navbar = () => {
                     <Link to="/About" onClick={closeMobileMenu}>About Us</Link>     
                 </li>
 
-                <li>
+                {/* <li>
                     <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
                 </li>
                 
@@ -77,7 +77,7 @@ const Navbar = () => {
                                 e.preventDefault();
                                 dispatch(connect());
                             }}>Connect Wallet</button>
-                </li>               
+                </li>                */}
             </ul>
        </header>
     )

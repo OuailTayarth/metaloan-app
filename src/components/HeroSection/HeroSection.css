@@ -20,7 +20,7 @@
 }
 
 .content .textBox h4 {
-    color:#7e81dc ;
+    color: #fffca1 ;
     font-size: 1em;
     line-height: 1em;
     margin-top: 20px;
@@ -72,8 +72,8 @@
 
 .content .btn {
     height: 40px;
-    width: 118px;
-    background-color: #7e81dc;
+    width: 157px;
+    background-color: #aed2f4;
     border: none;
     color: #000;
     cursor: pointer;
@@ -103,7 +103,7 @@
     
     .content .btn {
         height: 36px;
-        width: 120px;
+        width: 147px;
         font-size: 12px;
     }
 

@@ -5,7 +5,7 @@
     flex-direction: column;
     background-color: #000;
     color: #fff;
-    padding-top: 80px;
+    padding-top: 103px;
     width: 100%;
     
     
@@ -83,7 +83,7 @@
 
 .contacts .book-form .inputBox input[type = "submit"] {
     display: inline-block;
-    background:#7e81dc;
+    background:#aed2f4;
     color: #000;
     border: none;
     height: 40px;
@@ -106,6 +106,7 @@
 @media screen and (min-width: 576px) {
     .contacts {
       width: 70%;
+      padding-top: 10px;
     }
   }
 

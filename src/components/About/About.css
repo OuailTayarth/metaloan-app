@@ -2,15 +2,17 @@
     position: relative;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
-    padding: 50px 0px;
+    padding: 20px 0px 20px 0px;
+    margin-top: 125px;
 }
 
 .about-content .textBox {
     position: relative;
     max-width: 550px;
     margin: 0px 100px 0px 20px;
+    padding-left: 48px;
     
 }
 
@@ -61,8 +63,8 @@
 
 .about-content .btn {
     height: 40px;
-    width: 118px;
-    background-color: #7e81dc;
+    width: 157px;
+    background-color: #aed2f4;
     border: none;
     color: #000;
     cursor: pointer;
@@ -85,7 +87,6 @@
         display: flex;
         justify-content: flex-end;
         align-items: flex-start;
-        padding: 90px 0px;
         flex-direction: column-reverse;
     }
 
@@ -102,7 +103,8 @@
     }
 
     .about-content .textBox {
-        margin-left: 50px;
+        margin: 0px 20px 0px 0px;
+        padding-right: 20px;
     }
 }
 
@@ -113,7 +115,8 @@
     }
 
     .about-content .textBox h2 {
-        font-size: 3.8em;
+        font-size: 2.8em;
+        margin-bottom: 11px;
     }
 
     .about-content .textBox p {
@@ -122,11 +125,11 @@
     
     .about-content .btn {
         height: 36px;
-        width: 120px;
+        width: 150px;
         font-size: 12px;
     }
 
     .about-content .textBox {
-        margin-left: 30px;
+        margin-left: 0px;
     }
 }
