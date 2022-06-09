@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
     padding: 20px 0px 20px 0px;
     margin-top: 125px;
@@ -12,7 +12,7 @@
     position: relative;
     max-width: 550px;
     margin: 0px 100px 0px 20px;
-    padding-left: 48px;
+    padding-left: 120px;
     
 }
 
@@ -33,8 +33,8 @@
 .about-content .imgBox {
     width: 600px;
     display: flex;
-    justify-content: flex-end;
-    /* padding-right: 50px; */
+    justify-content: flex-start;
+    
 }
 
 .about-content .imgBox img {
@@ -105,6 +105,7 @@
     .about-content .textBox {
         margin: 0px 20px 0px 0px;
         padding-right: 20px;
+        padding-left: 49px;
     }
 }
 
