@@ -45,6 +45,10 @@
   margin-top: 20px;
 }
 
+.Footer .container .navigation li a {
+  font-size: 2rem;
+}
+
 
 
 .icon:hover {
@@ -90,10 +94,14 @@
 @media (min-width: 320px) and (max-width: 480px) {
   
   .Footer .container .navigation li a {
-    font-size: 15px;
-}
+    font-size: 2.2rem;
+  }
 
-.Footer .container .navigation {
+  .Footer .container .navigation li {
+    margin-bottom: 0;
+  }
+
+  .Footer .container .navigation {
   flex-direction: column;
 }
 

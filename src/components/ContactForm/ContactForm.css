@@ -5,11 +5,9 @@
     flex-direction: column;
     background-color: #000;
     color: #fff;
-    padding-top: 103px;
+    padding-top: 80px;
     width: 100%;
-    
-    
-}
+  }
 
 .checkbox-container {
   display: flex;
@@ -106,7 +104,6 @@
 @media screen and (min-width: 576px) {
     .contacts {
       width: 70%;
-      padding-top: 10px;
     }
   }
 
@@ -133,6 +130,7 @@
   @media screen and (max-width: 420px) {
     .contacts .title p {
         font-size: 1em;
+        max-width: 320px;
     }
   }
 
@@ -142,4 +140,9 @@
       height: 36px;
       font-size: 12px;
     }
+
+    .contacts .title h2 {
+      font-size: 2.7em;
+    }
+    
 }

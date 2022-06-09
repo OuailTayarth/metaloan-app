@@ -55,6 +55,10 @@ const Navbar = () => {
                 </li>
 
                 <li>
+                    <Link to="/About" onClick={closeMobileMenu}>About Us</Link>     
+                </li>
+
+                <li>
                    <Link to="/howItWorks" onClick={closeMobileMenu}>How it Works</Link> 
                 </li>
 
@@ -62,9 +66,7 @@ const Navbar = () => {
                     <Link to="/ContactForm" onClick={closeMobileMenu}>Request a Loan</Link> 
                 </li>
 
-                <li>
-                    <Link to="/About" onClick={closeMobileMenu}>About Us</Link>     
-                </li>
+                
 
                 {/* <li>
                     <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     

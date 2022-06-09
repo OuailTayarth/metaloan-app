@@ -10,7 +10,7 @@
 .howItWorks-content .textBox {
     position: relative;
     max-width: 550px;
-    margin: 0px 100px 0px 20px;
+    margin: 0px 20px 0px 20px;
     
 }
 
@@ -18,6 +18,7 @@
     color: #fff;
     font-size: 5em;
     line-height: 1em;
+    margin-bottom: 10px;
 }
 
 .howItWorks-content .textBox p {
@@ -59,7 +60,7 @@
 
 .howItWorks-content .btn {
     height: 40px;
-    width: 118px;
+    width: 155px;
     background-color: #aed2f4;
     border: none;
     color: #000;
@@ -96,13 +97,14 @@
         align-items: flex-start;
         padding: 90px 0px;
         flex-direction: column-reverse;
+        margin-top: 70px;
     }
 
     .howItWorks-content .imgBox {
         height: 350px;
         width: 100%;
         display: flex;
-        justify-content: center;
+        justify-content: start;
         padding-top: 50px;
     }
 
@@ -122,7 +124,7 @@
     }
 
     .howItWorks-content .textBox h2 {
-        font-size: 3.8em;
+        font-size: 2.8em;
     }
 
     .howItWorks-content .textBox p {
@@ -131,7 +133,7 @@
     
     .howItWorks-content .btn {
         height: 36px;
-        width: 107px;
+        width: 155px;
         font-size: 12px;
     }
 

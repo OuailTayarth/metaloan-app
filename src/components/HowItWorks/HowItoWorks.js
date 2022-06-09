@@ -24,7 +24,7 @@ const HowItoWorks = () => {
                     <li>6. After you complete your monthly payments, MetaLoan sends the metaverse land to your wallet.</li>
                 </ul>
                 <button className='btn'
-                        onClick={()=> navigate("launchApp/submitLoan")}>Get A Loan</button>
+                        onClick={()=> navigate("launchApp/submitLoan")}>Request a Loan</button>
             </div>
         </div>
 )
