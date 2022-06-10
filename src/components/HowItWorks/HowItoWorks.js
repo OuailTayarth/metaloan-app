@@ -1,6 +1,6 @@
 import React from "react";
 import "./HowItoWorks.css";
-import AboutImg from "../../assets/aboutImg.png";
+import metaHeroImg from "../../assets/metaHero.png";
 import { useNavigate } from "react-router-dom";
 
 
@@ -9,7 +9,7 @@ const HowItoWorks = () => {
     return (
         <div className="howItWorks-content">
             <div className="imgBox">
-                <img src={AboutImg} alt="aboutImg" className='metaHero'/>
+                <img src={metaHeroImg} alt="aboutImg" className='metaHero'/>
             </div>
 
             <div className="textBox">

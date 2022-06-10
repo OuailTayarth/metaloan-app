@@ -21,16 +21,23 @@ const Footer = () => {
 
                <div className="row">
                 <ul className="social-media">
-                    <li>
+                    {/* <li>
                         <Link to="/" className="icon"> <FaFacebook/> </Link>
+                    </li> */}
+
+                    <li>
+                        <a href="https://twitter.com/meta_loan?s=11&t=o0Jez5odsPGMSJg7SgLfFQ" 
+                        className="icon"
+                        target="_blank"
+                        rel="noreferrer"> <FaTwitter/> </a>
                     </li>
 
                     <li>
-                        <Link to="/" className="icon"> <FaTwitter/> </Link>
-                    </li>
-
-                    <li>
-                        <Link to="/" className="icon"> <AiOutlineInstagram/> </Link>
+                        <a  
+                        href="https://www.instagram.com/metaloan_/?igshid=YmMyMTA2M2Y=" 
+                        className="icon" 
+                        target="_blank" 
+                        rel="noreferrer"> <AiOutlineInstagram/> </a>
                     </li>
                 </ul>
                 
