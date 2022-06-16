@@ -67,11 +67,10 @@ const Navbar = () => {
                 </li>
 
                 
-
-                {/* <li>
+                <li>
                     <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
                 </li>
-                
+
                 <li>
                     <button className='btn'
                             id="connect"
@@ -79,7 +78,7 @@ const Navbar = () => {
                                 e.preventDefault();
                                 dispatch(connect());
                             }}>Connect Wallet</button>
-                </li>                */}
+                </li>
             </ul>
        </header>
     )

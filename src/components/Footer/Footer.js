@@ -43,7 +43,7 @@ const Footer = () => {
                 
                     <div className="message-legal">
                         <p>©MetaLoan.All Right Reserved 2022</p>
-                    </div> 
+                    </div>
                </div>
            </div>
        </div>

@@ -15,7 +15,7 @@ const ContactForm = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailsjs.sendForm("service_r8eentc","template_51zyd8b", form.current, "7ynNpxuSKCAwDl4oo")
+    emailsjs.sendForm("service_q0nfveq","template_rjc2l0k", form.current, "SueLEDML4gZNVsR2H")
             .then((result) => {
               console.log(result.text);
               e.target.reset();
@@ -51,7 +51,7 @@ const ContactForm = () => {
           </div>
 
           <div className="checkbox-container">
-            <input type="checkbox" id="scales" name="scales" disabled={handleClick} />
+            <input type="checkbox" id="scales" name="user_checkbox" disabled={handleClick} />
             <label for="scales">MetaLoan requires payment of a 30% down payment before any purchase. By submitting a request you acknowledge this requirement.</label>
           </div>
 
@@ -65,3 +65,24 @@ const ContactForm = () => {
 }
 
 export default ContactForm;
+
+
+
+
+
+/*
+
+Hello {{to_name}},
+
+You got a new message from {{user_name}}:
+
+{{message}}
+
+Link to the desired Land(Decentraland) : {{user_link}}
+
+Email : {{user_email}}
+
+Best wishes,
+EmailJS team
+
+*/

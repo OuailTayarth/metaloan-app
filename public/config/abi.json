@@ -337,7 +337,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct MetaLoanPayment.SubmittedLoan[]",
+				"internalType": "struct MetaTest.SubmittedLoan[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -383,7 +383,7 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct MetaLoanPayment.SubmittedLoan",
+				"internalType": "struct MetaTest.SubmittedLoan",
 				"name": "",
 				"type": "tuple"
 			}
@@ -424,7 +424,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct MetaLoanPayment.Plan",
+				"internalType": "struct MetaTest.Plan",
 				"name": "",
 				"type": "tuple"
 			}
@@ -459,7 +459,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct MetaLoanPayment.Plan[]",
+				"internalType": "struct MetaTest.Plan[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -581,6 +581,25 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "paymentCounterPerWallet",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "_planId",
 				"type": "uint256"
@@ -619,26 +638,7 @@
 				"type": "address"
 			}
 		],
-		"name": "totalPaymentTracker",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "totalPaymentsPerWallet",
+		"name": "totalPaymentPerWallet",
 		"outputs": [
 			{
 				"internalType": "uint256",

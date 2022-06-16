@@ -20,6 +20,7 @@ import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import ContactForm from "./components/ContactForm/ContactForm";
 import HowItoWorks from "./components/HowItWorks/HowItoWorks";
+import ERC20ABI from "./ERC20ABI.json";
 let web3 = new Web3(window.ethereum);
 
 
@@ -141,10 +142,28 @@ function decrementLoanId() {
 
 
   // function to get a loan at a specific planId
-  function getLoan() {
+  async function getLoan() {
     showAlert(true, "Welcome to MetaLoan, Your payment is processing...!");
     setActivePayment(true);
-    blockchain.smartContract.methods.requestLoan(loanId).send({from : blockchain.account})
+    let plan = await blockchain.smartContract.methods.idToPlan(loanId).call();
+    let tokenPayment = plan.tokenPayment;
+    let upfrontPayment = plan.upfrontPayment;
+    let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
+
+    // Perfect approve Example bellow
+    // USDTToken.methods.approve("0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6", "1000000").send({from : blockchain.account});
+    const MetaLoanAddress = "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6";
+    // We can't use to :  because we are approving not transferring funds
+    USDTToken.methods.approve(MetaLoanAddress, upfrontPayment)
+    .send({from : blockchain.account,
+           maxPriorityFeePerGas: null,
+           maxFeePerGas: null})       
+    .then(       
+     await blockchain.smartContract.methods.requestLoan(loanId)
+    .send({from : blockchain.account,
+           maxPriorityFeePerGas: null,
+           maxFeePerGas: null
+    })
     .once("error", (err)=> {
       let error = err.toString();
       console.log(error);
@@ -157,7 +176,7 @@ function decrementLoanId() {
       setActivePayment(false);
       showAlert(true, "Congratulations, You loan has been submitted successfully!");
       dispatch(fetchData(blockchain.account));
-    });
+    }))
   }
 
   // pay loan

@@ -1,10 +1,10 @@
 {
-    "CONTRACT_ADDRESS": "0x6dd763DDbC5CC729c21224c4B949D93F57CAd806",
+    "CONTRACT_ADDRESS": "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6",
     "SCAN_LINK": "https://rinkeby.etherscan.io/address/0x1b4eae2dc7ca0b68643a26177bfc9c069b3d6e05",
     "NETWORK": {
-      "NAME": "Rinkeby Test Network",
-      "SYMBOL": "ETH",
-      "ID": 4
+      "NAME": "Polygon Mainnet",
+      "SYMBOL": "MATIC",
+      "ID": 137
     },
     "NFT_NAME": "Test",
     "SYMBOL": "HFH",
