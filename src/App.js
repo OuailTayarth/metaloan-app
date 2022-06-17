@@ -149,15 +149,15 @@ function decrementLoanId() {
     let tokenPayment = plan.tokenPayment;
     let upfrontPayment = plan.upfrontPayment;
     let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
-
     // Perfect approve Example bellow
     // USDTToken.methods.approve("0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6", "1000000").send({from : blockchain.account});
     const MetaLoanAddress = "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6";
     // We can't use to :  because we are approving not transferring funds
-    USDTToken.methods.approve(MetaLoanAddress, upfrontPayment)
+    USDTToken.methods
+    .approve(MetaLoanAddress, upfrontPayment)
     .send({from : blockchain.account,
            maxPriorityFeePerGas: null,
-           maxFeePerGas: null})       
+           maxFeePerGas: null})   
     .then(       
      await blockchain.smartContract.methods.requestLoan(loanId)
     .send({from : blockchain.account,
@@ -180,10 +180,28 @@ function decrementLoanId() {
   }
 
   // pay loan
-  function payLoan() {
+  async function payLoan() {
     setActivePayment(true);
     showAlert(true, "Happy to see you, Your payment is processing...!");  
-    blockchain.smartContract.methods.payLoan(loanId).send({from: blockchain.account})
+    let plan = await blockchain.smartContract.methods.idToPlan(loanId).call();
+    let tokenPayment = plan.tokenPayment;
+    let monthlyPayment = plan.monthlyPayment;
+    console.log(monthlyPayment, tokenPayment);
+    let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
+
+    const MetaLoanAddress = "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6";
+    
+    USDTToken.methods
+    .approve(MetaLoanAddress, monthlyPayment)
+    .send({from : blockchain.account,
+           maxPriorityFeePerGas: null,
+           maxFeePerGas: null})
+    .then(
+    await blockchain.smartContract.methods.payLoan(loanId)
+    .send({from: blockchain.account,
+           maxPriorityFeePerGas: null,
+           maxFeePerGas: null
+    })
     .once("error", (err)=> {
       console.log(err);
       setActivePayment(false);
@@ -194,7 +212,7 @@ function decrementLoanId() {
       setActivePayment(false);
       showAlert(true, "Congratulations, You monthly payment has been submitted successfully");
       dispatch(fetchData(blockchain.account));
-    })
+    }))
   }
 
   
