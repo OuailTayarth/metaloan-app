@@ -10,8 +10,7 @@
 .howItWorks-content .textBox {
     position: relative;
     max-width: 550px;
-    margin: 0px 20px 0px 20px;
-    
+    margin: 0px 100px 0px 20px;
 }
 
 .howItWorks-content .textBox h2 {
@@ -30,8 +29,8 @@
 .howItWorks-content .imgBox {
     width: 600px;
     display: flex;
-    justify-content: flex-end;
-    /* padding-right: 50px; */
+    justify-content: flex-start;
+    
 }
 
 .howItWorks-content .imgBox img {

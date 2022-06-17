@@ -39,7 +39,7 @@
     width: 600px;
     display: flex;
     justify-content: flex-end;
-    /* padding-right: 50px; */
+    padding-right: 50px;
 }
 
 .content .imgBox img {
@@ -85,6 +85,21 @@
 
 .content .btn:hover {
     transform: translateY(-6%);
+}
+
+
+@media (max-width:991px) {
+    .content {
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction:column;
+        padding-top: 132px;
+    }
+
+    .content .imgBox {
+        display: none;
+    }
+
 }
 
 

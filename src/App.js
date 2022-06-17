@@ -16,7 +16,6 @@ import Navbar from "./components/Navbar/Navbar";
 import CreatePlan from "./components/CreatePlan/CreatePlan";
 import HeroSection from "./components/HeroSection/HeroSection";
 import About from "./components/About/About";
-import Testimonials from "./components/Testimonials/Testimonials";
 import Footer from "./components/Footer/Footer";
 import ContactForm from "./components/ContactForm/ContactForm";
 import HowItoWorks from "./components/HowItWorks/HowItoWorks";
@@ -25,40 +24,12 @@ let web3 = new Web3(window.ethereum);
 
 
 
-
-
-
-/*
-  To get the tokenId I can add or initial a variable at 0 inside the smart contract 
-  instead of array.length, so I can make a call for the tokenId from the contract
-  TODOS: tracking the token ID
-       : Create an nave with a router  
-       : How to get the error from the smart contract;
-       : Smart the instance if the smart contract is not activated
-       : Create a plan navbar
-       : If I don't connect dispatch connect I will not be able to see the smart contract
-       : I got stuck on returning all the borrowers
-       : add the animation of developer/designer/trust
-       : background animated video metaverse
-       : merging the function of NFt minter dapp with the current dapp
-       : return array of arrays and store it inside an array.
-       : convert arrays inside array to object= TODOS
-       : data.response the error cause Promise.all should be await as well as the
-       call
-       make payment input;
-       based on the address I should display The Tokens logo
-       fix the problem of when I click on borrowers I need to to click twice on the connect
-       wallet smart contract twice????????
-       How should I get the abi of USDC abi on polygon network
-*/
-
-
 function App() {
   const dispatch = useDispatch();
   const blockchain = useSelector((state) => state.blockchain);
   const [loanId, setLoanId] = useState(0);
   const [tokenPaymentAddress, setTokenPaymentAddress] = useState([]);
-  console.log(tokenPaymentAddress);
+
   const [LoanData, setLoanData] = useState([]);
   const [BorrowersData, setBorrowersData] = useState([]);
   const [alert, setAlert] = useState({show : false, msg: ""});
@@ -107,52 +78,56 @@ function App() {
         newLoanId = 100;
     }
     setLoanId(newLoanId);
-}
-
-// Decrement Loan Id
-function decrementLoanId() {
-  let newLoanId = loanId + 1;
-  if(newLoanId > 0) {
-      newLoanId = 0;
   }
-  setLoanId(newLoanId);
-}
 
-
-  // /* Function to create a plan from the owner wallet | could be solve with inputs form */
-  function createPlan() {
-    const upfrontPayment = web3.utils.toWei("20", "ether");
-    const monthlyPayment = web3.utils.toWei("20", "ether");
-    const lenderAddress = "0x68ec584C5f130319E71992bC9A8369111a07c5FA";
-    const tokenPaymentAddress = "0x5B4c93B48A18F5DfA3e86Dcb3843477A82955cb5";
-    console.log(upfrontPayment,monthlyPayment);
-    blockchain.smartContract.methods
-    .createPlan(lenderAddress, tokenPaymentAddress,upfrontPayment, monthlyPayment)
-    .send({from : blockchain.account})
-    .once("error", (err)=> {
-      console.log(err);
-      console.log("Transaction was rejected!");
-    })
-    .then((receipt)=> {
-      console.log(receipt);
-      dispatch(fetchData(blockchain.account));
-    });
-
+  // Decrement Loan Id
+  function decrementLoanId() {
+    let newLoanId = loanId + 1;
+    if(newLoanId > 0) {
+        newLoanId = 0;
+    }
+    setLoanId(newLoanId);
   }
 
 
-  // function to get a loan at a specific planId
+  // // /* Function to create a plan from the owner wallet | could be solve with inputs form */
+  // function createPlan() {
+  //   const upfrontPayment = web3.utils.toWei("20", "ether");
+  //   const monthlyPayment = web3.utils.toWei("20", "ether");
+  //   const lenderAddress = "0x68ec584C5f130319E71992bC9A8369111a07c5FA";
+  //   const tokenPaymentAddress = "0x5B4c93B48A18F5DfA3e86Dcb3843477A82955cb5";
+  //   console.log(upfrontPayment,monthlyPayment);
+  //   blockchain.smartContract.methods
+  //   .createPlan(lenderAddress, tokenPaymentAddress,upfrontPayment, monthlyPayment)
+  //   .send({from : blockchain.account})
+  //   .once("error", (err)=> {
+  //     console.log(err);
+  //     console.log("Transaction was rejected!");
+  //   })
+  //   .then((receipt)=> {
+  //     console.log(receipt);
+  //     dispatch(fetchData(blockchain.account));
+  //   });
+
+  // }
+
+
+  // To request a Loan at a specific planId
   async function getLoan() {
     showAlert(true, "Welcome to MetaLoan, Your payment is processing...!");
     setActivePayment(true);
+
+    /* Get Plan Information */
     let plan = await blockchain.smartContract.methods.idToPlan(loanId).call();
     let tokenPayment = plan.tokenPayment;
     let upfrontPayment = plan.upfrontPayment;
+
+    /* Create Instance of USDC tokens */ 
     let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
-    // Perfect approve Example bellow
-    // USDTToken.methods.approve("0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6", "1000000").send({from : blockchain.account});
+
     const MetaLoanAddress = "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6";
-    // We can't use to :  because we are approving not transferring funds
+
+    /* We can't use to: because we are approving not transferring funds */
     USDTToken.methods
     .approve(MetaLoanAddress, upfrontPayment)
     .send({from : blockchain.account,
@@ -179,14 +154,18 @@ function decrementLoanId() {
     }))
   }
 
-  // pay loan
+
+  /* To Pay for monthly Loan */
   async function payLoan() {
     setActivePayment(true);
     showAlert(true, "Happy to see you, Your payment is processing...!");  
+
+    /* Get Plan Information */
     let plan = await blockchain.smartContract.methods.idToPlan(loanId).call();
     let tokenPayment = plan.tokenPayment;
     let monthlyPayment = plan.monthlyPayment;
-    console.log(monthlyPayment, tokenPayment);
+
+    /* Create Instance of USDC tokens */ 
     let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
 
     const MetaLoanAddress = "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6";
@@ -218,17 +197,24 @@ function decrementLoanId() {
   
   
 
-  // /* Fetch all Loans */
+  /* Fetch loan per user */
   async function fetchLoanData() {
+    /* User Account */
     const userAccount = await blockchain.account;
-    const data = await blockchain.smartContract.methods.fetchMyLoan(userAccount,"0").call();
-    const paymentData = await blockchain.smartContract.methods.totalPaymentTracker(userAccount).call();
+
+    /* Get Loan information */
+    const data = await blockchain.smartContract.methods.fetchMyLoan(userAccount, loanId).call();
+
+    /* Get the total Payment of each wallet */
+    const paymentData = await blockchain.smartContract.methods.totalPaymentPerWallet(userAccount).call();
     const totalPaymentPerWallet = web3.utils.fromWei(paymentData, "ether");
-    console.log(totalPaymentPerWallet);
+
+    /* Loan information */
     const status = (data.activated).toString();
     let startDay = (moment.unix(data.start)).toString();
     let nextPayment = (moment.unix(data.nextPayment)).toString();
     let borrowerAddress = (data.borrower).toString();
+
       let item = {
         borrower : borrowerAddress,
         startLoan: startDay,
@@ -236,16 +222,18 @@ function decrementLoanId() {
         totalPayment: totalPaymentPerWallet,
         activated: status
       }
-
       setLoanData(item);
   }
 
 
   // fetch borrowers Data 
   async function fetchBorrowersData () {
+    /* Get all borrowers */
     const data = await blockchain.smartContract.methods.fetchAllBorrowers().call();
-    
+
+    /* Fetch all borrowers */
     let items = await Promise.all(data.map(async (el) => {
+      /* All borrowers information */
       const status = (el.activated).toString();
       let startDay = (moment.unix(el.start)).toString();
       let nextPayment = (moment.unix(el.nextPayment)).toString();
@@ -257,7 +245,7 @@ function decrementLoanId() {
         nextPayment: nextPayment,
         activated: status
       }
-      console.log(item);
+
       return item;
       
     }));
@@ -302,8 +290,8 @@ function decrementLoanId() {
                     <Route path="fetchBorrowers" 
                     element={<FetchBorrowers BorrowersData = {BorrowersData}/>}/>
 
-                    <Route path="createPlan"
-                    element={<CreatePlan createPlan={createPlan}/>}/>
+                    {/* <Route path="createPlan"
+                    element={<CreatePlan createPlan={createPlan}/>}/> */}
                 </Route>
             </Routes>
             <ContactForm/>
