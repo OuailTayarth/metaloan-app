@@ -9,8 +9,10 @@ const ContactForm = () => {
   const form = useRef();
 
   const [disabled, setDisabled] = useState(false);
+  const [isCheckBox, setIsCheckBox] = useState(false);
   const handleClick = () => setDisabled(!disabled);
 
+  console.log(isCheckBox);
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -35,7 +37,7 @@ const ContactForm = () => {
 
         <form ref={form} class="book-form" onSubmit={sendEmail}>
           <div className="inputBox">
-            <input type="text" name="user_name" placeholder="First & Last Name"/>
+            <input type="text" name="user_name" placeholder="First & Last Name" required/>
           </div>
 
           <div className="inputBox">
@@ -43,16 +45,22 @@ const ContactForm = () => {
           </div>
 
           <div className="inputBox">
-            <input type="text" name="user_link" placeholder="Link to the desired Land(Decentraland) "/>
+            <input type="text" name="user_link" placeholder="Link to the desired Land(Decentraland)" required/>
           </div>
 
           <div className="inputBox">
-            <textarea name="user_message" placeholder="Anything else we should know" rows="10" ></textarea>
+            <textarea name="user_message" placeholder="Anything else we should know" rows="10" required></textarea>
           </div>
 
           <div className="checkbox-container">
-            <input type="checkbox" id="scales" name="user_checkbox" disabled={handleClick} />
-            <label for="scales">MetaLoan requires payment of a 30% down payment before any purchase. By submitting a request you acknowledge this requirement.</label>
+            <input type="checkbox" id="scales" 
+                  name="user_checkbox" 
+                  disabled={handleClick} 
+                  value={isCheckBox ? 
+                    " The user acknowledge that MetaLoan requires payment of 30% down payment before any purchase " : 
+                    "The user didn't acknowledge that MetaLoan requires payment of 30% down payment before any purchase"}
+                  onChange={()=> setIsCheckBox(!isCheckBox)}/>  
+            <label for="user_checkbox">MetaLoan requires payment of a 30% down payment before any purchase. By submitting a request you acknowledge this requirement.</label>
           </div>
 
           <div className="inputBox">
