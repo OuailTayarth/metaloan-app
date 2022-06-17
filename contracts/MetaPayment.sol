@@ -1,25 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.6;
+pragma solidity ^0.8.13;
 
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-
-
-
-// The lastest Contract Address => 0x220eBd4c939e95De0b52f5Cf594125eB1DC34f3D
-// Contract => 0xc9e23A04d9906cCfceea62422512f85DEEFeD8b9
-// USDT token contract => 0x8c243e7BCAEc794A79e355Dfd7e59505FE0C8417
-// Modify the 30 month period.
-// 100000000000000000000
-// add approve to the contract to spend my Token on my behalf 
-// For testing
-// should remove for the origin contract
-// The the subscriber should also needs to execute approve(yourContract, amount)
-// on the token contract directly
-
-
 
 contract MetaLoanPayment is ReentrancyGuard {
 
@@ -72,7 +57,7 @@ contract MetaLoanPayment is ReentrancyGuard {
     /* Mapping from an ID to Plan structed */
     mapping(uint => Plan) public idToPlan;
     /* Keep track of the total payment of each borrowers in Tokens. */
-    mapping(address => uint256) public totalPaymentTracker;
+    mapping(address => uint256) public totalPaymentPerWallet;
     /* Add new manager */
     mapping(address => bool) public isManager;
 
@@ -89,7 +74,7 @@ contract MetaLoanPayment is ReentrancyGuard {
 
 
     /* keep track of numbers of payment for each address*/ 
-    mapping(address => uint256) public totalPaymentsPerWallet;
+    mapping(address => uint256) public paymentCounterPerWallet;
 
     /* Constructor of the smart contract*/
     constructor() {
@@ -145,7 +130,7 @@ contract MetaLoanPayment is ReentrancyGuard {
         _monthlyPayment
     );
 
-
+    
     emit PlanCreated(msg.sender, totalPlans, _upfrontPayment,_monthlyPayment); 
       totalPlans++;
     }
@@ -160,12 +145,13 @@ contract MetaLoanPayment is ReentrancyGuard {
     payable
     PlanExists(_planId)
     callerIsUser()
-    nonReentrant()
+    nonReentrant
     {   
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
         Plan storage plan = idToPlan[_planId];
 
-        totalPaymentTracker[msg.sender] += plan.upfrontPayment;
+        paymentCounterPerWallet[msg.sender] += 1;
+        totalPaymentPerWallet[msg.sender] += plan.upfrontPayment;
 
         emit PaymentSent(
             payable(msg.sender),
@@ -177,7 +163,7 @@ contract MetaLoanPayment is ReentrancyGuard {
         activeLoans[msg.sender][_planId] = SubmittedLoan(
             payable(msg.sender),
             block.timestamp,
-            block.timestamp + 1 minutes,
+            block.timestamp + 30 days,
             true
         );
 
@@ -191,6 +177,7 @@ contract MetaLoanPayment is ReentrancyGuard {
     }
 
 
+
     /**
     * @notice To make a monthly payement 
     *
@@ -201,21 +188,21 @@ contract MetaLoanPayment is ReentrancyGuard {
         external payable
         LoanExists(_planId)
         callerIsUser()
-        nonReentrant()
+        nonReentrant
         {
+            
         SubmittedLoan storage submittedLoan = activeLoans[msg.sender][_planId];
-
         require(block.timestamp > submittedLoan.nextPayment, "MetaLoan :: Payement not due yet");
 
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
         Plan storage plan = idToPlan[_planId];
 
-        totalPaymentTracker[msg.sender] += plan.monthlyPayment; 
-        totalPaymentsPerWallet[msg.sender] += 1;
-        submittedLoan.nextPayment = submittedLoan.nextPayment +  1 minutes;
-
+        totalPaymentPerWallet[msg.sender] += plan.monthlyPayment; 
+        paymentCounterPerWallet[msg.sender] += 1;
+        submittedLoan.nextPayment = submittedLoan.nextPayment + 30 days;
 
         tokenPayment.safeTransferFrom(msg.sender, plan.lender, plan.monthlyPayment);
+
         emit PaymentSent(
             payable(msg.sender),
             payable(plan.lender),
@@ -235,10 +222,11 @@ contract MetaLoanPayment is ReentrancyGuard {
      LoanExists(_planId)
     {   
         require(deleteTime, "MetaLoan :: deleteTime loan is not activated yet");
-        totalPaymentTracker[msg.sender] = 0;
+        totalPaymentPerWallet[msg.sender] = 0;
         delete activeLoans[msg.sender][_planId];
         emit LoanDeleted(msg.sender, _planId, block.timestamp);
     }
+
 
     /**
     * @notice Delete a Plan Loan when the borrower finishes the payment. 
@@ -260,19 +248,17 @@ contract MetaLoanPayment is ReentrancyGuard {
     * @param _planId The planId for a specific loan
     **/
     function withdrawToken (uint256 _planId) external payable
-    onlyOwner() nonReentrant()  { 
+    onlyOwner() nonReentrant  { 
         IERC20 tokenPayment = IERC20(idToPlan[_planId].tokenPayment);
         tokenPayment.safeTransfer(msg.sender, tokenPayment.balanceOf(address(this)));
     }
-
-
 
 
     /**
     * @notice Withraw Eth from the contract to the Owner. 
     * @param _amount The amount of Eth that should be transfered
     **/
-    function withdrawEth (uint256 _amount) external payable onlyOwner() nonReentrant() {
+    function withdrawEth (uint256 _amount) external payable onlyOwner() nonReentrant {
         require(_amount > 0, "_amount can not be 0");
         payable(msg.sender).transfer(_amount);
     }
@@ -318,6 +304,7 @@ contract MetaLoanPayment is ReentrancyGuard {
         return idToPlan[_planId];
     }
 
+
     /**
     * @notice Fetch all borrowers loans
     **/
@@ -335,6 +322,7 @@ contract MetaLoanPayment is ReentrancyGuard {
             return items;
     }
 
+
     /**
     * @notice Fetch all Plans Loans
     **/
@@ -349,4 +337,5 @@ contract MetaLoanPayment is ReentrancyGuard {
     }
 
 }
+
 

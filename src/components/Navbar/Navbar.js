@@ -13,7 +13,6 @@ const Navbar = () => {
     const [accounts, setAccounts] = useState([]);
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
-    console.log(accounts);
 
 
     useEffect(()=> {
@@ -64,7 +63,7 @@ const Navbar = () => {
                 </li>
 
                 
-                <li>
+                {/* <li>
                     <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
                 </li>
 
@@ -80,7 +79,7 @@ const Navbar = () => {
                                     {accounts.substring(0, 12)}...
                                 </div>)}
                             </button>
-                </li>
+                </li> */}
             </ul>
        </header>
     )

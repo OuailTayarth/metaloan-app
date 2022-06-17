@@ -1,18 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState} from 'react';
 import './ContactForm.css';
 import emailsjs from "@emailjs/browser";
+import Alert from '../Alert/Alert';
 
 
 
 
-const ContactForm = () => {
+const ContactForm = ({alert, removeAlert}) => {
   const form = useRef();
-
   const [disabled, setDisabled] = useState(false);
   const [isCheckBox, setIsCheckBox] = useState(false);
   const handleClick = () => setDisabled(!disabled);
 
-  console.log(isCheckBox);
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -20,6 +19,7 @@ const ContactForm = () => {
     emailsjs.sendForm("service_q0nfveq","template_rjc2l0k", form.current, "SueLEDML4gZNVsR2H")
             .then((result) => {
               console.log(result.text);
+              removeAlert(true, "Thank you! MetaLoan will review your request and e-mail with more information to complete your loan.");
               e.target.reset();
             })
             .then((error)=> {
@@ -66,8 +66,10 @@ const ContactForm = () => {
           <div className="inputBox">
             <input type="Submit"/>
           </div>
+          <>
+            {alert.show && <Alert {...alert} removeAlert={removeAlert} />}
+          </>
         </form>
-
       </section>
     )
 }

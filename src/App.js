@@ -13,7 +13,6 @@ import FetchLoan from "./components/UserPages/FetchLoan/FetchLoan";
 import FetchBorrowers from "./components/UserPages/FetchBorrowers/FetchBorrowers";
 import { Routes, Route} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-import CreatePlan from "./components/CreatePlan/CreatePlan";
 import HeroSection from "./components/HeroSection/HeroSection";
 import About from "./components/About/About";
 import Footer from "./components/Footer/Footer";
@@ -28,7 +27,7 @@ function App() {
   const dispatch = useDispatch();
   const blockchain = useSelector((state) => state.blockchain);
   const [loanId, setLoanId] = useState(0);
-  const [tokenPaymentAddress, setTokenPaymentAddress] = useState([]);
+  // const [tokenPaymentAddress, setTokenPaymentAddress] = useState([]);
 
   const [LoanData, setLoanData] = useState([]);
   const [BorrowersData, setBorrowersData] = useState([]);
@@ -46,13 +45,12 @@ function App() {
   //   navigate("/", {replace: true});
   // },[]);
 
+
   
   // ShowAlert
   function showAlert(show = false, msg = "") {
       setAlert({show:show, msg:msg});
   }
-  
-
 
 
   // keep the user connected on page refresh
@@ -294,7 +292,8 @@ function App() {
                     element={<CreatePlan createPlan={createPlan}/>}/> */}
                 </Route>
             </Routes>
-            <ContactForm/>
+            <ContactForm removeAlert={showAlert}
+                         alert={alert}/>
             <Footer/>
         </>
     </s.Main>

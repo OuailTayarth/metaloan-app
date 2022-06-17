@@ -1,6 +1,6 @@
 {
-    "CONTRACT_ADDRESS": "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6",
-    "SCAN_LINK": "https://rinkeby.etherscan.io/address/0x1b4eae2dc7ca0b68643a26177bfc9c069b3d6e05",
+    "CONTRACT_ADDRESS": "0x6Eb3a9B8776BE1DdbAc473D2af5b403BA69320cb",
+    "SCAN_LINK": "https://polygonscan.com/address/0x6eb3a9b8776be1ddbac473d2af5b403ba69320cb",
     "NETWORK": {
       "NAME": "Polygon Mainnet",
       "SYMBOL": "MATIC",
@@ -8,9 +8,9 @@
     },
     "NFT_NAME": "Test",
     "SYMBOL": "HFH",
-    "MAX_SUPPLY": 10000,
-    "WEI_COST": 3100000000000000,
-    "DISPLAY_COST": 0.0031,
+    "MAX_SUPPLY": 0,
+    "WEI_COST": 0,
+    "DISPLAY_COST": 0,
     "MARKETPLACE": "Opeansea",
     "MARKETPLACE_LINK": "https://testnets.opensea.io/",
     "SHOW_BACKGROUND": true

@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 import "../../UserPages/links-container.css";
 import "./SubmitLoan.css";
 import Alert from "../../Alert/Alert";
