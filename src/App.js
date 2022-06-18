@@ -22,7 +22,7 @@ import ERC20ABI from "./ERC20ABI.json";
 let web3 = new Web3(window.ethereum);
 
 
-
+  // Metaloan real smart contract : 0x6Eb3a9B8776BE1DdbAc473D2af5b403BA69320cb
 function App() {
   const dispatch = useDispatch();
   const blockchain = useSelector((state) => state.blockchain);
@@ -130,13 +130,7 @@ function App() {
     .approve(MetaLoanAddress, upfrontPayment)
     .send({from : blockchain.account,
            maxPriorityFeePerGas: null,
-           maxFeePerGas: null})   
-    .then(       
-     await blockchain.smartContract.methods.requestLoan(loanId)
-    .send({from : blockchain.account,
-           maxPriorityFeePerGas: null,
-           maxFeePerGas: null
-    })
+           maxFeePerGas: null})
     .once("error", (err)=> {
       let error = err.toString();
       console.log(error);
@@ -145,11 +139,24 @@ function App() {
       showAlert(true, "Something went wrong");
     })
     .then((receipt)=> {
-      console.log(receipt);
-      setActivePayment(false);
-      showAlert(true, "Congratulations, You loan has been submitted successfully!");
-      dispatch(fetchData(blockchain.account));
-    }))
+      blockchain.smartContract.methods.requestLoan(loanId)
+      .send({from : blockchain.account,
+             maxPriorityFeePerGas: null,
+             maxFeePerGas: null
+      })
+      .once("error", (err) => {
+        let error = err.toString();
+        console.log(error);
+        setActivePayment(false);
+        showAlert(true, "Something went wrong");
+      })
+      .then((receipt)=> {
+        console.log(receipt);
+        setActivePayment(false);
+        showAlert(true, "Congratulations, You loan has been submitted successfully!");
+        dispatch(fetchData(blockchain.account));
+      })
+    })
   }
 
 
@@ -160,9 +167,10 @@ function App() {
 
     /* Get Plan Information */
     let plan = await blockchain.smartContract.methods.idToPlan(loanId).call();
+    console.log(plan);
     let tokenPayment = plan.tokenPayment;
     let monthlyPayment = plan.monthlyPayment;
-
+    
     /* Create Instance of USDC tokens */ 
     let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
 
@@ -173,23 +181,52 @@ function App() {
     .send({from : blockchain.account,
            maxPriorityFeePerGas: null,
            maxFeePerGas: null})
-    .then(
-    await blockchain.smartContract.methods.payLoan(loanId)
-    .send({from: blockchain.account,
-           maxPriorityFeePerGas: null,
-           maxFeePerGas: null
-    })
     .once("error", (err)=> {
       console.log(err);
       setActivePayment(false);
       showAlert(true, "Something went wrong...!");
     })
     .then((receipt)=> {
-      console.log(receipt);
-      setActivePayment(false);
-      showAlert(true, "Congratulations, You monthly payment has been submitted successfully");
-      dispatch(fetchData(blockchain.account));
-    }))
+      blockchain.smartContract.methods.payLoan(loanId)
+        .send({from: blockchain.account,
+               maxPriorityFeePerGas: null,
+               maxFeePerGas: null
+        })
+        .once("error", (error)=> {
+          console.log(error);
+          setActivePayment(false);
+          showAlert(true, "Something went wrong...!");
+        })
+        .then((receipt)=> {
+          console.log(receipt);
+          setActivePayment(false);
+          showAlert(true, "Congratulations, You monthly payment has been submitted successfully");
+          dispatch(fetchData(blockchain.account));
+        })
+    })
+
+    // USDTToken.methods
+    // .approve(MetaLoanAddress, monthlyPayment)
+    // .send({from : blockchain.account,
+    //        maxPriorityFeePerGas: null,
+    //        maxFeePerGas: null})
+    // .then(
+    // await blockchain.smartContract.methods.payLoan(loanId)
+    // .send({from: blockchain.account,
+    //        maxPriorityFeePerGas: null,
+    //        maxFeePerGas: null
+    // })
+    // .once("error", (err)=> {
+    //   console.log(err);
+    //   setActivePayment(false);
+    //   showAlert(true, "Something went wrong...!");
+    // })
+    // .then((receipt)=> {
+    //   console.log(receipt);
+    //   setActivePayment(false);
+    //   showAlert(true, "Congratulations, You monthly payment has been submitted successfully");
+    //   dispatch(fetchData(blockchain.account));
+    // }))
   }
 
   

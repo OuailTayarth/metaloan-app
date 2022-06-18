@@ -63,7 +63,7 @@ const Navbar = () => {
                 </li>
 
                 
-                {/* <li>
+                <li>
                     <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
                 </li>
 
@@ -78,8 +78,8 @@ const Navbar = () => {
                                 <div id='address'>
                                     {accounts.substring(0, 12)}...
                                 </div>)}
-                            </button>
-                </li> */}
+                    </button>
+                </li>
             </ul>
        </header>
     )
