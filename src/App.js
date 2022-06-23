@@ -34,6 +34,7 @@ function App() {
   const [alert, setAlert] = useState({show : false, msg: ""});
   const [activePayment, setActivePayment] = useState(false);
   
+
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
@@ -123,7 +124,7 @@ function App() {
     /* Create Instance of USDC tokens */ 
     let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
 
-    const MetaLoanAddress = "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6";
+    const MetaLoanAddress = "0x6Eb3a9B8776BE1DdbAc473D2af5b403BA69320cb";
 
     /* We can't use to: because we are approving not transferring funds */
     USDTToken.methods
@@ -136,7 +137,7 @@ function App() {
       console.log(error);
       console.log(err);
       setActivePayment(false);
-      showAlert(true, "Something went wrong");
+      showAlert(true, "Something went wrong...!");
     })
     .then((receipt)=> {
       blockchain.smartContract.methods.requestLoan(loanId)
@@ -148,7 +149,7 @@ function App() {
         let error = err.toString();
         console.log(error);
         setActivePayment(false);
-        showAlert(true, "Something went wrong");
+        showAlert(true, "Something went wrong...!");
       })
       .then((receipt)=> {
         console.log(receipt);
@@ -174,7 +175,7 @@ function App() {
     /* Create Instance of USDC tokens */ 
     let USDTToken = new web3.eth.Contract(ERC20ABI, tokenPayment);
 
-    const MetaLoanAddress = "0xc6988e2EfB0a11a529666b2cD43322Ce8A4C78a6";
+    const MetaLoanAddress = "0x6Eb3a9B8776BE1DdbAc473D2af5b403BA69320cb";
     
     USDTToken.methods
     .approve(MetaLoanAddress, monthlyPayment)

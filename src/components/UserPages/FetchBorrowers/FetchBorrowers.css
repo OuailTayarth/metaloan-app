@@ -13,7 +13,7 @@
 
 
 .single-borrower {
-    background-color: #6b7379;
+    background-color: rgb(11, 17, 27);
     color: #fff;
     border-radius: 6px;
     padding: 16px 0px;
@@ -30,7 +30,7 @@
 }
 
 .single-borrower h1 {
-    color: #000;
+    color: #fff;
     font-weight: 500;
     padding: 2px 0px;
     margin-bottom: 1px;
@@ -51,7 +51,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:#6b7379;
+    background-color: rgb(11, 17, 27);
     color: #fff;
     border-radius: 10px;
     padding: 20px;

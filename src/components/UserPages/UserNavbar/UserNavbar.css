@@ -16,7 +16,7 @@
     display: flex;
     transition:1s ease-out;
     max-width: 800px;
-    background-color: #6b7379;
+    background-color: rgb(11, 17, 27);
     padding: 17px 0px;
     border-radius: 3px;
     
@@ -30,7 +30,7 @@
 .links-Navigation li a {
     letter-spacing: 0.3px;
     font-weight: 400;
-    color: #000;
+    color: #fff;
     font-size: 1.20rem;
     transition: color 0.5s;    
 }
