@@ -3,7 +3,11 @@
 }
 
 .submit-container.two {
-    margin-bottom: -36px;
+    margin-bottom: 9px;
+}
+
+.submit-container.tree {
+    margin-bottom: 67px;
 }
 
 .submit-container h1 {

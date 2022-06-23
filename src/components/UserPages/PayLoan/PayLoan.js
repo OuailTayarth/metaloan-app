@@ -10,7 +10,7 @@ const PayLoan = ({payLoan,
                    
 
     return (
-        <div className="submit-container">
+        <div className="submit-container tree">
             <h1>Make sure to pay your loan on time! </h1>
 
             <div className="count-buttons">

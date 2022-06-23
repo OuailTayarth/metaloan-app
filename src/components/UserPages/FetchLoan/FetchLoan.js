@@ -13,7 +13,7 @@ const FetchLoan = ({LoanData}) => {
                 <h1>Loan Start: <br/> <span>{LoanData.startLoan} </span></h1>
                 <h1>NextPayment: <br/> <span>{LoanData.nextPayment} </span></h1>
                 <h1>Loan status:  <br/> <span> {LoanData.activated} </span></h1>
-             </div>
+            </div>
         ) : (
             <h1 className="message">Loan does not exist</h1>
         )}

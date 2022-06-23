@@ -45,6 +45,8 @@
     line-height: 24px;
 }
 
+
+
 .message {
     display: flex;
     justify-content: center;
@@ -58,7 +60,7 @@
 }
 
 .loan-container.tree {
-    margin-bottom: -60px;
+    margin-bottom: 20px;
 }
 
 .message:hover {
@@ -68,6 +70,16 @@
 
 .borrowers-container.one {
     margin-bottom: -21px;
+    margin-top: 180px;
+}
+
+
+@media (max-width: 992px) {
+
+    .borrowers-container.one {
+        margin-bottom: -21px;
+        margin-top: 198px;
+    }
 }
 
 
