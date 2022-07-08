@@ -1,475 +1,1381 @@
 [
-  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "_planId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "date",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "status",
-        "type": "bool"
-      }
-    ],
-    "name": "LoanCreated",
-    "type": "event"
+
+                  "inputs": [],
+
+                  "stateMutability": "nonpayable",
+
+                  "type": "constructor"
+
   },
+
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "_planId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "date",
-        "type": "uint256"
-      }
-    ],
-    "name": "LoanDeleted",
-    "type": "event"
+
+                  "anonymous": false,
+
+                  "inputs": [
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "address",
+
+                                                  "name": "borrower",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "date",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": false,
+
+                                                  "internalType": "bool",
+
+                                                  "name": "status",
+
+                                                  "type": "bool"
+
+                                  }
+
+                  ],
+
+                  "name": "LoanCreated",
+
+                  "type": "event"
+
   },
+
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "payment",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_planId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "date",
-        "type": "uint256"
-      }
-    ],
-    "name": "PaymentSent",
-    "type": "event"
+
+                  "anonymous": false,
+
+                  "inputs": [
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "address",
+
+                                                  "name": "borrower",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "date",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "LoanDeleted",
+
+                  "type": "event"
+
   },
+
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "creator",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "upfrontPayment",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "planIndex",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "monthlyPayment",
-        "type": "uint256"
-      }
-    ],
-    "name": "PlanCreated",
-    "type": "event"
+
+                  "anonymous": false,
+
+                  "inputs": [
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "address",
+
+                                                  "name": "from",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "address",
+
+                                                  "name": "to",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "payment",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": false,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": false,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "date",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "PaymentSent",
+
+                  "type": "event"
+
   },
+
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "_planId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "date",
-        "type": "uint256"
-      }
-    ],
-    "name": "PlanDeleted",
-    "type": "event"
+
+                  "anonymous": false,
+
+                  "inputs": [
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "address",
+
+                                                  "name": "creator",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "upfrontPayment",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "planIndex",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": false,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "monthlyPayment",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "PlanCreated",
+
+                  "type": "event"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "address", "name": "", "type": "address" },
-      { "internalType": "uint256", "name": "", "type": "uint256" }
-    ],
-    "name": "activeLoans",
-    "outputs": [
-      {
-        "internalType": "address payable",
-        "name": "borrower",
-        "type": "address"
-      },
-      { "internalType": "uint256", "name": "start", "type": "uint256" },
-      { "internalType": "uint256", "name": "nextPayment", "type": "uint256" },
-      { "internalType": "bool", "name": "activated", "type": "bool" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "anonymous": false,
+
+                  "inputs": [
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "address",
+
+                                                  "name": "borrower",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "indexed": true,
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "date",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "PlanDeleted",
+
+                  "type": "event"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "address", "name": "_manager", "type": "address" }
-    ],
-    "name": "addManager",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "activeLoans",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "address payable",
+
+                                                  "name": "borrower",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "start",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "nextPayment",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "bool",
+
+                                                  "name": "activated",
+
+                                                  "type": "bool"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "allBorrowers",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "_manager",
+
+                                                  "type": "address"
+
+                                  }
+
+                  ],
+
+                  "name": "addManager",
+
+                  "outputs": [],
+
+                  "stateMutability": "nonpayable",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "allPlansId",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "allBorrowers",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "",
+
+                                                  "type": "address"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "address", "name": "_lender", "type": "address" },
-      { "internalType": "address", "name": "_tokenPayment", "type": "address" },
-      {
-        "internalType": "uint256",
-        "name": "_upfrontPayment",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_monthlyPayment",
-        "type": "uint256"
-      }
-    ],
-    "name": "createPlan",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "allPlansId",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_planId", "type": "uint256" }
-    ],
-    "name": "deleteLoan",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "_lender",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "_tokenPayment",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_upfrontPayment",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_monthlyPayment",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "createPlan",
+
+                  "outputs": [],
+
+                  "stateMutability": "nonpayable",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_planId", "type": "uint256" }
-    ],
-    "name": "deletePlan",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "deleteLoan",
+
+                  "outputs": [],
+
+                  "stateMutability": "nonpayable",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "deleteTime",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "deletePlan",
+
+                  "outputs": [],
+
+                  "stateMutability": "nonpayable",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "fetchAllBorrowers",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address payable",
-            "name": "borrower",
-            "type": "address"
-          },
-          { "internalType": "uint256", "name": "start", "type": "uint256" },
-          {
-            "internalType": "uint256",
-            "name": "nextPayment",
-            "type": "uint256"
-          },
-          { "internalType": "bool", "name": "activated", "type": "bool" }
-        ],
-        "internalType": "struct MetaLoanPayment.SubmittedLoan[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "deleteTime",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "bool",
+
+                                                  "name": "",
+
+                                                  "type": "bool"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" },
-      { "internalType": "uint256", "name": "_planId", "type": "uint256" }
-    ],
-    "name": "fetchMyLoan",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address payable",
-            "name": "borrower",
-            "type": "address"
-          },
-          { "internalType": "uint256", "name": "start", "type": "uint256" },
-          {
-            "internalType": "uint256",
-            "name": "nextPayment",
-            "type": "uint256"
-          },
-          { "internalType": "bool", "name": "activated", "type": "bool" }
-        ],
-        "internalType": "struct MetaLoanPayment.SubmittedLoan",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "fetchAllBorrowers",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "components": [
+
+                                                                  {
+
+                                                                                  "internalType": "address payable",
+
+                                                                                  "name": "borrower",
+
+                                                                                  "type": "address"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "start",
+
+                                                                                  "type": "uint256"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "nextPayment",
+
+                                                                                  "type": "uint256"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "bool",
+
+                                                                                  "name": "activated",
+
+                                                                                  "type": "bool"
+
+                                                                  }
+
+                                                  ],
+
+                                                  "internalType": "struct MetaLoanPayment.SubmittedLoan[]",
+
+                                                  "name": "",
+
+                                                  "type": "tuple[]"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_planId", "type": "uint256" }
-    ],
-    "name": "fetchPlan",
-    "outputs": [
-      {
-        "components": [
-          { "internalType": "address", "name": "lender", "type": "address" },
-          {
-            "internalType": "address",
-            "name": "tokenPayment",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "upfrontPayment",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "monthlyPayment",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct MetaLoanPayment.Plan",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "user",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "fetchMyLoan",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "components": [
+
+                                                                  {
+
+                                                                                  "internalType": "address payable",
+
+                                                                                  "name": "borrower",
+
+                                                                                  "type": "address"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "start",
+
+                                                                                  "type": "uint256"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "nextPayment",
+
+                                                                                  "type": "uint256"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "bool",
+
+                                                                                  "name": "activated",
+
+                                                                                  "type": "bool"
+
+                                                                  }
+
+                                                  ],
+
+                                                  "internalType": "struct MetaLoanPayment.SubmittedLoan",
+
+                                                  "name": "",
+
+                                                  "type": "tuple"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "fetchallPlans",
-    "outputs": [
-      {
-        "components": [
-          { "internalType": "address", "name": "lender", "type": "address" },
-          {
-            "internalType": "address",
-            "name": "tokenPayment",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "upfrontPayment",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "monthlyPayment",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct MetaLoanPayment.Plan[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "fetchPlan",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "components": [
+
+                                                                  {
+
+                                                                                  "internalType": "address",
+
+                                                                                  "name": "lender",
+
+                                                                                  "type": "address"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "address",
+
+                                                                                  "name": "tokenPayment",
+
+                                                                                  "type": "address"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "upfrontPayment",
+
+                                                                                  "type": "uint256"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "monthlyPayment",
+
+                                                                                  "type": "uint256"
+
+                                                                  }
+
+                                                  ],
+
+                                                  "internalType": "struct MetaLoanPayment.Plan",
+
+                                                  "name": "",
+
+                                                  "type": "tuple"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "getBalance",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "fetchallPlans",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "components": [
+
+                                                                  {
+
+                                                                                  "internalType": "address",
+
+                                                                                  "name": "lender",
+
+                                                                                  "type": "address"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "address",
+
+                                                                                  "name": "tokenPayment",
+
+                                                                                  "type": "address"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "upfrontPayment",
+
+                                                                                  "type": "uint256"
+
+                                                                  },
+
+                                                                  {
+
+                                                                                  "internalType": "uint256",
+
+                                                                                  "name": "monthlyPayment",
+
+                                                                                  "type": "uint256"
+
+                                                                  }
+
+                                                  ],
+
+                                                  "internalType": "struct MetaLoanPayment.Plan[]",
+
+                                                  "name": "",
+
+                                                  "type": "tuple[]"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "idToPlan",
-    "outputs": [
-      { "internalType": "address", "name": "lender", "type": "address" },
-      { "internalType": "address", "name": "tokenPayment", "type": "address" },
-      {
-        "internalType": "uint256",
-        "name": "upfrontPayment",
-        "type": "uint256"
-      },
-      { "internalType": "uint256", "name": "monthlyPayment", "type": "uint256" }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "getBalance",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "isManager",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "idToPlan",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "lender",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "tokenPayment",
+
+                                                  "type": "address"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "upfrontPayment",
+
+                                                  "type": "uint256"
+
+                                  },
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "monthlyPayment",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "managers",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "",
+
+                                                  "type": "address"
+
+                                  }
+
+                  ],
+
+                  "name": "isManager",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "bool",
+
+                                                  "name": "",
+
+                                                  "type": "bool"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "managers",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "",
+
+                                                  "type": "address"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_planId", "type": "uint256" }
-    ],
-    "name": "payLoan",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "owner",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "",
+
+                                                  "type": "address"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "paymentCounterPerWallet",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "payLoan",
+
+                  "outputs": [],
+
+                  "stateMutability": "payable",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_planId", "type": "uint256" }
-    ],
-    "name": "requestLoan",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "",
+
+                                                  "type": "address"
+
+                                  }
+
+                  ],
+
+                  "name": "paymentCounterPerWallet",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "toggleDelete",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "requestLoan",
+
+                  "outputs": [],
+
+                  "stateMutability": "payable",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "totalLoans",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "toggleDelete",
+
+                  "outputs": [],
+
+                  "stateMutability": "nonpayable",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "totalPaymentPerWallet",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "totalLoans",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [],
-    "name": "totalPlans",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "address",
+
+                                                  "name": "",
+
+                                                  "type": "address"
+
+                                  }
+
+                  ],
+
+                  "name": "totalPaymentPerWallet",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
-    ],
-    "name": "withdrawEth",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+
+                  "inputs": [],
+
+                  "name": "totalPlans",
+
+                  "outputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "stateMutability": "view",
+
+                  "type": "function"
+
   },
+
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "_planId", "type": "uint256" }
-    ],
-    "name": "withdrawToken",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_amount",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "withdrawEth",
+
+                  "outputs": [],
+
+                  "stateMutability": "payable",
+
+                  "type": "function"
+
+  },
+
+  {
+
+                  "inputs": [
+
+                                  {
+
+                                                  "internalType": "uint256",
+
+                                                  "name": "_planId",
+
+                                                  "type": "uint256"
+
+                                  }
+
+                  ],
+
+                  "name": "withdrawToken",
+
+                  "outputs": [],
+
+                  "stateMutability": "payable",
+
+                  "type": "function"
+
   }
+
 ]

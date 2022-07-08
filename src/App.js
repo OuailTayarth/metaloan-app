@@ -19,6 +19,7 @@ import Footer from "./components/Footer/Footer";
 import ContactForm from "./components/ContactForm/ContactForm";
 import HowItoWorks from "./components/HowItWorks/HowItoWorks";
 import ERC20ABI from "./ERC20ABI.json";
+import FAQ from "./components/FAQ/FAQ";
 let web3 = new Web3(window.ethereum);
 
 
@@ -33,8 +34,9 @@ function App() {
   const [BorrowersData, setBorrowersData] = useState([]);
   const [alert, setAlert] = useState({show : false, msg: ""});
   const [activePayment, setActivePayment] = useState(false);
-  
+  const [isBorrowerAddress, setBorrowerAddress] = useState();
 
+  
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
@@ -45,7 +47,6 @@ function App() {
   // useEffect(()=> {
   //   navigate("/", {replace: true});
   // },[]);
-
 
   
   // ShowAlert
@@ -158,6 +159,7 @@ function App() {
         dispatch(fetchData(blockchain.account));
       })
     })
+  
   }
 
 
@@ -206,28 +208,6 @@ function App() {
         })
     })
 
-    // USDTToken.methods
-    // .approve(MetaLoanAddress, monthlyPayment)
-    // .send({from : blockchain.account,
-    //        maxPriorityFeePerGas: null,
-    //        maxFeePerGas: null})
-    // .then(
-    // await blockchain.smartContract.methods.payLoan(loanId)
-    // .send({from: blockchain.account,
-    //        maxPriorityFeePerGas: null,
-    //        maxFeePerGas: null
-    // })
-    // .once("error", (err)=> {
-    //   console.log(err);
-    //   setActivePayment(false);
-    //   showAlert(true, "Something went wrong...!");
-    // })
-    // .then((receipt)=> {
-    //   console.log(receipt);
-    //   setActivePayment(false);
-    //   showAlert(true, "Congratulations, You monthly payment has been submitted successfully");
-    //   dispatch(fetchData(blockchain.account));
-    // }))
   }
 
   
@@ -243,13 +223,15 @@ function App() {
 
     /* Get the total Payment of each wallet */
     const paymentData = await blockchain.smartContract.methods.totalPaymentPerWallet(userAccount).call();
-    const totalPaymentPerWallet = web3.utils.fromWei(paymentData, "ether");
+    const totalPaymentPerWallet =  (paymentData / 1000000);
 
     /* Loan information */
     const status = (data.activated).toString();
     let startDay = (moment.unix(data.start)).toString();
     let nextPayment = (moment.unix(data.nextPayment)).toString();
     let borrowerAddress = (data.borrower).toString();
+
+    setBorrowerAddress(borrowerAddress.toLowerCase());
 
       let item = {
         borrower : borrowerAddress,
@@ -258,7 +240,9 @@ function App() {
         totalPayment: totalPaymentPerWallet,
         activated: status
       }
+
       setLoanData(item);
+  
   }
 
 
@@ -297,7 +281,8 @@ function App() {
                 <Route path="/" element={<HeroSection/>}/>
                 <Route path="/howItWorks" element={<HowItoWorks/>}/>
                 <Route path="/about" element={<About/>}/>
-                <Route path="/launchApp" 
+                <Route path="/faq" element={<FAQ/>}/>
+                <Route path="/launchApp"
                     element={<LaunchApp fetchLoanData={fetchLoanData} 
                                         fetchBorrowersData={fetchBorrowersData}/>}>
                 
@@ -321,7 +306,8 @@ function App() {
                                          activePayment={activePayment}/>}/>
 
                     <Route path="fetchLoan" 
-                    element={<FetchLoan LoanData={LoanData}/>}/>
+                    element={<FetchLoan LoanData={LoanData}
+                                        isBorrowerAddress={isBorrowerAddress}/>}/>
 
                     <Route path="fetchBorrowers" 
                     element={<FetchBorrowers BorrowersData = {BorrowersData}/>}/>

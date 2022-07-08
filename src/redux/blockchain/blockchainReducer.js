@@ -13,7 +13,7 @@ const blockchainReducer = (state = initialState, action) => {
     case "CONNECTION_REQUEST":
       return {
         ...initialState,
-        loading: true,
+        loading: false,
       };
     case "CONNECTION_SUCCESS":
       return {

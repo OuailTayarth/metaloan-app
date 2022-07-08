@@ -1,12 +1,16 @@
 import React from "react";
 import "../FetchBorrowers/FetchBorrowers.css";
+import { useSelector } from "react-redux";
 
 
 
-const FetchLoan = ({LoanData}) => {
+const FetchLoan = ({LoanData, isBorrowerAddress}) => {
+    
+    const blockchain = useSelector((state)=> state.blockchain);
+
     return (
         <div className="loan-container tree">
-        {Object.keys(LoanData).length > 0 ? (
+        {Object.keys(LoanData).length > 0 && blockchain.account === isBorrowerAddress ? (
             <div className="single-borrower">
                 <h1 >Borrower address: <br/> <span>{LoanData.borrower} </span></h1>
                 <h1>Total Payment: <br/> <span> {LoanData.totalPayment} USDC </span></h1>
@@ -14,8 +18,10 @@ const FetchLoan = ({LoanData}) => {
                 <h1>NextPayment: <br/> <span>{LoanData.nextPayment} </span></h1>
                 <h1>Loan status:  <br/> <span> {LoanData.activated} </span></h1>
             </div>
-        ) : (
-            <h1 className="message">Loan does not exist</h1>
+        ) : ( <>
+                <h1 className="message">Loan does not exist</h1>
+              </>
+           
         )}
         </div>
         

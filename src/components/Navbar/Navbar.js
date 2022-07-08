@@ -15,13 +15,26 @@ const Navbar = () => {
     const closeMobileMenu = () => setClick(false);
 
 
+    // useEffect(()=> {
+    //     
+    //     dispatch(fetchData(blockchain.account));
+    // }, [])
+
+
     useEffect(()=> {
+        getData();
         fetchAccounts();
-        dispatch(fetchData(blockchain.account));
-    }, [])
+    }, [blockchain.account]);
+
+
+    const getData = () => {
+        if(blockchain.account !=="" && blockchain.smartContract !== null) {
+            dispatch(fetchData(blockchain.account));
+        }
+    };
 
     // fetch accounts Data
-    async function fetchAccounts () {
+    async function fetchAccounts() {
         const { ethereum } = window;
         const metamaskIsInstalled = ethereum && ethereum.isMetaMask;
 
@@ -37,7 +50,11 @@ const Navbar = () => {
         }
     }
 
-    
+    // {accounts.length === 0 ? "Connect Wallet" : (
+    //     <div id='address'>
+    //         {accounts.substring(0, 12)}...
+    //     </div>)}
+
     
 
     return (
@@ -51,15 +68,19 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                    <Link to="/About" onClick={closeMobileMenu}>About Us</Link>     
+                    <Link to="/about" onClick={closeMobileMenu}>About Us</Link>     
                 </li>
 
                 <li>
-                   <Link to="/howItWorks" onClick={closeMobileMenu}>How it Works</Link> 
+                   <Link to="/howitworks" onClick={closeMobileMenu}>How it Works</Link> 
                 </li>
 
                 <li>
-                    <Link to="/ContactForm" onClick={closeMobileMenu}>Request a Loan</Link> 
+                   <Link to="/faq" onClick={closeMobileMenu}>FAQ</Link> 
+                </li>
+
+                <li>
+                    <Link to="/contactform" onClick={closeMobileMenu}>Request a Loan</Link> 
                 </li>
 
                 
@@ -73,11 +94,15 @@ const Navbar = () => {
                             onClick={(e)=> {
                                 e.preventDefault();
                                 dispatch(connect());
-                            }}>
-                                {accounts.length === 0 ? "Connect Wallet" : (
-                                <div id='address'>
-                                    {accounts.substring(0, 12)}...
-                                </div>)}
+                                getData();
+                    }}>
+                    
+                    {accounts.length === 0 ? "Connect Wallet" : (
+                        <div id='address'>
+                            {accounts.substring(0,12)}...
+                        </div>
+                    )}
+                            
                     </button>
                 </li>
             </ul>
