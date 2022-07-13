@@ -20,6 +20,7 @@ import ContactForm from "./components/ContactForm/ContactForm";
 import HowItoWorks from "./components/HowItWorks/HowItoWorks";
 import ERC20ABI from "./ERC20ABI.json";
 import FAQ from "./components/FAQ/FAQ";
+import OurTeam from "./components/OurTeam/OurTeam";
 let web3 = new Web3(window.ethereum);
 
 
@@ -281,7 +282,8 @@ function App() {
                 <Route path="/" element={<HeroSection/>}/>
                 <Route path="/howItWorks" element={<HowItoWorks/>}/>
                 <Route path="/about" element={<About/>}/>
-                <Route path="/faq" element={<FAQ/>}/>
+                <Route path="/team" element={<OurTeam/>}/>
+                {/* <Route path="/faq" element={<FAQ/>}/> */}
                 <Route path="/launchApp"
                     element={<LaunchApp fetchLoanData={fetchLoanData} 
                                         fetchBorrowersData={fetchBorrowersData}/>}>
@@ -311,6 +313,7 @@ function App() {
 
                     <Route path="fetchBorrowers" 
                     element={<FetchBorrowers BorrowersData = {BorrowersData}/>}/>
+                    
 
                     {/* <Route path="createPlan"
                     element={<CreatePlan createPlan={createPlan}/>}/> */}

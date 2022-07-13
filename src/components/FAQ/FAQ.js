@@ -22,6 +22,7 @@ const FAQ = () => {
     return (
         <div className="accordion-section">
             <div className="container">
+                <h1 className="FAQTitle">Frequently Asked Questions</h1>
                 {Data.map((item, index)=> {
                     return (
                         <div className="accordion-wrap">

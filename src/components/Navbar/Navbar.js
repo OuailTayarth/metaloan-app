@@ -75,18 +75,22 @@ const Navbar = () => {
                    <Link to="/howitworks" onClick={closeMobileMenu}>How it Works</Link> 
                 </li>
 
-                <li>
+                {/* <li>
                    <Link to="/faq" onClick={closeMobileMenu}>FAQ</Link> 
-                </li>
+                </li> */}
 
                 <li>
                     <Link to="/contactform" onClick={closeMobileMenu}>Request a Loan</Link> 
                 </li>
 
-                
                 <li>
-                    <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
+                    <Link to="/team" onClick={closeMobileMenu}>Our Team</Link> 
                 </li>
+
+                
+                {/* <li>
+                    <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
+                </li> */}
 
                 <li>
                     <button className='btn'
