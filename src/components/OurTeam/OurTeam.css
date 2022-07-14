@@ -2,13 +2,14 @@
   padding: 20px 0px 20px 0px;
   /* margin-top: 125px; */
   position: relative;
-  padding-top: 180px;
+  padding-top: 135px;
 }
 
 .OurTeam-section .teamTitle {
   font-size: 3rem;
-  /* padding-bottom: 50px; */
+  padding-bottom: 15px;
   text-align: center;
+  letter-spacing: 0.5px;
 }
 
 .OurTeam-section .container {
@@ -26,7 +27,7 @@
    position: relative;
    width: 340px;
    height: 450px;
-   background: #fff;
+   background: #151636;
    overflow: hidden;
    border-radius: 10px;
    margin: 20px;
@@ -50,7 +51,8 @@
    left: -16px;
    width: 100%;
    height: 100%;
-   box-shadow: 0 0 0 20px rgba(255,0,0,0.5);
+   /* box-shadow: 0 0 0 20px rgba(255,0,0,0.5); */
+   box-shadow: 0 0 0 20px rgba(243, 184, 184, 0.5);
    border-radius: 50%;
    z-index: 2;
    pointer-events: none;
@@ -102,22 +104,25 @@
 .OurTeam-section .content h3
 {
    font-size: 1.4em;
-   color: #333;
+   color: #C0C7F7;
+   font-weight: 400;
    margin-top: 7px;
    margin-bottom: 2px;
    letter-spacing: 0.5px;
 }
 
-.OurTeam-section .content .title
+.OurTeam-section .content .title h4
 {
-   font-weight: 400;
-   color: black;
-   padding: 10px 0px;
+   color: #C0C7F7;
+   padding: 6px 0px 6px 0px;
    letter-spacing: 0.5px;
+   font-weight: 400;
+   text-align: center;
+   line-height: 19px;
 }
 
 .icons-content .icon {
-   filter: invert(1);
+   filter: invert(0.2);
    font-size: 16px;
 }
 

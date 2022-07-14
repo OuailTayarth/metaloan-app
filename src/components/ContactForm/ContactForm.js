@@ -29,9 +29,8 @@ const ContactForm = ({alert, removeAlert}) => {
 
     return (
         <section className="contacts" id="booking">
-  
         <div className="title">
-          <h2>Request a Loan</h2>
+          <h1>Request a Loan</h1>
           <p>Complete this form to receive your custom loan plan</p>
         </div>
 

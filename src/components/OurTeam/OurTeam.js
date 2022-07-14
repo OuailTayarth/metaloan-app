@@ -21,6 +21,29 @@ const OurTeam = () => {
                             <h4>Blockchain developer</h4>
                         </div>
                         <div className="icons-content">
+                            <a href="https://www.linkedin.com/in/tayarthouail/" target="_blank" rel="noreferrer">
+                                <ImLinkedin2 className="icon"/>
+                            </a>
+                            <a href="https://twitter.com/Tayarthouail" 
+                            target="_blank" rel="noreferrer">
+                                <BsTwitter className="icon"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="circle">
+                        <div class="imgBox">
+                            <img src={devProfil} alt="blockchain developer"/>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h3>Eduardo Dávalos</h3>
+                        <div class="title">
+                            <h4>Director of Metaverse <br/> Planning and Design</h4>
+                        </div>
+                        <div className="icons-content">
                             <a href="#">
                                 <ImLinkedin2 className="icon"/>
                             </a>
