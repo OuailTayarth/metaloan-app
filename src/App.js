@@ -313,8 +313,6 @@ function App() {
 
                     <Route path="fetchBorrowers" 
                     element={<FetchBorrowers BorrowersData = {BorrowersData}/>}/>
-                    
-
                     {/* <Route path="createPlan"
                     element={<CreatePlan createPlan={createPlan}/>}/> */}
                 </Route>

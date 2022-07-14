@@ -80,14 +80,13 @@ const Navbar = () => {
                 </li> */}
 
                 <li>
-                    <Link to="/contactform" onClick={closeMobileMenu}>Request a Loan</Link> 
-                </li>
-
-                <li>
                     <Link to="/team" onClick={closeMobileMenu}>Our Team</Link> 
                 </li>
 
-                
+                <li>
+                    <Link to="/requestloan" onClick={closeMobileMenu}>Request a Loan</Link> 
+                </li>
+
                 {/* <li>
                     <Link to="/launchApp/submitLoan" id="connect" onClick={closeMobileMenu}>My Loan</Link>     
                 </li> */}
