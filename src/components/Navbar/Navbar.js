@@ -80,7 +80,7 @@ const Navbar = () => {
                 </li> */}
 
                 <li>
-                    <Link to="/team" onClick={closeMobileMenu}>Our Team</Link> 
+                    <Link to="/ourteam" onClick={closeMobileMenu}>Our Team</Link> 
                 </li>
 
                 <li>

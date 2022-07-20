@@ -282,7 +282,7 @@ function App() {
                 <Route path="/" element={<HeroSection/>}/>
                 <Route path="/howItWorks" element={<HowItoWorks/>}/>
                 <Route path="/about" element={<About/>}/>
-                <Route path="/team" element={<OurTeam/>}/>
+                <Route path="/ourteam" element={<OurTeam/>}/>
                 {/* <Route path="/faq" element={<FAQ/>}/> */}
                 <Route path="/launchApp"
                     element={<LaunchApp fetchLoanData={fetchLoanData} 
