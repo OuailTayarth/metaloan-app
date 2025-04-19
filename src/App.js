@@ -25,6 +25,7 @@ import config from "./config/config.json";
 import metaloanInterface from "../src/config/abi.json";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
+import CubeLoader from "./components/Loaders/cubeLoader";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,12 +37,20 @@ function App() {
   const [alert, setAlert] = useState({ show: false, msg: "" });
   const [activePayment, setActivePayment] = useState(false);
   const [isBorrowerAddress, setBorrowerAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
     }
   }, [blockchain.smartContract]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3500);
+    return () => clearTimeout(timer);
+  }, []);
 
   // ShowAlert
   function showAlert(show = false, msg = "") {
@@ -303,83 +312,87 @@ function App() {
 
   return (
     <>
-      <s.Main>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/howitWorks" element={<HowItoWorks />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/metateam" element={<OurTeam />} />
-          <Route
-            path="/requestloan"
-            element={<ContactForm removeAlert={showAlert} alert={alert} />}
-          />
-          <Route
-            path="/admin"
-            element={
-              <Admin
-                showAlert={showAlert}
-                alert={alert}
-                activePayment={activePayment}
-                setActivePayment={setActivePayment}
-              />
-            }
-          />
-          <Route
-            path="/launchApp"
-            element={
-              <LaunchApp
-                fetchLoanData={fetchLoanData}
-                fetchBorrowersData={fetchBorrowersData}
-              />
-            }>
+      {isLoading ? (
+        <CubeLoader />
+      ) : (
+        <s.Main>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/howitWorks" element={<HowItoWorks />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/metateam" element={<OurTeam />} />
             <Route
-              path="submitLoan"
+              path="/requestloan"
+              element={<ContactForm removeAlert={showAlert} alert={alert} />}
+            />
+            <Route
+              path="/admin"
               element={
-                <SubmitLoan
-                  getLoan={getLoan}
-                  incrementLoanId={incrementLoanId}
-                  decrementLoanId={decrementLoanId}
-                  loanId={loanId}
+                <Admin
+                  showAlert={showAlert}
                   alert={alert}
-                  removeAlert={showAlert}
                   activePayment={activePayment}
+                  setActivePayment={setActivePayment}
                 />
               }
             />
-
             <Route
-              path="payLoan"
+              path="/launchApp"
               element={
-                <PayLoan
-                  payLoan={payLoan}
-                  alert={alert}
-                  removeAlert={showAlert}
-                  incrementLoanId={incrementLoanId}
-                  decrementLoanId={decrementLoanId}
-                  loanId={loanId}
-                  activePayment={activePayment}
+                <LaunchApp
+                  fetchLoanData={fetchLoanData}
+                  fetchBorrowersData={fetchBorrowersData}
                 />
-              }
-            />
+              }>
+              <Route
+                path="submitLoan"
+                element={
+                  <SubmitLoan
+                    getLoan={getLoan}
+                    incrementLoanId={incrementLoanId}
+                    decrementLoanId={decrementLoanId}
+                    loanId={loanId}
+                    alert={alert}
+                    removeAlert={showAlert}
+                    activePayment={activePayment}
+                  />
+                }
+              />
 
-            <Route
-              path="fetchLoan"
-              element={
-                <FetchLoan
-                  LoanData={LoanData}
-                  isBorrowerAddress={isBorrowerAddress}
-                />
-              }
-            />
-            <Route
-              path="borrowers"
-              element={<FetchBorrowers BorrowersData={BorrowersData} />}
-            />
-          </Route>
-        </Routes>
-        <Footer />
-      </s.Main>
+              <Route
+                path="payLoan"
+                element={
+                  <PayLoan
+                    payLoan={payLoan}
+                    alert={alert}
+                    removeAlert={showAlert}
+                    incrementLoanId={incrementLoanId}
+                    decrementLoanId={decrementLoanId}
+                    loanId={loanId}
+                    activePayment={activePayment}
+                  />
+                }
+              />
+
+              <Route
+                path="fetchLoan"
+                element={
+                  <FetchLoan
+                    LoanData={LoanData}
+                    isBorrowerAddress={isBorrowerAddress}
+                  />
+                }
+              />
+              <Route
+                path="borrowers"
+                element={<FetchBorrowers BorrowersData={BorrowersData} />}
+              />
+            </Route>
+          </Routes>
+          <Footer />
+        </s.Main>
+      )}
     </>
   );
 }
