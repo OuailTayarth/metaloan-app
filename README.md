@@ -1,78 +1,24 @@
 # MetaLoan: Own Your Piece of the Metaverse
 
-Break down the cost of your metaversal assets into small, affordable payments with MetaLoan's DApp on the Polygon blockchain. This project enables users to secure their stake in the expanding universe of digital experiences by facilitating manageable financial transactions.
+MetaLoan is a full-stack application built with React on the front end and Polygon blockchain on the back end for storing data. It helps users own metaverse land by offering affordable loan payments. The app uses smart contracts and blockchain for transparent and efficient loan processing, making virtual ownership accessible to everyone.
 
-<a href="https://ibb.co/wwNyV0n"><img src="https://i.ibb.co/xfShWCn/metaloa.png" alt="metaloa" border="0"></a>
+<a href="https://ibb.co/4Z4y2CXN"><img src="https://i.ibb.co/WWB907MK/Metaling-Landing.png" alt="Metaling-Landing" border="0"></a>
 
+## Reason for Building This App
+
+I built this project during my last role as a front-end developer at Rose Law Group, the company I was working at. It makes owning metaverse land affordable by breaking down high costs into small payments, helping more people join virtual worlds for fun or investment.
 
 ## Technologies
 
 - **Front-end**: ReactJS
 - **Smart Contract Language**: Solidity
-- **Blockchain**: Polygon Mainnet
+- **Backend**: blockchain
 - **Testing**: Foundry
 
-## Smart Contract Overview
+## Link to Newest Version
 
-The `MetaLoan` contract is designed to create and manage loan plans. It allows managers to create loan plans, users to apply for and pay loans, and also provides other functionalities such as the ability to delete a loan plan, withdraw tokens, and more.
+https://heartfelt-gingersnap-5ab22b.netlify.app/
 
-## MetaLoan Contract Functions
+## License
 
-### Modifiers
-- `onlyOwner`
-- `onlyManager`
-- `PlanExists`
-- `NotZeroAddress`
-- `NotZeroValue`
-
-### State-changing Functions
-- `constructor`
-- `createPlan`
-- `requestLoan`
-- `payLoan`
-- `deletePlan`
-- `withdrawTokens`
-- `addManager`
-
-### View Functions
-- `fetchMyLoan`
-- `fetchPlan`
-- `fetchAllBorrowers`
-- `fetchallPlans`
-
-### Events
-- `PlanCreated`
-- `PaymentSent`
-- `LoanCreated`
-- `LoanDeleted`
-- `PlanDeleted`
-- `TransferOfTokens`
-
-### Contract Address
-
-[View Metaloan Smart Contract on Polygon Mainnet](https://polygonscan.com/address/0xA3b2C7cE6f2788148EBfc65BeB4Cb04cb3BDe46E)
-
-## Local Setup
-
-1. **Clone the Repository**:
-```
-git clone <repository-url>
-```
-
-3. **Install Dependencies**:
-```
-npm install
-```
-
-5. **Start the DApp**:
-```
-npm start
-```
-
-## Foundry Test
-Follow the [instructions](https://book.getfoundry.sh/getting-started/installation.html) to install [Foundry](https://github.com/foundry-rs/foundry).
-
-Clone and install dependencies:git submodule update --init --recursive  
-Test Contract: ```forge test --contracts ./src/test/Metaloan.t.sol -vvvv```
-
-Visit `http://localhost:3000/` to interact with the decentralized application. 
+This project is licensed under a Proprietary License. For usage permissions, please contact the author.

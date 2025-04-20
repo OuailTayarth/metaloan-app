@@ -1,32 +1,47 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
-import { connect } from "./redux/blockchain/blockchainActions";
-import { fetchData } from "./redux/data/dataActions";
+// React and Hooks
+import React, { useEffect, useState } from "react"; // Core React library with useEffect and useState hooks
+import { useDispatch, useSelector } from "react-redux"; // Redux hooks for dispatching actions and selecting state
+
+// CSS Import (No Category)
+import "./App.css"; // Stylesheet for the App component
+
+// Custom Actions
+import { connect } from "./redux/blockchain/blockchainActions"; // Custom action for blockchain connection
+import { fetchData } from "./redux/data/dataActions"; // Custom action for fetching data
+
+// Custom Styles
 import * as s from "../src/styles/globalStyles";
-import moment from "moment";
+
+// Utility Libraries
+import moment from "moment"; // Library for date and time manipulation
+
+// Custom Components
 import LaunchApp from "./components/LaunchApp/LaunchApp";
 import SubmitLoan from "./components/UserPages/SubmitLoan/SubmitLoan";
 import PayLoan from "./components/UserPages/PayLoan/PayLoan";
 import FetchLoan from "./components/UserPages/FetchLoan/FetchLoan";
 import FetchBorrowers from "./components/UserPages/FetchBorrowers/FetchBorrowers";
-import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import About from "./components/About/About";
 import Footer from "./components/Footer/Footer";
 import ContactForm from "./components/ContactForm/ContactForm";
 import Admin from "./components/Admin/Admin";
 import HowItoWorks from "./components/HowItWorks/HowItoWorks";
-import ERC20ABI from "./ERC20ABI.json";
 import OurTeam from "./components/OurTeam/OurTeam";
-import Loader from "./components/Loader/Loader";
 import Home from "./components/Home";
-import config from "./config/config.json";
-import metaloanInterface from "../src/config/abi.json";
-import { ethers } from "ethers";
-import Web3Modal from "web3modal";
 import CubeLoader from "./components/Loaders/cubeLoader";
 
+// Routing
+import { Routes, Route } from "react-router-dom";
+
+// Blockchain-related
+import ERC20ABI from "./ERC20ABI.json"; // ABI for ERC20 token contract
+import metaloanInterface from "../src/config/abi.json"; // ABI for a custom loan contract
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
+
+// Configuration
+import config from "./config/config.json";
 function App() {
   const dispatch = useDispatch();
   const blockchain = useSelector((state) => state.blockchain);
@@ -48,7 +63,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3500);
+    }, 3800);
     return () => clearTimeout(timer);
   }, []);
 
