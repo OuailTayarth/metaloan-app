@@ -32,6 +32,10 @@
   overflow: hidden;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .howItWorks-content .textBox p {
   font-size: 1.1em;
   line-height: 20px;

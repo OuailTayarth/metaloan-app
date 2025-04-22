@@ -1,17 +1,20 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./App";
 import store from "./redux/store";
 import { Provider } from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+// import "./components/HeroSection/HeroSection.css";
+// import "./App.css";
+// import "./../src/styles/globalStyles.js";
 
+const container = document.getElementById("root");
+const root = createRoot(container);
 
-ReactDOM.render(
+root.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>,
-  document.getElementById("root")
+  </Provider>
 );
-

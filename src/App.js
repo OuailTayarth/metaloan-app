@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react"; // Core React library with useEffect and useState hooks
 import { useDispatch, useSelector } from "react-redux"; // Redux hooks for dispatching actions and selecting state
 
-// CSS Import (No Category)
+// CSS Import
 import "./App.css"; // Stylesheet for the App component
 
 // Custom Actions

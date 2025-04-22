@@ -7,15 +7,6 @@
   padding: 120px 70px;
 }
 
-.LineChildren {
-  transform: translate(0, 500px);
-  padding-top: 2px;
-}
-
-.LineParents {
-  overflow: hidden;
-}
-
 .content .textBox {
   position: relative;
   max-width: 469px;
@@ -54,6 +45,19 @@
 
 .content .imgBox img {
   max-width: 662px;
+}
+
+.LineParents {
+  overflow: hidden;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.LineChildren {
+  transform: translate(0, 500px);
+  padding-top: 2px;
 }
 
 .button-container #btn-left {
