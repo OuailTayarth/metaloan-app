@@ -1,7 +1,7 @@
 import React from "react";
 import "./Loading.css";
 
-const Loading = () => {
+const Loading = (): JSX.Element => {
   return (
     <div className="lds-ripple">
       <div></div>

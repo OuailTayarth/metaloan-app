@@ -1,7 +1,8 @@
 import React from "react";
 import "./FetchBorrowers.css";
+import { FetchBorrowersProps } from "../../../models/fetchBorrowersProps";
 
-const FetchBorrowers = ({ BorrowersData }) => {
+const FetchBorrowers: React.FC<FetchBorrowersProps> = ({ BorrowersData }) => {
   return (
     <div className="borrowers-container one">
       {BorrowersData.length > 0 ? (

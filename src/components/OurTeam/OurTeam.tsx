@@ -1,3 +1,4 @@
+import React from "react";
 import "./OurTeam.css";
 import { BsTwitter } from "react-icons/bs";
 import { ImLinkedin2 } from "react-icons/im";
@@ -6,7 +7,7 @@ import metaProfil from "../../assets/eduardoAvatar.jpg";
 import eduardoMeta from "../../assets/eduardoProfil.png";
 import ouailBlock from "../../assets/OuailProfilPro.jpg";
 
-const OurTeam = () => {
+const OurTeam = (): JSX.Element => {
   return (
     <div className="OurTeam-section" id="metateam">
       <h1 className="teamTitle">Our Team</h1>
@@ -36,12 +37,14 @@ const OurTeam = () => {
                 href="https://www.linkedin.com/in/tayarthouail/"
                 target="_blank"
                 rel="noreferrer">
+                {/* @ts-ignore */}
                 <ImLinkedin2 className="icon" />
               </a>
               <a
                 href="https://twitter.com/Tayarthouail"
                 target="_blank"
                 rel="noreferrer">
+                {/* @ts-ignore */}
                 <BsTwitter className="icon" />
               </a>
             </div>
@@ -71,12 +74,14 @@ const OurTeam = () => {
                 href="https://www.linkedin.com/in/davametric/"
                 rel="noreferrer"
                 target="_blank">
+                {/* @ts-ignore */}
                 <ImLinkedin2 className="icon" />
               </a>
               <a
                 href="https://twitter.com/metaversearchi_"
                 rel="noreferrer"
                 target="_blank">
+                {/* @ts-ignore */}
                 <BsTwitter className="icon" />
               </a>
             </div>

@@ -22,20 +22,18 @@ const fetchDataFailed = (payload) => {
 };
 
 // Load Data from the contract
-export const fetchData = (account) => {
+export const fetchData = () => {
   return async (dispatch) => {
     dispatch(fetchDataRequest());
     try {
-  
-
-      let totalLoans = await store.getState()
-        .blockchain.smartContract.methods
-        .totalLoans()
+      let totalLoans = await store
+        .getState()
+        .blockchain.smartContract.methods.totalLoans()
         .call();
 
       dispatch(
         fetchDataSuccess({
-          totalLoans
+          totalLoans,
         })
       );
     } catch (err) {

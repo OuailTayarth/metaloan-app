@@ -10,7 +10,7 @@ import { connect } from "./redux/blockchain/blockchainActions"; // Custom action
 import { fetchData } from "./redux/data/dataActions"; // Custom action for fetching data
 
 // Custom Styles
-import * as s from "../src/styles/globalStyles";
+import * as s from "./styles/globalStyles";
 
 // Utility Libraries
 import moment from "moment"; // Library for date and time manipulation
@@ -36,39 +36,52 @@ import { Routes, Route } from "react-router-dom";
 
 // Blockchain-related
 import ERC20ABI from "./ERC20ABI.json"; // ABI for ERC20 token contract
-import metaloanInterface from "../src/config/abi.json"; // ABI for a custom loan contract
+import metaloanInterface from "./config/abi.json"; // ABI for a custom loan contract
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 
 // Configuration
 import config from "./config/config.json";
-function App() {
-  const dispatch = useDispatch();
-  const blockchain = useSelector((state) => state.blockchain);
-  const [loanId, setLoanId] = useState(0);
+import { AppDispatch, RootState } from "./redux/store";
+import { BlockchainStates } from "./models/blockchainStates";
+import { LoanDataType } from "./models/loanData";
+import { BorrowerDataType } from "./models/borrowerData";
+import { AlertType } from "./models/alert";
 
-  const [LoanData, setLoanData] = useState([]);
-  const [BorrowersData, setBorrowersData] = useState([]);
-  const [alert, setAlert] = useState({ show: false, msg: "" });
-  const [activePayment, setActivePayment] = useState(false);
-  const [isBorrowerAddress, setBorrowerAddress] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+const App = (): JSX.Element => {
+  const dispatch = useDispatch<AppDispatch>();
+  const blockchain = useSelector<RootState, BlockchainStates>(
+    (state) => state.blockchain
+  );
+  const [loanId, setLoanId] = useState<number>(0);
+  const [LoanData, setLoanData] = useState<LoanDataType | null>(null);
+  const [BorrowersData, setBorrowersData] = useState<BorrowerDataType[]>([]);
+  const [alert, setAlert] = useState<AlertType>({ show: false, msg: "" });
+  const [activePayment, setActivePayment] = useState<boolean>(false);
+  const [isBorrowerAddress, setIsBorrowerAddress] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
-      dispatch(fetchData(blockchain.account));
+      dispatch(fetchData());
     }
   }, [blockchain.smartContract]);
 
+  /**
+   * Delays setting the loading state to false after 3 seconds and clears the timeout on cleanup.
+   */
   useEffect(() => {
-    const timer = setTimeout(() => {
+    let timer: NodeJS.Timeout | undefined;
+    timer = setTimeout(() => {
       setIsLoading(false);
     }, 4000);
-    return () => clearTimeout(timer);
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   // ShowAlert
-  function showAlert(show = false, msg = "") {
+  function showAlert(show = false, msg = ""): void {
     setAlert({ show: show, msg: msg });
   }
 
@@ -87,7 +100,7 @@ function App() {
   }, []);
 
   // Increment loan Id
-  function incrementLoanId() {
+  function incrementLoanId(): void {
     let newLoanId = loanId + 1;
     if (newLoanId > 100) {
       newLoanId = 100;
@@ -96,9 +109,9 @@ function App() {
   }
 
   // Decrement loan Id
-  function decrementLoanId() {
-    let newLoanId = loanId + 1;
-    if (newLoanId > 0) {
+  function decrementLoanId(): void {
+    let newLoanId = loanId - 1;
+    if (newLoanId < 0) {
       newLoanId = 0;
     }
     setLoanId(newLoanId);
@@ -107,7 +120,7 @@ function App() {
   /**
    * Requests and activates a loan plan
    */
-  async function getLoan() {
+  async function getLoan(): Promise<void> {
     showAlert(true, "Welcome to MetaLoan, your payment is processing...!");
     setActivePayment(true);
 
@@ -122,7 +135,7 @@ function App() {
       const metaloanContract = new ethers.Contract(
         config.CONTRACT_ADDRESS,
         metaloanInterface,
-        signer
+        signer as any
       );
 
       // Fetch plan details
@@ -134,7 +147,7 @@ function App() {
       const stableTokenContract = new ethers.Contract(
         tokenPayment,
         ERC20ABI,
-        signer
+        signer as any
       );
 
       // Approve MetaLoan to spend tokens
@@ -166,7 +179,7 @@ function App() {
   /**
    * Pay and records a monthly loan payment
    */
-  async function payLoan() {
+  async function payLoan(): Promise<void> {
     setActivePayment(true);
     showAlert(true, "Happy to see you, your payment is processing...!");
 
@@ -181,7 +194,7 @@ function App() {
       const metaloanContract = new ethers.Contract(
         config.CONTRACT_ADDRESS, // e.g., "0xA3b2C7cE6f2788148EBfc65BeB4Cb04cb3BDe46E"
         metaloanInterface,
-        signer
+        signer as any
       );
 
       // Step 3: Fetch plan details using loanId
@@ -193,7 +206,7 @@ function App() {
       const stableTokenContract = new ethers.Contract(
         tokenPayment,
         ERC20ABI,
-        signer
+        signer as any
       );
 
       // Step 5: Approve MetaLoan contract to spend tokens
@@ -213,7 +226,7 @@ function App() {
         true,
         "Congratulations, your monthly payment has been submitted successfully!"
       );
-      dispatch(fetchData(await signer.getAddress())); // Update data if applicable
+      dispatch(fetchData()); // Update data if applicable
     } catch (err) {
       // Step 8: Handle errors
       console.error(err);
@@ -225,7 +238,7 @@ function App() {
   /**
    * Fetches and loads the user's loan data from the blockchain.
    */
-  async function fetchLoanData() {
+  async function fetchLoanData(): Promise<void> {
     try {
       // Step 1: Connect to the user's wallet using Web3Modal
       const web3Modal = new Web3Modal();
@@ -233,13 +246,12 @@ function App() {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const userAccount = await signer.getAddress(); // Get the user's account address
-      console.log("user Acccount", userAccount);
 
       // Step 2: Create MetaLoan contract instance
       const metaloanContract = new ethers.Contract(
         config.CONTRACT_ADDRESS, // e.g., "0xA3b2C7cE6f2788148EBfc65BeB4Cb04cb3BDe46E"
         metaloanInterface,
-        provider // Use provider for read-only calls
+        provider as any // Use provider for read-only calls
       );
 
       console.log("meta loan contract", metaloanContract);
@@ -258,7 +270,7 @@ function App() {
       const nextPayment = moment.unix(data.nextPayment).toString();
       const borrowerAddress = data.borrower.toString().toLowerCase();
 
-      setBorrowerAddress(borrowerAddress.toLowerCase());
+      setIsBorrowerAddress(borrowerAddress.toLowerCase());
 
       const item = {
         borrower: borrowerAddress,
@@ -277,7 +289,7 @@ function App() {
   /**
    * Fetches and loads all borrowers' data from the blockchain.
    */
-  async function fetchBorrowersData() {
+  async function fetchBorrowersData(): Promise<void> {
     try {
       // Set up the provider
       const provider = new ethers.providers.JsonRpcProvider(
@@ -288,23 +300,16 @@ function App() {
       const metaloanContract = new ethers.Contract(
         config.CONTRACT_ADDRESS,
         metaloanInterface,
-        provider
+        provider as any
       );
-
-      console.log("contract address", config.CONTRACT_ADDRESS);
-      console.log("abi", metaloanInterface);
-      console.log("metaloan Contract", metaloanContract);
 
       // fetch all borrowers from the contract
       const data = await metaloanContract.fetchAllBorrowers();
 
-      console.log("data", data);
-
       /* Fetch all borrowers */
       const items = await Promise.all(
-        data.map(async (el) => {
+        data.map(async (el: any): Promise<BorrowerDataType> => {
           /* All borrowers information */
-          // const status = (el.activated).toString();
           let startDay = moment.unix(el.start).toString();
           let nextPayment = moment.unix(el.nextPayment).toString();
           let borrowerAddress = el.borrower.toString();
@@ -345,8 +350,8 @@ function App() {
               path="/admin"
               element={
                 <Admin
-                  showAlert={showAlert}
                   alert={alert}
+                  showAlert={showAlert}
                   activePayment={activePayment}
                   setActivePayment={setActivePayment}
                 />
@@ -410,5 +415,5 @@ function App() {
       )}
     </>
   );
-}
+};
 export default App;

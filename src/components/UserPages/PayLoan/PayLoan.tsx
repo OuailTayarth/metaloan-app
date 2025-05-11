@@ -1,9 +1,9 @@
-import "../../UserPages/links-container.css";
-import "./SubmitLoan.css";
+import React from "react";
 import Alert from "../../Alert/Alert";
+import { PayLoanProps } from "../../../models/payLoanProps";
 
-const SubmitLoan = ({
-  getLoan,
+const PayLoan: React.FC<PayLoanProps> = ({
+  payLoan,
   decrementLoanId,
   incrementLoanId,
   loanId,
@@ -12,17 +12,14 @@ const SubmitLoan = ({
   activePayment,
 }) => {
   return (
-    <div className="submit-container two">
-      <h1>
-        To Have your Loan accepted, you have to deposit 30% as down payment of
-        the total amount of the Loan{" "}
-      </h1>
+    <div className="submit-container tree">
+      <h1>Don't forget to pay your loan on time! </h1>
 
       <div className="count-buttons">
         <button
           className="btn"
           id="count"
-          disabled={activePayment ? 1 : 0}
+          disabled={activePayment}
           onClick={() => {
             decrementLoanId();
           }}>
@@ -34,29 +31,30 @@ const SubmitLoan = ({
         <button
           className="btn"
           id="count"
-          disabled={activePayment ? 1 : 0}
+          disabled={activePayment}
           onClick={() => {
             incrementLoanId();
           }}>
           +
         </button>
       </div>
+
       <h4>
-        Make sure to select the right number of your loan plan before your pay
+        Make sure to select the right number of your loan offer before your pay
       </h4>
       {alert.show && <Alert {...alert} removeAlert={removeAlert} />}
       <button
         className="btn"
         id="launchApp-btn"
-        disabled={activePayment ? 1 : 0}
+        disabled={activePayment}
         onClick={(e) => {
           e.preventDefault();
-          getLoan();
+          payLoan();
         }}>
-        {activePayment ? "Busy..." : "Submit Loan"}
+        {activePayment ? "Busy..." : "Pay Loan"}
       </button>
     </div>
   );
 };
 
-export default SubmitLoan;
+export default PayLoan;

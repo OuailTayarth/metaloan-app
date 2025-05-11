@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./About.css";
 import AboutImg from "../../assets/Aboutus.jpg";
 import { useNavigate } from "react-router-dom";
-import SplitText from "../../Utilis/split3.min";
+import SplitText from "../../Utilities/splitText";
 import gsap from "gsap";
 
-const About = () => {
+const About = (): JSX.Element => {
   const navigate = useNavigate();
-  const [isHidden, setIsHidden] = useState(true);
+  const [isHidden, setIsHidden] = useState<boolean>(true);
 
   useEffect(() => {
     const split = new SplitText(".hero-text", {

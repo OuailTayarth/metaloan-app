@@ -7,6 +7,11 @@ const rootReducer = combineReducers({
   data: dataReducer,
 });
 
+// define the RooState type returns from the redux store
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
+
 const store = configureStore({
   reducer: rootReducer,
 });

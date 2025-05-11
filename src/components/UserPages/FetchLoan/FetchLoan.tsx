@@ -1,13 +1,22 @@
 import React from "react";
 import "../FetchBorrowers/FetchBorrowers.css";
 import { useSelector } from "react-redux";
+import { FetchLoanProps } from "../../../models/fetchLoanProps";
+import { RootState } from "../../../redux/store";
+import { BlockchainStates } from "../../../models/blockchainStates";
 
-const FetchLoan = ({ LoanData, isBorrowerAddress }) => {
-  const blockchain = useSelector((state) => state.blockchain);
+const FetchLoan: React.FC<FetchLoanProps> = ({
+  LoanData,
+  isBorrowerAddress,
+}) => {
+  const blockchain = useSelector<RootState, BlockchainStates>(
+    (state) => state.blockchain
+  );
 
   return (
     <div className="loan-container tree">
-      {Object.keys(LoanData).length > 0 &&
+      {LoanData != null &&
+      Object.keys(LoanData).length > 0 &&
       blockchain.account === isBorrowerAddress ? (
         <div className="single-borrower">
           <h1>

@@ -1,8 +1,12 @@
+import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./UserNavbar.css";
-import { useEffect } from "react";
+import { LaunchAppProps } from "../../../models/LaunchAppProps";
 
-const UserNavbar = ({ fetchLoanData, fetchBorrowersData }) => {
+const UserNavbar: React.FC<LaunchAppProps> = ({
+  fetchLoanData,
+  fetchBorrowersData,
+}) => {
   useEffect(() => {
     fetchBorrowersData();
     fetchLoanData();
@@ -17,11 +21,6 @@ const UserNavbar = ({ fetchLoanData, fetchBorrowersData }) => {
               Borrowers
             </Link>
           </li>
-
-          {/* <li>
-                    <Link to="createPlan">Create Plan</Link>      
-                 </li> */}
-
           <li>
             <Link to="submitLoan">Submit Loan</Link>
           </li>
