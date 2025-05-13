@@ -6,9 +6,10 @@ import SplitText from "../../Utilities/splitText";
 import gsap from "gsap";
 
 const About = (): JSX.Element => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // mock this
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
+  // mock split
   useEffect(() => {
     const split = new SplitText(".hero-text", {
       type: "lines",

@@ -1,6 +1,4 @@
 {
-    "workbench.editor.enablePreview": false,
-    "cSpell.words": [
-        "ipfs"
-    ]
+  "workbench.editor.enablePreview": false,
+  "cSpell.words": ["gsap", "ipfs", "metaverse"]
 }
