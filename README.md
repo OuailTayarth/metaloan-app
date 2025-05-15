@@ -12,9 +12,7 @@ I built this project during my last role as a front-end developer at Rose Law Gr
 
 - **Front-end**: ReactJS, TypeScript
 - **State Management**: Redux
-- **Smart Contract Language**: Solidity
-- **Backend**: blockchain
-- **Testing**: Foundry
+- **Testing**: Vitest
 
 ## Link to Newest Version
 
