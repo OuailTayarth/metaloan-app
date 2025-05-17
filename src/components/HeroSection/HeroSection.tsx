@@ -15,11 +15,6 @@ const HeroSection = (): JSX.Element => {
       linesClass: "LineChildren",
     });
 
-    const splitParent = new SplitText(".hero-text", {
-      type: "lines",
-      linesClass: "LineParents",
-    });
-
     setIsHidden(false);
 
     // Use gsap.fromTo to define the exact starting and ending states

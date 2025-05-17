@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./About.css";
-import AboutImg from "../../assets/Aboutus.jpg";
+import AboutImg from "../../assets/AboutUs.jpg";
 import { useNavigate } from "react-router-dom";
 import SplitText from "../../Utilities/splitText";
 import gsap from "gsap";
 
 const About = (): JSX.Element => {
-  const navigate = useNavigate(); // mock this
+  const navigate = useNavigate();
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   // mock split
@@ -14,11 +14,6 @@ const About = (): JSX.Element => {
     const split = new SplitText(".hero-text", {
       type: "lines",
       linesClass: "LineChildren",
-    });
-
-    const splitParent = new SplitText(".hero-text", {
-      type: "lines",
-      linesClass: "LineParents",
     });
 
     setIsHidden(false);
