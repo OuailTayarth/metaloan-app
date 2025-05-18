@@ -16,7 +16,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ alert, removeAlert }) => {
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // check for undefined
+    // check for undefined values
     if (form.current && serviceId && templateId && publicKey) {
       emailsjs
         .sendForm(serviceId, templateId, form.current, publicKey)

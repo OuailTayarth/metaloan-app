@@ -18,13 +18,9 @@ const OurTeam = (): JSX.Element => {
               <img
                 src={ouailBlock}
                 className="img1"
-                alt="blockchain developer"
+                alt="front end developer"
               />
-              <img
-                src={devProfil}
-                className="avatar"
-                alt="blockchain developer"
-              />
+              <img src={devProfil} className="avatar" alt="front end avatar" />
             </div>
           </div>
           <div className="content">
