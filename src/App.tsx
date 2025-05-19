@@ -56,7 +56,10 @@ const App = (): JSX.Element => {
   const [loanId, setLoanId] = useState<number>(0);
   const [LoanData, setLoanData] = useState<LoanDataType | null>(null);
   const [BorrowersData, setBorrowersData] = useState<BorrowerDataType[]>([]);
-  const [alert, setAlert] = useState<AlertType>({ show: false, msg: "" });
+  const [alert, setAlert] = useState<AlertType | null>({
+    show: false,
+    msg: "",
+  });
   const [activePayment, setActivePayment] = useState<boolean>(false);
   const [isBorrowerAddress, setIsBorrowerAddress] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);

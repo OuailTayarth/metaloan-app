@@ -26,7 +26,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ alert, removeAlert }) => {
             true,
             "Thank you! MetaLoan will review your request and e-mail with more information to complete your loan."
           );
-          (e.target as HTMLFormElement).reset();
+          // (e.target as HTMLFormElement).reset();
         })
         .catch((error) => {
           console.log(error);
@@ -41,7 +41,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ alert, removeAlert }) => {
         <p>Complete this form to receive your custom loan plan</p>
       </div>
 
-      <form ref={form} className="book-form" onSubmit={sendEmail}>
+      <form
+        ref={form}
+        className="book-form"
+        onSubmit={sendEmail}
+        aria-label="Contact">
         <div className="inputBox">
           <input
             type="text"
@@ -52,7 +56,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ alert, removeAlert }) => {
         </div>
 
         <div className="inputBox">
-          <input type="email" name="user_email" placeholder=" Email" required />
+          <input type="email" name="user_email" placeholder="Email" required />
         </div>
 
         <div className="inputBox">
@@ -79,7 +83,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ alert, removeAlert }) => {
             name="user_checkbox"
             value={
               isCheckBox
-                ? " The user acknowledge that MetaLoan requires payment of 50% down payment before any purchase "
+                ? "The user acknowledge that MetaLoan requires payment of 50% down payment before any purchase"
                 : "The user didn't acknowledge that MetaLoan requires payment of 50% down payment before any purchase"
             }
             onChange={() => setIsCheckBox(!isCheckBox)}
