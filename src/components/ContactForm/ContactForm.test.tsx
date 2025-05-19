@@ -60,6 +60,13 @@ describe("ContactForm", () => {
     render(<ContactForm alert={null} removeAlert={mockRemoveAlert} />);
 
     const checkBox = screen.getByRole("checkbox");
+    const formElement = screen.getByRole("form", {
+      name: "Contact",
+    }) as HTMLFormElement;
+
+    const resetMock = vi
+      .spyOn(formElement, "reset")
+      .mockImplementation(() => {});
 
     // Fill form
     fireEvent.change(screen.getByPlaceholderText("First & Last Name"), {
@@ -89,7 +96,7 @@ describe("ContactForm", () => {
     );
     fireEvent.click(checkBox);
 
-    fireEvent.submit(screen.getByRole("form", { name: "Contact" }));
+    fireEvent.submit(formElement);
 
     await waitFor(() => {
       // Verify email sent + alert called with success message
@@ -104,7 +111,7 @@ describe("ContactForm", () => {
         "Thank you! MetaLoan will review your request and e-mail with more information to complete your loan."
       );
 
-      // access the history call on the sendForm
+      // access the first history call on the sendForm
       const submittedForm = vi.mocked(emailsjs.sendForm).mock
         .calls[0][2] as HTMLFormElement;
 
@@ -138,6 +145,9 @@ describe("ContactForm", () => {
         "The user acknowledge that MetaLoan requires payment of 50% down payment before any purchase"
       );
     });
+
+    // clean up the reset from mock
+    resetMock.mockRestore();
   });
 
   it("toggles checkbox value on click", () => {

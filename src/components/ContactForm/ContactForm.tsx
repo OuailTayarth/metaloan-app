@@ -26,7 +26,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ alert, removeAlert }) => {
             true,
             "Thank you! MetaLoan will review your request and e-mail with more information to complete your loan."
           );
-          // (e.target as HTMLFormElement).reset();
+          (e.target as HTMLFormElement).reset();
         })
         .catch((error) => {
           console.log(error);

@@ -4,7 +4,7 @@ import { AiOutlineInstagram } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <div className="Footer">
       <div className="container">
@@ -20,10 +20,6 @@ const Footer = () => {
 
         <div className="row">
           <ul className="social-media">
-            {/* <li>
-                        <Link to="/" className="icon"> <FaFacebook/> </Link>
-                    </li> */}
-
             <li>
               <a
                 href="https://twitter.com/meta_loan?s=11&t=o0Jez5odsPGMSJg7SgLfFQ"

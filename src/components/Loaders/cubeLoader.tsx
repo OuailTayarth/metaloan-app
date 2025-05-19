@@ -1,7 +1,7 @@
-import { React } from "react";
+import React from "react";
 import "./cubeLoader.css";
 
-const CubeLoader = () => {
+const CubeLoader = (): JSX.Element => {
   return (
     <div className="main-scene">
       <div className="scene">

@@ -4,17 +4,22 @@ import { connect } from "../../redux/blockchain/blockchainActions";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../redux/data/dataActions";
 import "./Navbar.css";
+import { AppDispatch, RootState } from "../../redux/store";
+import { BlockchainStates } from "../../models/blockchainStates";
 
-const Navbar = () => {
-  const dispatch = useDispatch();
-  const blockchain = useSelector((state) => state.blockchain);
-  const [click, setClick] = useState(false);
+const Navbar = (): JSX.Element => {
+  const dispatch = useDispatch<AppDispatch>();
+  const blockchain = useSelector<RootState, BlockchainStates>(
+    (state) => state.blockchain
+  );
+  const [click, setClick] = useState<boolean>(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const adminAddress = "0xb8cea4b30758f65657287e3bdc2eac6bf9e68702";
 
   const getData = () => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
-      dispatch(fetchData(blockchain.account));
+      dispatch(fetchData());
     }
   };
 
@@ -65,7 +70,7 @@ const Navbar = () => {
         </li>
 
         <li>
-          {blockchain.account == 0xb8cea4b30758f65657287e3bdc2eac6bf9e68702 && (
+          {blockchain.account == adminAddress && (
             <Link to="/admin" id="connect" onClick={closeMobileMenu}>
               Admin
             </Link>
@@ -84,7 +89,7 @@ const Navbar = () => {
             {blockchain.walletConnected === false ? (
               "connect wallet"
             ) : (
-              <div id="address">{blockchain.account.substring(0, 12)}...</div>
+              <div id="address">{blockchain.account!.substring(0, 12)}...</div>
             )}
           </button>
         </li>
