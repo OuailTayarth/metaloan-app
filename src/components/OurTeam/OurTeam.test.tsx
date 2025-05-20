@@ -35,9 +35,13 @@ describe("OurTeam Component", () => {
     });
 
     // verify urls are correctly formatted(to avoid typos)
-    expect(links[0].href).toContain(
+    expect(links[0] as HTMLAnchorElement).toHaveAttribute(
+      "href",
       "https://www.linkedin.com/in/tayarthouail/"
     );
-    expect(links[3].href).toContain("https://twitter.com/metaversearchi_");
+    expect(links[3] as HTMLAnchorElement).toHaveAttribute(
+      "href",
+      "https://twitter.com/metaversearchi_"
+    );
   });
 });

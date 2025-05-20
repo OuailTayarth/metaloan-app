@@ -2,6 +2,7 @@ import React from "react";
 import UserNavbar from "../UserPages/UserNavbar/UserNavbar";
 import "./launchApp.css";
 import { LaunchAppProps } from "../../models/LaunchAppProps";
+import { Outlet } from "react-router-dom";
 
 const LaunchApp: React.FC<LaunchAppProps> = ({
   fetchLoanData,
@@ -13,6 +14,7 @@ const LaunchApp: React.FC<LaunchAppProps> = ({
         fetchLoanData={fetchLoanData}
         fetchBorrowersData={fetchBorrowersData}
       />
+      <Outlet />
     </div>
   );
 };

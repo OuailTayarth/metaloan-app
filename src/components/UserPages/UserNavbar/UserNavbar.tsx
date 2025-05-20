@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./UserNavbar.css";
 import { LaunchAppProps } from "../../../models/LaunchAppProps";
 
@@ -36,7 +36,6 @@ const UserNavbar: React.FC<LaunchAppProps> = ({
           </li>
         </ul>
       </div>
-      <Outlet />
     </>
   );
 };

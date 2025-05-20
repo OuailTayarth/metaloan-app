@@ -33,6 +33,14 @@ vi.mock("./components/Footer/Footer", () => ({
   default: () => <div>Footer Page Content</div>,
 }));
 
+vi.mock("./components/LaunchApp/LaunchApp", () => ({
+  default: () => <div>Launch App Content</div>,
+}));
+
+vi.mock("./components/UserPages/SubmitLoan/SubmitLoan", () => ({
+  default: () => <div>Submit Loan Content</div>,
+}));
+
 describe("App Component", () => {
   it("renders without crashing", () => {
     render(
@@ -90,6 +98,18 @@ describe("App Component", () => {
       path: "/requestloan",
       name: "ContactForm",
       content: "Contact Form Content",
+    },
+
+    {
+      path: "/launchApp",
+      name: "LaunchApp",
+      content: "Launch App Content",
+    },
+
+    {
+      path: "/launchApp/submitLoan",
+      name: "SubmitLoan",
+      content: "Submit Loan Content",
     },
   ];
 

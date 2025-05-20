@@ -58,7 +58,7 @@ const App = (): JSX.Element => {
   const [loanId, setLoanId] = useState<number>(0);
   const [LoanData, setLoanData] = useState<LoanDataType | null>(null);
   const [BorrowersData, setBorrowersData] = useState<BorrowerDataType[]>([]);
-  const [alert, setAlert] = useState<AlertType | null>({
+  const [alert, setAlert] = useState<AlertType>({
     show: false,
     msg: "",
   });

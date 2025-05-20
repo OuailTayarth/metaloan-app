@@ -26,6 +26,7 @@ const Footer = (): JSX.Element => {
                 className="icon"
                 target="_blank"
                 rel="noreferrer">
+                {/* @ts-ignore */}
                 <FaTwitter />
               </a>
             </li>
@@ -36,6 +37,7 @@ const Footer = (): JSX.Element => {
                 className="icon"
                 target="_blank"
                 rel="noreferrer">
+                {/* @ts-ignore */}
                 <AiOutlineInstagram />
               </a>
             </li>
