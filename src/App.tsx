@@ -1,14 +1,15 @@
 // React and Hooks
-import React, { useEffect, useState } from "react"; // Core React library with useEffect and useState hooks
-import { useDispatch, useSelector } from "react-redux"; // Redux hooks for dispatching actions and selecting state
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-//
 // CSS Import
 import "./App.css"; // Stylesheet for the App component
 
 // Custom Actions
-import { connect } from "./redux/blockchain/blockchainActions"; // Custom action for blockchain connection
-import { fetchData } from "./redux/data/dataActions"; // Custom action for fetching data
+// Custom action for blockchain connection
+import { connect } from "./redux/blockchain/blockchainActions";
+// Custom action for fetching data
+import { fetchData } from "./redux/data/dataActions";
 
 // Custom Styles
 import * as s from "./styles/globalStyles";
