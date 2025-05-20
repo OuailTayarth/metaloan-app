@@ -1,6 +1,6 @@
-# MetaLoan: Own Your Piece of the Metaverse
+# MetaLoan: Own Your Piece of a Digital Land
 
-MetaLoan is a full-stack application built with React on the front end and Polygon blockchain on the back end for storing data. It helps users own metaverse land by offering affordable loan payments. The app uses smart contracts and blockchain for transparent and efficient loan processing, making virtual ownership accessible to everyone.
+MetaLoan is a web application built with React/Typescript on the front end. It helps users own digital lands by offering affordable loan payments and repayment through the platform, making owning virtual land accessible to everyone to enjoy gaming and connect with others in the digital world.
 
 <a href="https://ibb.co/4Z4y2CXN"><img src="https://i.ibb.co/WWB907MK/Metaling-Landing.png" alt="Metaling-Landing" border="0"></a>
 
