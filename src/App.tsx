@@ -49,6 +49,7 @@ import { BlockchainStates } from "./models/blockchainStates";
 import { LoanDataType } from "./models/loanData";
 import { BorrowerDataType } from "./models/borrowerData";
 import { AlertType } from "./models/alert";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
@@ -414,6 +415,8 @@ const App = (): JSX.Element => {
                 element={<FetchBorrowers BorrowersData={BorrowersData} />}
               />
             </Route>
+
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />
         </s.Main>

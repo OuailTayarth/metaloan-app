@@ -57,6 +57,10 @@ vi.mock("./components/UserPages/PayLoan/PayLoan", () => ({
   default: () => <div>Pay Loan Content</div>,
 }));
 
+vi.mock("./components/ErrorPage/ErrorPage", () => ({
+  default: () => <div>404 - Page Not Found</div>,
+}));
+
 describe("App Component", () => {
   it("renders without crashing", () => {
     render(
@@ -132,10 +136,16 @@ describe("App Component", () => {
       name: "PayLoan",
       content: "Pay Loan Content",
     },
+    // test Error Page with nonexistent route
+    {
+      path: "/launchApp/pay",
+      name: "PageError",
+      content: "404 - Page Not Found",
+    },
   ];
 
   routes.forEach(({ path, name, content }) => {
-    it.only(`renders ${name} page at ${path} route`, async () => {
+    it(`renders ${name} page at ${path} route`, async () => {
       render(
         <MemoryRouter initialEntries={[path]}>
           <App />
