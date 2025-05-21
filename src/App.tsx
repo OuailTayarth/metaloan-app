@@ -172,7 +172,7 @@ const App = (): JSX.Element => {
         true,
         "Congratulations, your loan has been submitted successfully!"
       );
-      // Uncomment and adjust if you have a data fetch function
+
       // dispatch(fetchData(await signer.getAddress()));
     } catch (err) {
       console.error(err);
@@ -344,7 +344,7 @@ const App = (): JSX.Element => {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/howitWorks" element={<HowItoWorks />} />
+            <Route path="/howItWorks" element={<HowItoWorks />} />
             <Route path="/about" element={<About />} />
             <Route path="/metateam" element={<OurTeam />} />
             <Route

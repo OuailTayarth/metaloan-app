@@ -50,5 +50,7 @@ vi.mock("ethers", () => ({
 }));
 
 vi.mock("web3modal", () => ({
-  default: vi.fn().mockImplementation(() => ({ connect: vi.fn() })),
+  default: vi.fn().mockImplementation(() => ({
+    connect: vi.fn().mockResolvedValue({}),
+  })),
 }));

@@ -2,8 +2,10 @@
 import React from "react";
 import { describe, it } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter, Link } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 import App from "./App";
+import { AlertType } from "./models/alert";
 
 vi.mock("./components/Loaders/cubeLoader", () => ({
   default: () => <div data-testId="cube-loader">Loading...</div>,
@@ -14,7 +16,13 @@ vi.mock("./components/Home", () => ({
 }));
 
 vi.mock("./components/Navbar/Navbar", () => ({
-  default: () => <div>Navbar Page Content</div>,
+  default: () => (
+    <nav>
+      <div>Navbar Page Content</div>
+      <Link to="/about">About</Link>
+      <Link to="/howItWorks">How It Works</Link>
+    </nav>
+  ),
 }));
 
 vi.mock("./components/About/About", () => ({
@@ -33,12 +41,20 @@ vi.mock("./components/Footer/Footer", () => ({
   default: () => <div>Footer Page Content</div>,
 }));
 
-vi.mock("./components/LaunchApp/LaunchApp", () => ({
-  default: () => <div>Launch App Content</div>,
+vi.mock("./components/Admin/Admin", () => ({
+  default: () => <div>Admin page Content</div>,
 }));
 
 vi.mock("./components/UserPages/SubmitLoan/SubmitLoan", () => ({
   default: () => <div>Submit Loan Content</div>,
+}));
+
+vi.mock("./components/UserPages/UserNavbar/UserNavbar", () => ({
+  default: () => <div>User Navbar Content</div>,
+}));
+
+vi.mock("./components/UserPages/PayLoan/PayLoan", () => ({
+  default: () => <div>Pay Loan Content</div>,
 }));
 
 describe("App Component", () => {
@@ -90,7 +106,7 @@ describe("App Component", () => {
     { path: "/", name: "Home", content: "Home Page Content" },
     { path: "/about", name: "About", content: "About Page Content" },
     {
-      path: "/howitWorks",
+      path: "/howItWorks",
       name: "HowItWorks",
       content: "How It Works Content",
     },
@@ -99,17 +115,22 @@ describe("App Component", () => {
       name: "ContactForm",
       content: "Contact Form Content",
     },
-
     {
-      path: "/launchApp",
-      name: "LaunchApp",
-      content: "Launch App Content",
+      path: "/admin",
+      name: "Admin",
+      content: "Admin page Content",
     },
-
+    // nested routes
     {
       path: "/launchApp/submitLoan",
       name: "SubmitLoan",
       content: "Submit Loan Content",
+    },
+
+    {
+      path: "/launchApp/payLoan",
+      name: "PayLoan",
+      content: "Pay Loan Content",
     },
   ];
 
@@ -132,6 +153,33 @@ describe("App Component", () => {
         },
         { timeout: 5000 }
       );
+    });
+  });
+
+  it("updates content when navigating via navbar links", async () => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
+
+    // fast forwards 4 second to match the useEffect delay in app.js
+    vi.useFakeTimers();
+    vi.advanceTimersByTime(4000);
+    vi.useRealTimers();
+
+    // wait for initial load
+    await waitFor(() => screen.getByText("Home Page Content"), {
+      timeout: 5000,
+    });
+
+    // click navbar link
+    const aboutLink = screen.getByRole("link", { name: /about/i });
+    userEvent.click(aboutLink);
+
+    // Verify new route
+    await waitFor(() => {
+      expect(screen.getByText("About Page Content")).toBeInTheDocument();
     });
   });
 });

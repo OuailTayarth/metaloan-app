@@ -37,7 +37,7 @@ const Navbar = (): JSX.Element => {
         </li>
 
         <li>
-          <Link to="/howitWorks" onClick={closeMobileMenu}>
+          <Link to="/howItWorks" onClick={closeMobileMenu}>
             How It Works
           </Link>
         </li>
