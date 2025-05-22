@@ -36,10 +36,11 @@ vi.mock("../Utilities/splitText.js", () => ({
 }));
 
 vi.mock("react-redux", () => ({
-  useSelector: vi.fn().mockReturnValue({
-    blockchain: { account: "", smartContract: null },
-    data: {},
-  }),
+  useSelector: vi.fn((fn) =>
+    fn({
+      blockchain: { account: "0x123" },
+    })
+  ),
   useDispatch: () => vi.fn(),
 }));
 

@@ -23,7 +23,7 @@ const Admin: React.FC<AdminProps> = ({
   const [monthlyPayment, setMonthlyPayment] = useState<string>("");
 
   /* Function to create a plan from the owner wallet | could be solve with inputs form */
-  const createLoanPlan = (e: React.FormEvent<HTMLFormElement>) => {
+  const createLoanPlan = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     if (!lenderAddress || !USDTaddress || !downPayment || !monthlyPayment) {
@@ -77,16 +77,19 @@ const Admin: React.FC<AdminProps> = ({
   return (
     <section className="admin-container" id="admin">
       <div className="title">
-        <h1>Welcome Omar!</h1>
+        <h1>Welcome Admin!</h1>
         <p>Create a new loan plan</p>
       </div>
 
-      <form className="book-form" onSubmit={createLoanPlan}>
+      <form
+        className="book-form"
+        onSubmit={createLoanPlan}
+        aria-label="adminForm">
         <div className="inputBox">
           <label htmlFor="text">Lender wallet address</label>
           <input
             type="text"
-            placeholder=" Lender wallet address"
+            placeholder="Lender wallet address"
             value={lenderAddress}
             onChange={(e) => setLenderAddress(e.target.value)}
             required

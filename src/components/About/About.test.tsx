@@ -3,9 +3,10 @@ import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import About from "./About";
 import { mockNavigate } from "../../test/test-utils";
+import userEvent from "@testing-library/user-event";
 
 describe("About Component", () => {
-  // Check if all elements render correctly
+  // check if all elements render correctly
   it("renders heading, paragraph, button, and image correctly", () => {
     render(<About />);
     expect(screen.getByText("About Us")).toBeInTheDocument();
@@ -16,7 +17,7 @@ describe("About Component", () => {
     expect(screen.getByAltText("aboutImg")).toBeInTheDocument();
   });
 
-  // Verify initial state and state change after useEffect
+  // verify initial state and state change after useEffect
   it("removes 'hidden' class after initial render", async () => {
     render(<About />);
 
@@ -26,7 +27,7 @@ describe("About Component", () => {
     });
   });
 
-  // Test button click navigation
+  // test button click navigation
   it('navigates to "launchApp/submitLoan" when button is clicked', () => {
     render(<About />);
     const button = screen.getByRole("button", { name: "Request A Loan" });

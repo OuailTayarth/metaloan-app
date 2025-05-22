@@ -5,7 +5,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter, Link } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
-import { AlertType } from "./models/alert";
 
 vi.mock("./components/Loaders/cubeLoader", () => ({
   default: () => <div data-testId="cube-loader">Loading...</div>,

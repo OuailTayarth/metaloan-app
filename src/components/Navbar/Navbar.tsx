@@ -15,7 +15,7 @@ const Navbar = (): JSX.Element => {
   const [click, setClick] = useState<boolean>(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-  const adminAddress = "0xb8cea4b30758f65657287e3bdc2eac6bf9e68702";
+  const adminAddress = "0xb8cea4b30758f65657282e3bdc2eac6bf9e68702"; // fake address for testing
 
   const getData = () => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {

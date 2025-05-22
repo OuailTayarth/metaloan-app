@@ -62,10 +62,10 @@ describe("ContactForm", () => {
     const checkBox = screen.getByRole("checkbox");
     const formElement = screen.getByRole("form", {
       name: "Contact",
-    }) as HTMLFormElement;
+    });
 
     const resetMock = vi
-      .spyOn(formElement, "reset")
+      .spyOn(formElement as HTMLFormElement, "reset")
       .mockImplementation(() => {});
 
     // Fill form
