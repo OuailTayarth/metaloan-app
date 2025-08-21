@@ -14,6 +14,15 @@ I built this project during my last role as a front-end developer at Rose Law Gr
 - **State Management**: Redux
 - **Testing**: Vitest
 
+## Testing
+
+- 51 Vitest tests covering:
+  - Component rendering
+  - User flows (loan submission/payment)
+  - Route validation
+  - Error states  
+    Run tests: `npm test`
+
 ## Link to Newest Version
 
 https://heartfelt-gingersnap-5ab22b.netlify.app/

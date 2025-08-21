@@ -25,7 +25,7 @@ const HeroSection = (): JSX.Element => {
         duration: 1,
         y: 0,
         opacity: 1, // Ending state
-        stagger: 0.1,
+        stagger: 0.03,
         ease: "power2",
       }
     );

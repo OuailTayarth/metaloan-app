@@ -50,6 +50,7 @@
 
 .howItWorks-content .imgBox img {
   max-width: 662px;
+  border-radius: 10px;
 }
 
 .howItWorks-content .play {

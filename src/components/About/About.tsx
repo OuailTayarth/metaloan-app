@@ -26,7 +26,7 @@ const About = (): JSX.Element => {
         duration: 1,
         y: 0,
         opacity: 1, // Ending state
-        stagger: 0.1,
+        stagger: 0.03,
         ease: "power2",
       }
     );
@@ -35,7 +35,7 @@ const About = (): JSX.Element => {
   return (
     <div className="about-content" id="about" data-scroll-section>
       <div className={`textBox ${isHidden ? "hidden" : ""}`}>
-        <h2 className="hero-text">About Us</h2>
+        <h2 className="hero-title">About Us</h2>
         <p className="hero-text">
           As the only lending company focused only on metaverse properties,
           MetaLoan is committed to making metaverse ownership accessible to

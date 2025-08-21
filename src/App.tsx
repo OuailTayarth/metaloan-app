@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 // CSS Import
 import "./App.css"; // Stylesheet for the App component
 
-// Custom Actions
 // Custom action for blockchain connection
 import { connect } from "./redux/blockchain/blockchainActions";
 // Custom action for fetching data

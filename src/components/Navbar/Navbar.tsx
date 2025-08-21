@@ -68,31 +68,6 @@ const Navbar = (): JSX.Element => {
             Launch App
           </Link>
         </li>
-
-        <li>
-          {blockchain.account == adminAddress && (
-            <Link to="/admin" id="connect" onClick={closeMobileMenu}>
-              Admin
-            </Link>
-          )}
-        </li>
-
-        <li>
-          <button
-            className="btn"
-            id="connect"
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(connect());
-              getData();
-            }}>
-            {blockchain.walletConnected === false ? (
-              "connect wallet"
-            ) : (
-              <div id="address">{blockchain.account!.substring(0, 12)}...</div>
-            )}
-          </button>
-        </li>
       </ul>
     </header>
   );
