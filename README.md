@@ -6,7 +6,7 @@ MetaLoan is a web application built with React/Typescript on the front end. It h
 
 ## Reason for Building This App
 
-I built this project during my last role as a front-end developer at Rose Law Group, the company I was working at. It makes owning metaverse land affordable by breaking down high costs into small payments, helping more people join virtual worlds for fun or investment.
+I built this project during my latest role as a front-end engineer. It’s a payment platform that makes owning metaverse land affordable by breaking down high costs into smaller payments, helping more people join virtual worlds for fun or investment
 
 ## Technologies
 
