@@ -39,7 +39,7 @@ Platform processed 100+ successful loan payments, enabling broader access to vir
 
 ## Link to Live Version
 
-[https://heartfelt-gingersnap-5ab22b.netlify.app/](https://loan-digital.netlify.app/)
+[loan-digital.netlify.app](https://loan-digital.netlify.app/)
 
 ## Getting Started
 
