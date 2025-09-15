@@ -1,6 +1,6 @@
 # MetaLoan: Own Your Piece of a Digital Land
 
-MetaLoan is a web application built with React/TypeScript. It allows users to own digital land on “Decentraland” by offering affordable loan payments and repayment through the platform, making virtual land ownership accessible to everyone — to enjoy gaming and connect with others in the video game world
+MetaLoan is a web application built with React/TypeScript. It allows users to own digital land on the video gaming platform “Decentraland” by offering affordable loan payments and repayment through the MetaLoan app, making virtual land ownership accessible to everyone — to enjoy gaming and connect with others in the video game world
 
 <a href="https://ibb.co/4Z4y2CXN"><img src="https://i.ibb.co/WWB907MK/Metaling-Landing.png" alt="Metaling-Landing" border="0"></a>
 
